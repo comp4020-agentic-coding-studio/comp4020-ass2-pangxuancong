@@ -11,4 +11,112 @@ constraints:
   - one-lane
 ---
 
-<!-- STARTER_CONTENT: write this week's argument, case, evidence and counterargument, then remove this comment. -->
+The standard advice for a losing game is to play safer. Farm, do not force,
+wait for a mistake. It is delivered with confidence and it is, in a mode where
+contact cannot be declined and there is nowhere else to farm, close to the
+worst available plan.
+
+This week argues that the value of an action is not a property of the action.
+It depends on the state you are in when you take it.
+
+## The same action, three values
+
+Consider one action: **trading evenly** — a fight in which both teams lose the
+same number of champions and spend the same resources.
+
+| state | what an even trade does | value |
+| --- | --- | --- |
+| ahead | preserves the gap, burns clock you want burned | good |
+| even | preserves symmetry | neutral |
+| behind | preserves a gap you need to close, burns clock you need | **losing** |
+
+Nothing about the action changed. The same play is correct, neutral and wrong
+depending only on where the game already is.
+
+This generalises, and it is the actual content of the week. Safe play is not
+neutral. Safe play **preserves the current state**, and preserving a losing
+state is losing slowly. When you are behind, the plays that keep the game close
+to how it is are the plays that guarantee the result.
+
+## Variance is the instrument
+
+The correct response to being behind is to widen the distribution, and this is
+the argument week 4 handed forward.
+
+If the expected outcome is a loss, an action that makes the game *less
+predictable* is worth more than one that makes it marginally better. You are
+not trying to raise the average. You are trying to reach the part of the range
+where you win, and safe play is precisely what removes that part of the range.
+
+Concretely, the plays that become correct when behind:
+
+- taking a fight that is roughly even rather than waiting for one that is
+  favourable, because the favourable one is not coming
+- committing to a single target the enemy expects you to respect
+- accepting a trade that is bad on paper if it is the only trade that changes
+  the shape of the game
+- protecting a scaling champion at the cost of everyone else's tempo, when
+  that champion reaching a threshold is the only branch that ends with a win
+
+And the plays that stop being correct:
+
+- disengaging from a fight that was going to be even
+- playing for the wave when the wave does not decide games
+- waiting
+
+## What behind actually means
+
+Worth being precise, because *behind* is not one state.
+
+**Behind on gold, even on composition.** The most recoverable position. Gold
+gaps close through fights; composition gaps do not.
+
+**Behind on composition, even on gold.** Much worse, and frequently misread as
+fine because the scoreboard looks close. Nothing that happens later fixes it.
+
+**Behind on a clock.** You have a champion who wins if the game reaches a
+length, and the enemy has a plan that ends it sooner. This is the only kind of
+behind where waiting is correct, and it is correct for a specific reason —
+there is a branch, and it is at the end of the timeline.
+
+The three call for different play. Collapsing them into *we are losing, play
+safe* is what produces the loss.
+
+## A case
+
+You have **Kayle** on your team. The game is fifteen minutes in and by every
+visible measure you are losing: fewer kills, less gold, a tower down.
+
+The enemy has **Pyke** and **Viktor**, and Pyke's whole game is that a low
+champion is a dead champion regardless of how the fight was going.
+
+Two readings. The first: we are behind, play safe, farm, do not die. This
+maximises the number of minutes the game lasts and also the number of chances
+Pyke has to remove somebody. Every one of those minutes is a coin flip on
+their terms.
+
+The second: we are behind on gold, ahead on the clock, and there is exactly
+one branch that wins — Kayle arrives. Everything else is instrumental to that.
+Fights are worth taking if Kayle gains from them and worth refusing if she
+does not, regardless of whether they look winnable. Four players spend the
+rest of the game being the reason Pyke's target is never her.
+
+The second is not more aggressive than the first. It is more specific.
+
+## The counterargument
+
+High-variance play from behind reliably loses faster, and a team that adopts it
+without a branch to aim at has simply chosen to lose sooner. Variance is not a
+strategy; it is a modifier applied to one.
+
+So the rule needs its condition attached: **widen the distribution when there
+is a branch that wins, and identify the branch first.** A team that cannot name
+what it is playing for should not be forcing. It should be finding out what it
+is playing for, which is a different activity and usually a faster one than
+farming.
+
+## Takeaway
+
+Losing games are not won by playing the same game more carefully. Name the
+branch that still ends in a win, then price every action by whether it leads
+there.
