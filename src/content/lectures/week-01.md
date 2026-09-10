@@ -14,4 +14,95 @@ constraints:
 slides: /decks/week-01/
 ---
 
-<!-- STARTER_CONTENT: write this week's argument, case, evidence and counterargument, then remove this comment. -->
+Most writing about this mode treats it as Summoner's Rift with the interesting
+parts removed. That view is common, it is wrong, and correcting it is the whole
+purpose of the first week.
+
+## What the mode takes
+
+Four things, and it is worth naming them precisely, because the rest of the
+semester is organised around them.
+
+**You do not choose your champion.** Rerolls and trades narrow the loss, but
+the starting position is assignment rather than selection.
+
+**You cannot retreat and reset at will.** There is no returning to base to
+shop, reconsider and come back even. Spending is tied to dying.
+
+**There is one lane.** No rotations, no side pressure, no map to be somewhere
+else on.
+
+**You cannot decline the fight.** Two teams occupy one bridge. Disengagement
+buys seconds, not the ten minutes a Rift player can spend farming elsewhere.
+
+Together these remove almost everything that ordinary League treats as
+strategy: the draft, the role, the map, the pace.
+
+## Where the strategy went
+
+The mistake is to conclude that what remains is execution. It is not. Every
+choice the mode removes at the *selection* stage reappears, harder, at the
+*interpretation* stage.
+
+On the Rift you decide what you want your champion to do and then draft one
+that does it. Here the order reverses: you are handed a champion and must work
+out what it can be made to do for this particular team, against this particular
+enemy, with the augments you happen to be offered. That is not less strategic.
+It is strategy without the comfort of having chosen the problem.
+
+Three things get conflated constantly, and this course keeps them apart:
+
+- **receiving** a strong option
+- **recognising** that an option is strong
+- **recognising that a normally strong option is wrong here**
+
+The first is luck. The second is knowledge, and it can be looked up. Only the
+third is skill, and it is the only one the mode rewards consistently, because
+it is the only one that survives a bad roll.
+
+## A scenario
+
+Two players are given Veigar on the same team, in games that are identical up
+to the loading screen. The team is Veigar, Braum, Sivir, Gragas, Nami. The
+enemy is Kassadin, Fizz, Alistar, Ziggs, Yuumi.
+
+The first player does what Veigar exists to do: stack, scale, and build toward
+the point in the game where one rotation removes somebody. This is not
+obviously wrong. It is also not a decision — it is a default applied to a
+situation nobody checked.
+
+The second player reads the enemy and sees two champions whose entire design is
+about arriving on top of exactly this champion, both of them scaling on the
+same axis he is. The question stops being *how much damage will I have at
+twenty minutes* and becomes *will I be permitted to be there at twenty
+minutes*. That may change the second component, the augment, whether Braum and
+Nami are told to hold their tools for him rather than for Sivir, and where he
+is willing to stand while stacking — which is most of what he does before the
+game becomes interesting.
+
+Same hand. Same information. Different decision, because one player treated
+the champion as an identity and the other treated it as a constraint.
+
+## The counterargument
+
+Randomness lowers the skill ceiling. This is the strongest objection to the
+mode and it deserves better than dismissal.
+
+It is partly right. Outcome variance is genuinely higher here, and over a
+single game the better player wins less reliably than they would on the Rift.
+Anyone claiming otherwise is selling something.
+
+But a lower correlation between skill and *outcome* is not the same as a lower
+ceiling on *decision quality*. The objection assumes decisions are graded by
+whether they won. This course does not grade them that way, and neither should
+a player reviewing their own game. A defensible choice that lost is still a
+defensible choice; an indefensible one that won is still indefensible. Week 9
+returns to this, because the mode contains at least one decision that looks
+like a mistake and usually is not.
+
+## Takeaway
+
+Constraint is the subject of this course, not its obstacle. The mode strips out
+the decisions a player can prepare in advance and leaves only the ones that
+have to be made in front of the situation. That is a narrower game than the
+Rift. It is not a smaller one.

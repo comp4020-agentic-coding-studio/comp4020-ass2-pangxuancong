@@ -10,4 +10,86 @@ constraints:
   - no-pick
 ---
 
-<!-- STARTER_CONTENT: write this week's argument, case, evidence and counterargument, then remove this comment. -->
+A drafted composition is an argument: five picks assembled by people who agreed
+on how they intended to win. A random five is not an argument. It is still a
+system, and systems have properties whether or not anyone intended them.
+
+This week is about reading those properties off a team you had no part in
+assembling.
+
+## The functions, not the roles
+
+Roles are a drafting concept and they do not survive the transition. What
+survives are **functions** — jobs that have to be done by somebody for the team
+to win a fight. There are eight worth tracking:
+
+| function | what it does | what its absence looks like |
+| --- | --- | --- |
+| frontline | occupies space the enemy must go through | fights start on your carries |
+| engage | chooses when a fight begins | you only ever fight when they decide to |
+| disengage | ends a fight you are losing | every fight is fought to completion |
+| poke | applies pressure without commitment | no way to win a stalemate |
+| sustained damage | converts a won fight into a dead team | fights end with everyone alive |
+| burst | deletes one specific target | tanks are unkillable |
+| peel | keeps the damage alive | your carry dies first, always |
+| waveclear | holds a losing position | you cannot survive a siege |
+
+Every random five covers some of these, over-covers others, and misses at
+least one. **Reading the composition means naming the gap before the enemy
+finds it.**
+
+## An annotated example
+
+Take a real shape rather than an abstraction.
+
+**Your team:** Graves, Lulu, Xerath, Brand, Sona
+**Their team:** Ornn, Zac, Swain, Kai'Sa, Nautilus
+
+Yours has no frontline. Lulu and Sona provide peel, Xerath and Brand provide
+poke and burst, Graves provides sustained damage at a range that requires him
+to be closer than anyone would like. Nobody on the team wants to be hit.
+
+Theirs has three engage tools and a frontline that is happy to be hit.
+
+Read functionally, the game is already described. Their win condition is any
+fight that starts on your terms being their terms — a Zac or Nautilus landing,
+followed by Ornn arriving into a team that has no way to make him leave. Your
+win condition is a fight that never starts: enough poke, applied from far
+enough back, that they take a losing engage or lose the wave.
+
+Neither team drafted this. Both teams have it.
+
+## The failure case
+
+The instructive failure is not the team that lacks a function. It is the team
+that has too many of one and reads that surplus as strength.
+
+A five with four sources of burst and no frontline is not a burst composition.
+It is a team that will kill exactly one enemy per fight and then lose the
+fight, over and over, while its players report that they are doing a great deal
+of damage. The damage number at the end of the game will support them. It will
+be the highest number on the scoreboard and it will be irrelevant.
+
+This is worth stating plainly because post-game statistics are the most
+available evidence a player has, and they systematically reward the reading
+that is easiest to make.
+
+## The counterargument
+
+If the composition cannot be changed, why spend time reading it?
+
+Because the composition is not the decision — it is the input to every
+decision that follows. It sets which fights are worth taking, where the team
+should stand, which augments compound and which are wasted, and, from week 10,
+what the build should become when the enemy adapts. A player who has not read
+their own composition is not making decisions. They are playing their champion
+and hoping the other four do something compatible.
+
+The honest limit is this: reading a composition tells you what your team *can*
+do, not what four strangers *will* do. Week 8 takes up that gap directly.
+
+## Takeaway
+
+A composition nobody drafted still has exactly one shape of fight it wins and
+one it loses. Finding both takes about fifteen seconds on the loading screen,
+and almost nobody spends them.

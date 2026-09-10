@@ -13,4 +13,86 @@ constraints:
   - forced-contact
 ---
 
-<!-- STARTER_CONTENT: write this week's argument, case, evidence and counterargument, then remove this comment. -->
+For eleven weeks this course has taught adaptation to a system. This week the
+system is the object of study rather than the environment.
+
+## The mechanism
+
+Champions in this mode are not the champions from Summoner's Rift. They are
+those champions with per-champion adjustments applied on top: modifiers to
+damage dealt and damage taken, to healing and shielding, sometimes to ability
+haste. The list is maintained patch by patch. Champions enter it, leave it, and
+have their numbers moved.
+
+This is not a criticism. It is a description, and it is the most interesting
+design fact about the mode, because of what it concedes.
+
+Every one of those modifiers is an admission that a champion, transplanted
+unaltered into this environment, produced an outcome the designers did not
+want. The list is a record of the gap between how a champion behaves where it
+was designed to live and how it behaves on a bridge it cannot leave.
+
+## The argument
+
+Ask what work the word *balanced* is doing.
+
+If balanced means **statistically balanced** — win rates clustered near even
+across the roster — then a sufficiently long list of modifiers achieves it
+almost by construction. Any champion whose win rate drifts gets a number
+adjusted until it stops drifting. The distribution can be flattened
+indefinitely. This is a solvable problem and the mode largely solves it.
+
+If balanced means **experientially balanced** — that being on either side of a
+matchup produces a game worth playing — then the modifier list is evidence
+against, not for. A champion that requires a large correction to reach an even
+win rate is a champion whose fundamental interaction with the environment is
+wrong. The correction hides the outcome; it does not repair the interaction.
+The player on the receiving end does not experience a corrected win rate. They
+experience the interaction.
+
+Hence the distinction the week turns on:
+
+> **Balance** is a property of a design. **Correction** is a process applied to
+> one. A mode can be arbitrarily well corrected and still be badly balanced,
+> and the win-rate table cannot tell the difference — which is precisely the
+> failure mode this course has been describing since week 4.
+
+That is the point of putting this week last. The reasoning applied here is the
+same reasoning applied to augment rankings in week 4: a population statistic
+answers a question about aggregates, and the question anyone actually has is
+about a particular case.
+
+## The counterargument
+
+Every live game is maintained. Continuous patching is what a live service *is*,
+and treating maintenance as evidence of failure would condemn the Rift too,
+which has been patched continuously for longer.
+
+This is the strongest response and it is largely right. The argument above
+does not survive as *maintenance is bad*. It has to be narrowed:
+
+The Rift is patched because the metagame moves — players find things, and the
+design responds. This mode is patched for a structurally different reason:
+champions are placed into an environment they were never designed for, and the
+patching corrects for that displacement. The first kind of maintenance is a
+design responding to its players. The second is a design paying rent on a
+decision made once, at the start, and never revisited.
+
+Whether that rent is worth paying is a genuine question, and this course does
+not settle it. Both answers are defensible. What is not defensible is
+answering it by pointing at a flat win-rate distribution.
+
+## What the semester was actually about
+
+Eleven weeks of optimising inside a system. One week asking whether the system
+deserved the optimisation.
+
+Both halves are the same skill. Reading a composition you did not draft and
+reading a mode you did not design are the same act performed at different
+scales: taking something handed to you, working out what it actually does
+rather than what it is described as doing, and deciding accordingly.
+
+## Takeaway
+
+You do not need better rolls. You need better decisions — and the last of them
+is deciding what the thing you have been getting good at is worth.
