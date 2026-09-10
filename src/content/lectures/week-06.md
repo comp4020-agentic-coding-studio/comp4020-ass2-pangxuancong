@@ -1,8 +1,8 @@
 ---
-title: Reading a champion you did not choose
-description: Week 2 of Act I --- The hand you're dealt
-week: 2
-date: 2026-07-28
+title: What the five of you add up to
+description: Week 6 of Act II --- Drafting after the draft
+week: 6
+date: 2026-08-25
 teachers:
   - spike
 ---

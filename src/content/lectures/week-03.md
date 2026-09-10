@@ -1,8 +1,8 @@
 ---
-title: Reading a champion you did not choose
-description: Week 2 of Act I --- The hand you're dealt
-week: 2
-date: 2026-07-28
+title: The economics of the reroll
+description: Week 3 of Act I --- The hand you're dealt
+week: 3
+date: 2026-08-04
 teachers:
   - spike
 ---

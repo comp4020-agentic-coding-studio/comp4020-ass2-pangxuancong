@@ -1,46 +1,31 @@
 ---
-title: Assignment 1
+title: "Assignment 1: One roll, explained"
 description:
-  The first piece of graded work — a placeholder brief showing the shape every
-  assessment page follows
+  A champion, a reroll state, three augment tiers and an opening item, none of
+  them chosen by you --- account for what you did with them
 week: 6
-due: 2027-04-12T12:00:00+10:00
-weight: 40
+due: 2026-08-28T17:00:00+10:00
+weight: 25
 marking:
   mode: weighted
   criteria:
-    - name: Response to the brief
-      weight: 60
-    - name: Quality of execution
+    - name: Quality of reasoning under uncertainty
       weight: 40
+    - name: Identification of the real trade-off
+      weight: 30
+    - name: Use of evidence (game state, patch, data)
+      weight: 20
+    - name: Clarity of the account
+      weight: 10
 spec:
-  - submitted by the deadline, in the format named below
-  - it does the thing the brief asks for, and a reader can tell that it does
-  - the work is yours, with any assistance declared
+  - a decision is recorded for the roll, the reroll, each augment tier and the opening item
+  - every decision names the alternative it beat and what it gave up
+  - the account still stands if the game was lost
 related:
-  - final-project
+  - lectures/week-02
+  - lectures/week-03
+  - lectures/week-04
+  - lectures/week-05
 ---
 
-<!-- STARTER_CONTENT: replace this assessment brief, then remove this comment. -->
-
-Replace this brief. An assessment page has three jobs: pose the problem, say
-what is submitted, and say how it is marked.
-
-## The brief
-
-> One sentence stating the problem, set as a blockquote so it reads as the thing
-> being asked rather than as commentary on it.
-
-Then a paragraph or two on what makes a strong response --- the room the brief
-leaves, and the judgement it is testing. Keep the provocation and the mechanics
-apart: a student should be able to read the first and know what to make, and
-read the second and know what to hand in.
-
-## What you submit
-
-Name the artefact and the format. If evidence of process is part of the
-submission, say which files and what each is for.
-
-The optional `marking:` block renders a criterion table (weighted) or a marking
-statement (holistic) below; leave it out and say how the work is marked in
-prose.
+<!-- STARTER_CONTENT: write this assessment brief, then remove this comment. -->

@@ -19,6 +19,9 @@ export const slopCourseMetaSchema = z
     endDate: z.iso.date(),
     description: z.string().trim().min(80).max(300),
     tags: z.array(z.string().trim().min(2).max(24)).min(1).max(3),
+    // The integration defaults this to an empty array. A course that cannot
+    // say what a student leaves with is not finished, so here it is required.
+    learningOutcomes: z.array(z.string().trim().min(1)).min(1).max(8),
   })
   .superRefine((course, ctx) => {
     const codeLevel = Number(course.code.at(4));
@@ -40,23 +43,34 @@ export const slopCourseMetaSchema = z
 
 // The single source of truth for the course record. The generated homepage,
 // navigation label and /api/index.json all read this object.
-// Replace every placeholder value, but keep the shape: the catalogue ingests
-// this API contract when the course is published.
 //
-// The code's last three digits were assigned to this repo when it was
-// provisioned, and no other course in the cohort has them. Change the first
-// digit to your course's level (and `level` to match); keep the other three.
-// STARTER_CONTENT: replace this course record, then remove this comment.
+// Dual-coded: the catalogue carries one code, so SLOP8223 is the canonical
+// record and the undergraduate offering (SLOP4223) is named in the prose. The
+// last three digits were assigned to this repo and are not ours to change;
+// only the leading level digit was a choice. `spec/course-promises.test.ts`
+// holds us to that, because the regex above would happily accept any three.
+//
+// The teaching calendar: twelve Tuesday lectures from 21 July, with the
+// standard two-week break after week 6. `endDate` runs past the last lecture
+// to cover the assessment period, so the final case study can fall inside it.
 export const courseMeta = slopCourseMetaSchema.parse({
-  code: "SLOP1223",
-  title: "Course Title Goes Here",
-  session: "Semester 1",
-  year: 2027,
-  level: 1,
-  startDate: "2027-02-22",
-  endDate: "2027-05-28",
+  code: "SLOP8223",
+  title: "HEX ARAM: The Hand You're Dealt",
+  session: "Semester 2",
+  year: 2026,
+  level: 8,
+  startDate: "2026-07-21",
+  endDate: "2026-11-20",
   description:
-    "One concise paragraph explaining what this course is, who it is for, " +
-    "and why somebody would choose to spend a semester taking it.",
-  tags: ["replace me"],
+    "Playing well with a hand you did not choose. Twelve weeks on decision-making, " +
+    "adaptation and design inside HEX ARAM, where you cannot pick your champion, " +
+    "cannot retreat, and cannot avoid the fight. Offered as SLOP4223 and SLOP8223.",
+  tags: ["decision-making", "game design", "ARAM"],
+  learningOutcomes: [
+    "Evaluate a decision separately from its outcome, and defend a choice that lost",
+    "Read champion, augment and item state as one system of trade-offs under incomplete information",
+    "Apply game-theoretic reasoning to commitment, timing and threat under forced contact",
+    "Use match and patch data to test a claim about play, and say what the data cannot settle",
+    "Critique the mode as a designed object, including its per-champion balance modifiers",
+  ],
 }) satisfies CourseMetaInput;

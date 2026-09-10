@@ -1,8 +1,8 @@
 ---
-title: Reading a champion you did not choose
-description: Week 2 of Act I --- The hand you're dealt
-week: 2
-date: 2026-07-28
+title: "Augments: the second draft"
+description: Week 4 of Act II --- Drafting after the draft
+week: 4
+date: 2026-08-11
 teachers:
   - spike
 ---

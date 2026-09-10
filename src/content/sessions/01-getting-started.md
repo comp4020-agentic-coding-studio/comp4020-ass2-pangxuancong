@@ -4,7 +4,7 @@ description:
   The first session of the semester — what to have working before you arrive,
   and what happens once you do
 week: 1
-date: 2027-02-22
+date: 2026-07-23
 teachers:
   - marisol-quaye
 spec:

@@ -1,8 +1,8 @@
 ---
-title: Reading a champion you did not choose
-description: Week 2 of Act I --- The hand you're dealt
-week: 2
-date: 2026-07-28
+title: Losing well
+description: Week 11 of Act IV --- The game has already changed
+week: 11
+date: 2026-10-13
 teachers:
   - spike
 ---

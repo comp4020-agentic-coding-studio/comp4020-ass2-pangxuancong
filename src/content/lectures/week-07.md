@@ -1,8 +1,8 @@
 ---
-title: Reading a champion you did not choose
-description: Week 2 of Act I --- The hand you're dealt
-week: 2
-date: 2026-07-28
+title: Space in a single lane
+description: Week 7 of Act III --- The one lane
+week: 7
+date: 2026-09-15
 teachers:
   - spike
 ---

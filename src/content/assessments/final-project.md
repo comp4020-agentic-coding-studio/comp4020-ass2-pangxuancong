@@ -1,38 +1,30 @@
 ---
-title: Final project
+title: "Final: One game, twelve decisions"
 description:
-  The capstone — a placeholder brief for the larger piece of work the semester
-  builds towards
+  One game from champion roll to nexus, stopped twelve times --- decide at each
+  stop, then write the post-game analysis
 week: 12
-due: 2027-05-28T12:00:00+10:00
-weight: 60
+due: 2026-11-13T17:00:00+10:00
+weight: 50
 marking:
-  mode: holistic
-  description:
-    The final project is judged as a whole against the brief, with particular
-    attention to whether the result stands alone and whether its scope fits the
-    semester that produced it.
+  mode: weighted
+  criteria:
+    - name: Quality of reasoning under uncertainty
+      weight: 40
+    - name: Identification of the real trade-off
+      weight: 30
+    - name: Use of evidence (game state, patch, data)
+      weight: 20
+    - name: Clarity of the account
+      weight: 10
 spec:
-  - submitted by the deadline, in the format named below
-  - it stands on its own, without you there to explain it
-  - it answers the brief rather than restating it
+  - a decision is recorded at each of the twelve stops
+  - the post-game analysis names the single decision that most moved the win probability, and argues why
+  - the account keeps decision quality and outcome apart
+related:
+  - lectures/week-01
+  - lectures/week-11
+  - lectures/week-12
 ---
 
-<!-- STARTER_CONTENT: replace this assessment brief, then remove this comment. -->
-
-Replace this brief. The final project is where a course's weights usually
-concentrate, so it is worth being explicit about how the earlier work feeds it.
-
-## The brief
-
-> One sentence, again as a blockquote.
-
-Say what scope is realistic in the time available. A brief that quietly assumes
-twice the available hours is the most common way a capstone goes wrong.
-
-## What you submit
-
-The artefact, and whatever a marker needs to run or read it.
-
-This one demonstrates the alternative marking mode: a holistic explanation
-rather than weighted criteria. The site renders either mode from frontmatter.
+<!-- STARTER_CONTENT: write this assessment brief, then remove this comment. -->

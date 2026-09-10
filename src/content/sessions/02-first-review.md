@@ -4,7 +4,7 @@ description:
   The second session, where work made in week 1 meets an audience for the first
   time
 week: 2
-date: 2027-03-01
+date: 2026-07-30
 teachers:
   - idris-fenn
 spec:

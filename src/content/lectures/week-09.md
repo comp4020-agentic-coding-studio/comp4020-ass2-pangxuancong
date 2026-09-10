@@ -1,8 +1,8 @@
 ---
-title: Reading a champion you did not choose
-description: Week 2 of Act I --- The hand you're dealt
-week: 2
-date: 2026-07-28
+title: Death as a resource
+description: Week 9 of Act III --- The one lane
+week: 9
+date: 2026-09-29
 teachers:
   - spike
 ---

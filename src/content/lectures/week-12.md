@@ -1,8 +1,8 @@
 ---
-title: Reading a champion you did not choose
-description: Week 2 of Act I --- The hand you're dealt
-week: 2
-date: 2026-07-28
+title: "Turning the lens: is this a good mode?"
+description: Week 12 of Act IV --- The game has already changed
+week: 12
+date: 2026-10-20
 teachers:
   - spike
 ---
