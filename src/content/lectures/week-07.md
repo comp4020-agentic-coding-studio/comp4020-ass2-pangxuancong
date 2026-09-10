@@ -10,4 +10,96 @@ constraints:
   - one-lane
 ---
 
-<!-- STARTER_CONTENT: write this week's argument, case, evidence and counterargument, then remove this comment. -->
+On Summoner's Rift, position is a point on a plane. There are three lanes, a
+jungle, and a river, and the question *where should I be* has a large answer
+space and a slow clock.
+
+On a bridge there is one axis. The answer space collapses, the clock speeds
+up, and most players conclude that positioning has become trivial. It has
+become **compressed**, which is a different thing and considerably less
+forgiving.
+
+## Position is an ordering, not a location
+
+The useful reframe for the whole week:
+
+> On a map, your position is *where you are*. On a bridge, your position is
+> *who is in front of you*.
+
+There is one line of ten champions and the only spatial variable that
+consistently matters is the order along it. Every fight is a question about
+that ordering: whether the people who need to be protected are behind the
+people who can absorb, whether your longest-range champion is far enough back
+to be using their range, and whether anyone has ended up in front of the
+frontline by accident.
+
+Almost every positioning error in this mode is an ordering error. Somebody is
+in the wrong place in the queue.
+
+## What still counts as terrain
+
+The bridge is not featureless. Four things function as terrain:
+
+**The minion line.** It is the only reliable indicator of where the neutral
+point is, it blocks some projectiles, and standing behind your own wave and
+standing in front of it are different decisions with different consequences.
+
+**The bushes.** Vision denial on a one-dimensional map is disproportionately
+powerful, because there is nowhere else the threat could be coming from. What
+you cannot see is not somewhere on the map — it is in front of you.
+
+**Depth.** The bridge has width as well as length, and it is used far less than
+it should be. Two champions at the same point along the lane, offset across
+it, present different targets and take different area effects.
+
+**Range bands.** The real map is not the geometry; it is the set of distances
+at which each of ten champions is dangerous. Those bands overlap and move as
+cooldowns come up.
+
+## Range asymmetry
+
+The clearest case is a pure difference in reach.
+
+Your **Caitlyn** against their **Skarner**. On the Rift, Skarner has a jungle
+to approach through and a map to arrive from an unexpected direction. On the
+bridge he has one direction, and it is directly along Caitlyn's axis of
+maximum threat.
+
+This looks like a total win for Caitlyn and it is not. It is a win *as long as
+the ordering holds*. The whole of Skarner's game is compressing the distance
+once, in a moment when the ordering has broken — after a mistimed step
+forward, in the confusion of a fight already in progress, out of a bush that
+was never checked. Caitlyn's advantage is not her range. It is her range
+*multiplied by the number of seconds the ordering survives*.
+
+Range advantages are not stable properties. They are maintained.
+
+## The failure case
+
+The team that loses this week's lesson is not the one that stands badly. It is
+the one that stands well and then, over about four seconds, drifts.
+
+Nobody decides to move forward. Each individual takes a small step to get in
+range of something, and the aggregate is a team that is now ten metres closer
+than it agreed to be and standing in the enemy's engage distance with the
+frontline somewhere behind. There is no moment at which the mistake was made.
+
+This is a genuine property of one-dimensional space: every small correction
+points in the same direction. On a map, players drift apart in different
+directions and nothing happens. Here they all drift forward.
+
+## The counterargument
+
+Some fights cannot be positioned out of. A composition with multiple long-range
+engage tools will eventually land one, and a defence built entirely on correct
+spacing is a defence with no second layer. Positioning buys time; it does not
+buy immunity, and a team that treats spacing as a plan rather than as a
+precondition will lose to the first tool that ignores it.
+
+Which is week 8's material, and the handoff is exact: spacing determines the
+conditions a fight begins under. It does not determine whether one begins.
+
+## Takeaway
+
+There is one axis and ten champions on it. Know your place in the line, and
+notice when the line has moved without anybody deciding that it should.
