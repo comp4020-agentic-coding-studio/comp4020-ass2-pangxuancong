@@ -1,14 +1,13 @@
 ---
-title: Reading a champion you did not choose
-description: Week 2 of Act I --- The hand you're dealt
+title: "Your Champion Is a Constraint, Not a Build Guide"
+description: "Reading a randomly assigned champion for what this game needs it to do"
 week: 2
 date: 2026-07-28
 teachers:
   - spike
+claim: "A champion's usual build is a weaker guide than what this particular team needs it to do."
+constraints:
+  - no-pick
 ---
 
-<!-- STARTER_CONTENT: write this week's claim, constraints and readings, then remove this comment. -->
-
-## Outline
-
-- to be written
+<!-- STARTER_CONTENT: write this week's argument, case, evidence and counterargument, then remove this comment. -->

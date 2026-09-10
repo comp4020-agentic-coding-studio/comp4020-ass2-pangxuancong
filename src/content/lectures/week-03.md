@@ -1,14 +1,13 @@
 ---
-title: The economics of the reroll
-description: Week 3 of Act I --- The hand you're dealt
+title: "A Reroll Is Not Free"
+description: "Opportunity cost and option value in the one pre-game choice the mode allows"
 week: 3
 date: 2026-08-04
 teachers:
   - spike
+claim: "Rerolling an acceptable champion in search of a better one is usually a losing trade."
+constraints:
+  - no-pick
 ---
 
-<!-- STARTER_CONTENT: write this week's claim, constraints and readings, then remove this comment. -->
-
-## Outline
-
-- to be written
+<!-- STARTER_CONTENT: write this week's argument, case, evidence and counterargument, then remove this comment. -->

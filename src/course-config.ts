@@ -67,10 +67,16 @@ export const courseMeta = slopCourseMetaSchema.parse({
     "cannot retreat, and cannot avoid the fight. Offered as SLOP4223 and SLOP8223.",
   tags: ["decision-making", "game design", "ARAM"],
   learningOutcomes: [
-    "Evaluate a decision separately from its outcome, and defend a choice that lost",
-    "Read champion, augment and item state as one system of trade-offs under incomplete information",
-    "Apply game-theoretic reasoning to commitment, timing and threat under forced contact",
-    "Use match and patch data to test a claim about play, and say what the data cannot settle",
-    "Critique the mode as a designed object, including its per-champion balance modifiers",
+    "Evaluate a randomly assigned champion against the needs of a specific game rather than a fixed build identity",
+    "Assess rerolls, augments and items as contextual trade-offs rather than isolated rankings",
+    "Identify the functional strengths, weaknesses and win conditions of a composition nobody drafted",
+    "Analyse positioning, engagement timing, death timing and tempo inside a single-lane environment",
+    "Revise a plan when enemy builds, augments, threats or game state invalidate its assumptions",
+    "Distinguish optimisation within the mode from the design decisions that shaped the mode",
   ],
 }) satisfies CourseMetaInput;
+
+// The integration's `course` record is a strict schema and rejects unknown
+// keys, so the prerequisite lives beside it rather than inside it. Pages read
+// this constant; it is never retyped in a template.
+export const coursePrerequisite = "SLOP6108 — League of Legends: Mechanics and Systems";

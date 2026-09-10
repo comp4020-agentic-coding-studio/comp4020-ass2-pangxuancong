@@ -1,5 +1,5 @@
 ---
-title: "Final: One game, twelve decisions"
+title: "Final: One Game, Twelve Decisions"
 description:
   One game from champion roll to nexus, stopped twelve times --- decide at each
   stop, then write the post-game analysis
@@ -23,6 +23,15 @@ spec:
   - the account keeps decision quality and outcome apart
 related:
   - lectures/week-01
+  - lectures/week-02
+  - lectures/week-03
+  - lectures/week-04
+  - lectures/week-05
+  - lectures/week-06
+  - lectures/week-07
+  - lectures/week-08
+  - lectures/week-09
+  - lectures/week-10
   - lectures/week-11
   - lectures/week-12
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Assignment 2: Read the board"
+title: "Assignment 2: Read the Game"
 description:
   Both team compositions and one frozen mid-game state --- name the win
   condition, the threat, and what you would change about how you are playing
