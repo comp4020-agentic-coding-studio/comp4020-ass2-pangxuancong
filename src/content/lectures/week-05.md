@@ -10,4 +10,93 @@ constraints:
   - no-recall
 ---
 
-<!-- STARTER_CONTENT: write this week's argument, case, evidence and counterargument, then remove this comment. -->
+The first purchase is made with less information than any other decision in
+the game and it is harder to undo than any other. That combination is the whole
+of this week.
+
+## What the recommendation knows
+
+A recommended build is not arbitrary. It is a compression of many games into an
+ordering, and as a starting point it is usually better than a novice's
+intuition. Treating it as noise is as lazy as treating it as an instruction.
+
+But be precise about what it was computed from. A recommendation is an average
+over games. It does not know your team, the enemy team, which augments you were
+offered, or that you are the only body between four enemies and your carry. It
+answers *what has usually been good on this champion*. The question in front of
+you is *what is good now*, and those questions have the same answer only when
+your game is close to average.
+
+The gap between them is the course. It is the same gap as week 4's, moved from
+augments to items.
+
+## The constraint that sharpens it
+
+On Summoner's Rift a wrong first item is a mistake with a short half-life. You
+recall in ninety seconds, you buy the correction, the game continues.
+
+Here you cannot. Purchasing is coupled to dying, and dying is expensive.
+A purchase you regret is a purchase you keep, sometimes for several fights.
+
+This changes the criterion, and the change is not cosmetic:
+
+> On the Rift, buy the item with the highest expected value.
+> Here, buy the item you are least likely to regret being stuck with.
+
+Those select differently. The highest-expected-value item is often a
+specialised one that is excellent against the game you expect. The
+least-regrettable item is the one that remains useful across the games you
+might actually get. Under irreversibility, the second criterion is correct and
+the recommended tab is optimising the first.
+
+## A case where the tab is simply wrong
+
+You are given **Garen**. Your team is Garen, Sett, Nasus, Illaoi, Taric. The
+enemy is Lux, Varus, Nidalee, Karthus, Janna.
+
+Every champion on your team is melee. Every champion on theirs is not.
+
+The recommended build for Garen assumes a game in which Garen reaches somebody.
+It is a good build for that game. You are not in it. In this game the operative
+questions are whether you can survive the walk, whether anything you buy makes
+the walk shorter, and whether the team's actual win condition is that you reach
+their back line at all — it may be that your job is to be the reason the wave
+does not kill your tower while four ranged champions fail to close a game they
+cannot end.
+
+A player following the tab will build to win a fight that will not be offered.
+The tab is not malfunctioning. It was asked the wrong question.
+
+## The four questions
+
+Before the first purchase, in this order:
+
+1. **What kills me?** Damage type, and whether it arrives as burst or over
+   time. This sets resistances and whether they are needed now or later.
+2. **What do I need to reach?** If nothing, mobility and durability are
+   worth less than they look.
+3. **What does my team already have?** Duplicated utility is wasted gold;
+   nobody needs the third source of the same effect.
+4. **What survives being wrong?** Of the candidates, which is still doing
+   something for me if my read of the game turns out to be mistaken?
+
+The fourth is the one the recommendation cannot answer, and under the
+no-recall constraint it is the one that matters most.
+
+## The counterargument
+
+Recommendations are a reasonable default for a player who lacks the knowledge
+to do better, and a course that teaches contempt for them will produce players
+who deviate confidently and badly. Deviation without a reason is worse than
+following the tab, because at least the tab is an average of things that
+worked.
+
+So the position is narrower than the title: the recommendation is a prior. A
+prior is something you update, and updating requires evidence. No evidence, no
+deviation. The failure this week attacks is not following the tab — it is
+following it without having checked whether this game is the average one.
+
+## Takeaway
+
+Buy for the game you are in, and when you cannot tell what game that is, buy
+the thing that is least embarrassing to be holding when you find out.
