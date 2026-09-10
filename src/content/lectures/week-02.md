@@ -10,4 +10,87 @@ constraints:
   - no-pick
 ---
 
-<!-- STARTER_CONTENT: write this week's argument, case, evidence and counterargument, then remove this comment. -->
+A champion arrives with a reputation. The reputation was earned somewhere
+else, in a mode where somebody chose it on purpose, for a job they had already
+decided needed doing. Here nobody chose it and no job has been decided. The
+reputation is the least useful thing in the package.
+
+What is useful is the list of properties underneath it.
+
+## Read the properties, not the name
+
+Seven, and they are all observable before the game starts:
+
+- **range** — the distance at which this champion is allowed to participate
+- **damage profile** — physical, magic, true; burst or sustained; single target
+  or area
+- **cooldown structure** — whether its power is continuous or arrives in
+  windows, and how long the gaps are
+- **mobility** — whether it can choose its position after a fight begins
+- **crowd control** — what it can stop, for how long, and how reliably
+- **survivability** — what it takes to kill, and whether that changes with gold
+- **scaling** — when it is at its strongest, relative to the game's length
+
+None of these is *what does this champion build*. Together they answer a
+different and better question: **what is this champion able to be asked for?**
+
+## The same champion, three jobs
+
+Take **Malphite**, whose reputation is fixed and whose actual function is not.
+
+**Game A.** Your team is Malphite, Jayce, Corki, Zyra, Soraka. Four champions
+who want to be far away and one who does not mind being close. Malphite is the
+only body on the team. His job is not to open fights — it is to make sure that
+when the enemy opens one, the four ranged champions are still alive thirty
+seconds later. He is peel. Everything he buys should serve staying between
+people.
+
+**Game B.** Your team is Malphite, Yorick, Trundle, Volibear, Rell. Four other
+champions who are perfectly happy to be hit. Malphite as a fifth frontline is
+redundant — the team already has more durability than it can use, and what it
+lacks is anything that removes an enemy carry. His job flips: he is the burst,
+and the team's win condition runs through his ultimate landing on somebody
+squishy rather than on whoever is nearest.
+
+**Game C.** The enemy is Talon, Zed, Quinn, Kled and Camille. Every point of
+damage on the other team is physical. Malphite's armour is no longer a
+personal statistic; it is a team-level asset, because he is the only member of
+the team who can stand in front of that composition and continue existing.
+
+Three games, one champion, three different correct answers. The reputation was
+constant across all three and useful in none of them.
+
+## Identity and function
+
+The distinction worth holding:
+
+> **Identity** is what a champion is. **Function** is what this team needs
+> somebody to do. Identity is fixed; function is assigned by the other nine
+> champions in the game.
+
+A player who reads identity plays the same game every time they are handed the
+same champion. A player who reads function plays a different game each time,
+which is the correct number, because it is a different game each time.
+
+The reroll decision from next week rests on this. So does the augment decision
+in week 4, the build in week 5, and every fight from week 8 onward. This is the
+first read, and everything downstream inherits its errors.
+
+## The counterargument
+
+Champions have identities for a reason. A champion designed as an assassin has
+tools that are good at assassinating and bad at holding ground, and a player
+who decides that this game needs their assassin to be a frontline will
+discover that intent does not override statistics. Function cannot be assigned
+freely; it is chosen from what the properties permit.
+
+That is the honest limit, and it narrows the claim rather than defeating it.
+The properties define a *range* of jobs the champion can do. Reputation
+identifies one point in that range — usually the most common one — and hides
+the rest. The skill is not overriding the champion. It is knowing how wide the
+range actually is.
+
+## Takeaway
+
+You were not given a build. You were given seven properties and four
+teammates. The job is whatever those two facts make possible.

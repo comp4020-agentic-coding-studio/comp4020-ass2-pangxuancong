@@ -10,4 +10,101 @@ constraints:
   - no-pick
 ---
 
-<!-- STARTER_CONTENT: write this week's argument, case, evidence and counterargument, then remove this comment. -->
+Augment rankings exist, they are easy to find, and they are largely correct
+about the thing they measure. This week is about the gap between the thing they
+measure and the decision in front of you.
+
+## Two different questions
+
+A ranking answers: **across a large number of games, which augment is
+associated with the most wins?**
+
+You are being asked: **of these particular options, offered to me, on this
+champion, alongside what I already have, which is best?**
+
+The two questions coincide only when your game resembles the average one. The
+ranking is computed over every champion that was offered the augment, every
+composition it was taken into, and every player who took it. Yours is one draw
+from that population, and the features that make it yours are exactly the ones
+the average discards.
+
+This is not an argument against rankings. It is an argument about what kind of
+object a ranking is: a **prior**, strong enough to start from and too coarse to
+finish with.
+
+## Four things the ranking cannot see
+
+**Your champion's damage profile.** An augment that multiplies one large hit
+and an augment that adds to many small ones are not interchangeable, and their
+population averages are taken over champions of both kinds.
+
+**What you already have.** Augment value is conditional, not additive. A second
+source of the same effect is worth less than the first, sometimes much less,
+and the ranking scores each augment as though it were the only one you owned.
+
+**Your team.** An augment that rewards fighting alongside allies is worth one
+thing on a team that groups and another on a team that cannot.
+
+**The enemy.** An augment that solves a problem you do not have is a wasted
+selection, regardless of how well it performs against the problems other people
+had.
+
+## Redundancy and marginal value
+
+The single most common error is treating augment selection as *pick the
+strongest* rather than *pick the one that adds the most*.
+
+These differ whenever you already own something. A durability augment taken by
+a champion who is already unkillable in the fights they are actually in
+converts gold-equivalent value into a statistic nobody will notice. The same
+augment on the same champion, two rounds earlier, might have been the pick of
+the set.
+
+The question is always **marginal**: what does my ability to affect this game
+look like with this, minus what it looks like without it? Rankings answer the
+absolute question. Nobody has ever needed the absolute question answered.
+
+## Risk, and when you want it
+
+Augments differ in variance as well as in expectation. Some produce a reliable
+increment; others produce a large effect conditional on something happening.
+
+The reliable one is usually correct, and this is where rankings and good play
+agree most often. But the correct amount of variance is not fixed — it depends
+on whether the reliable outcome is good enough. A team that is behind does not
+need a small consistent improvement to a losing position; it needs the
+distribution widened, because the left tail is already where it is going. Week
+11 develops this properly.
+
+For now the shape of the rule: **take variance when the expected outcome is a
+loss, and consistency when it is a win.** Neither is a property of the augment.
+Both are properties of the game you are in when you are offered it.
+
+## A case
+
+You are **Vladimir**, on a team that groups well, against a composition with
+no obvious way to burst you down. You are offered a strong damage augment, a
+sustain augment, and a high-variance one.
+
+The ranking may well put the sustain augment first, and against most
+compositions it would deserve that. Against this one you are already surviving
+the fights — the reason you are not winning them is that nothing on your team
+converts a won fight into dead enemies. The augment that adds the most is the
+one that solves the problem you have, which is not the problem the population
+had.
+
+## The counterargument
+
+A player without the knowledge to make this read will do worse deviating than
+following the list. That is true and it is the honest cost of this week: taught
+badly, it produces confident deviation on no evidence, which is worse than
+compliance.
+
+The defence is procedural. Deviation requires a stated reason of the form *the
+ranking assumes X, and X is false here*. If you cannot name X, take the
+ranking's answer. It is a good prior and you have no evidence against it.
+
+## Takeaway
+
+Rank the options against your game, not against the population. The list is
+where the decision starts and it has never once been where it ends.
