@@ -1,0 +1,171 @@
+/* SLOP8223's visual system, layered over the Slop brand palette.
+ *
+ * The theme's tokens are declared inside `@layer at.tokens`, so these
+ * unlayered declarations win regardless of load order. Everything here is a
+ * token override or an editorial pattern used across the site; nothing here
+ * is page-specific styling, which stays in the page that needs it.
+ *
+ * The register: industrial hazard signage for the colour logic, Swiss
+ * editorial poster typography for the scale jumps, brutalist web for flat
+ * blocking and the absence of decoration. Seven parts university course to
+ * three parts game subject.
+ *
+ * Dark ground only, and not as a preference: the accent is amber, amber on
+ * white fails contrast at every usable weight, and a palette that inverts
+ * would have to give up the accent. `colorScheme: "dark"` in site-config.ts
+ * is the other half of this decision. */
+
+:root {
+  /* The one saturated amber. Lighter and more saturated than the Slop lockup
+     gold, because it has to carry metadata, labels and links on a near-black
+     ground rather than sit on paper. Hazard-sign logic: the accent means
+     "read this", so it is spent on rules, labels and links and nothing else. */
+  --at-primary: #f0a417;
+  --at-secondary: #c07c10;
+  --at-tertiary: #b5aca0;
+
+  /* Near-black, warmed a few degrees toward the amber so the two inks read as
+     one system rather than as amber dropped onto neutral grey. */
+  --at-bg: #0c0b09;
+  --at-bg-alt: #141210;
+  --at-bg-elevated: #191614;
+
+  --at-text: #f4efe6;
+  --at-text-secondary: #bdb4a7;
+  --at-text-muted: #978d80;
+
+  /* Headings are warm off-white, not amber. A page where every heading is the
+     accent has no accent left for the things that matter: the week's claim,
+     its constraints, a patch label, a link. */
+  --at-heading: var(--at-text);
+
+  --at-border: rgb(240 164 23 / 32%);
+  --at-divider: rgb(244 239 230 / 14%);
+  --at-accent-soft: rgb(240 164 23 / 12%);
+  --at-code-bg: rgb(244 239 230 / 8%);
+
+  /* Flat blocking: no rounded corners anywhere, including components the
+     theme rounds on its own. */
+  --at-border-radius: 0;
+
+  /* A header row poured with amber turns every table into a warning label.
+     The rule under it does the same work for a tenth of the ink. */
+  --at-table-header-bg: transparent;
+  --at-table-header-text: var(--at-primary);
+  --at-table-stripe: rgb(244 239 230 / 4%);
+
+  /* Swiss scale jumps: a display size that is genuinely display, then a steep
+     drop to reading sizes. The middle of the ramp is deliberately empty. */
+  --at-font-size-h1: clamp(2.4rem, 1.5rem + 4vw, 4rem);
+  --at-font-size-h2: clamp(1.6rem, 1.3rem + 1.2vw, 2.1rem);
+  --at-font-size-h3: 1.3rem;
+
+  /* Course-local tokens, used by the patterns below and by page styles. */
+  --slop-label-size: 0.72rem;
+  --slop-label-tracking: 0.12em;
+  --slop-rule: 1px solid var(--at-border);
+  --slop-rule-heavy: 3px solid var(--at-primary);
+}
+
+/* Typography ---------------------------------------------------------- */
+
+h1 {
+  letter-spacing: -0.025em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+h2,
+h3 {
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+
+/* Section headings sit under a rule rather than inside decoration. */
+main h2 {
+  margin-block-start: 2.75rem;
+  padding-block-start: 0.75rem;
+  border-block-start: var(--slop-rule);
+}
+
+/* Editorial patterns --------------------------------------------------- */
+
+/* The label: uppercase, tracked, amber, monospace where it carries a number.
+   Metadata is labelled this way everywhere on the site — a week number, a
+   patch, a weight, a constraint. */
+.slop-label {
+  display: inline-block;
+  color: var(--at-primary);
+  font-size: var(--slop-label-size);
+  letter-spacing: var(--slop-label-tracking);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.slop-label--mono {
+  font-family: var(--at-font-mono);
+  letter-spacing: 0.06em;
+}
+
+/* The claim: the one sentence a week is prepared to be argued with about,
+   set like an editorial headline. Capitalised in CSS rather than in the
+   content, so the frontmatter stays a readable sentence and screen readers
+   are not handed twelve lines of shouting. */
+.slop-claim {
+  margin-block: 0.5rem 2rem;
+  font-size: clamp(1.4rem, 1.05rem + 1.6vw, 2.15rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+/* Patch labels and statistics are monospace, so a number always looks like a
+   measurement rather than prose. */
+.slop-figure {
+  font-family: var(--at-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Flat chips for the four constraints. Bordered, square, never filled: a
+   filled amber chip on every week page would out-shout the claim above it. */
+.slop-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slop-chips li {
+  padding: 0.2rem 0.55rem;
+  border: var(--slop-rule);
+  color: var(--at-text-secondary);
+  font-size: var(--slop-label-size);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Content affordances -------------------------------------------------- */
+
+blockquote {
+  border-inline-start: var(--slop-rule-heavy);
+}
+
+/* Links are amber and underlined. Underlines stay: the accent alone is not
+   an affordance for anyone who cannot see it. */
+main a:not(.at-card):not(.at-button) {
+  text-underline-offset: 0.18em;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

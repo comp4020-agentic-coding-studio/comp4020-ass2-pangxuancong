@@ -25,7 +25,13 @@ export const siteConfig = defineSiteConfig({
     { text: "Policies", href: "/policies/" },
   ],
 
+  // Not a preference: the accent is amber, amber on white is unreadable at
+  // every weight the site uses it at, and a palette that inverted would have
+  // to give the accent up. See src/styles/course.css.
+  colorScheme: "dark",
+
   licence: "CC-BY-NC-SA-4.0",
   socialImage: "/src/assets/images/card.png",
-  socialImageAlt: `A preview card for ${courseMeta.code}: ${courseMeta.title}`,
+  socialImageAlt:
+    "Two inks on near-black: five card outlines with only the third one filled, beside a walled single corridor where a marker's earlier positions fade out behind it and a hazard-striped barrier closes the far end",
 });

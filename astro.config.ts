@@ -22,7 +22,10 @@ export default defineConfig({
       defaultLayout: "src/layouts/PageLayout.astro",
       // The whole brand choice: three colour tokens and a set of lockups. Keep
       // institutional brand packages and assets out of this fictional site.
-      brandCss: "astro-theme-slop/slop.css",
+      // Slop's lockup palette first, then SLOP8223's own overrides: the same
+      // two-ink register, re-grounded in near-black so the amber is legible as
+      // an accent. Both are unlayered, so the later file wins.
+      brandCss: ["astro-theme-slop/slop.css", "/src/styles/course.css"],
       imageFormat: "avif",
       llmsTxt: true,
       // The theme owns the markdown plugin chain, so astromotion's slide

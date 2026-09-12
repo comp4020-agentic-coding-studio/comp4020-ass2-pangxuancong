@@ -2,7 +2,7 @@
 title: "Assignment 1: One roll, explained"
 description:
   A champion, a reroll state, three augment tiers and an opening item, none of
-  them chosen by you --- account for what you did with them
+  them chosen by you — account for what you did with them
 week: 6
 due: 2026-08-28T17:00:00+10:00
 weight: 25
@@ -33,7 +33,7 @@ a different one, and there is no reroll on the assignment.
 
 ## What you receive
 
-A single ARAM: Mayhem opening, frozen before the first purchase:
+A single HEX ARAM opening, frozen before the first purchase:
 
 - the champion assigned to you, and your bench
 - how many rerolls you hold

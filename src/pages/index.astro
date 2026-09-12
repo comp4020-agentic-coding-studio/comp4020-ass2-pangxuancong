@@ -3,7 +3,7 @@ import Card from "astro-theme-university/components/Card.astro";
 import CardGrid from "astro-theme-university/components/CardGrid.astro";
 import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
 import { withBase } from "astro-theme-university/url";
-import heroImage from "../assets/images/hero-home.avif";
+import heroImage from "../assets/images/hero-home.png";
 import { courseMeta, coursePrerequisite } from "../course-config";
 import { siteConfig } from "../site-config";
 ---
@@ -12,10 +12,10 @@ import { siteConfig } from "../site-config";
   title={`${courseMeta.code}: ${courseMeta.title}`}
   description={courseMeta.description}
   heroImage={heroImage}
-  heroImageAlt="A lecture theatre reduced to flat gold and black shapes, rows of seats sweeping past the frame, in a two-ink risograph print"
+  heroImageAlt="Two inks on near-black: a single walled corridor spanning the frame, a marker's earlier positions fading out behind it, and a hazard-striped barrier closing the far end"
   {...siteConfig}
 >
-  <ul class="course-tags" aria-label="Course tags">
+  <ul class="slop-chips course-tags" aria-label="Course tags">
     {courseMeta.tags.map((tag) => <li>{tag}</li>)}
   </ul>
 
@@ -124,20 +124,7 @@ import { siteConfig } from "../site-config";
 
 <style>
   .course-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
     margin-block: 0 2rem;
-    padding: 0;
-    list-style: none;
-  }
-
-  .course-tags li {
-    padding: 0.25rem 0.65rem;
-    border-radius: 999px;
-    color: var(--at-text-secondary);
-    background: var(--at-bg-alt);
-    font-size: 0.9rem;
   }
 
   .lede {

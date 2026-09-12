@@ -35,7 +35,16 @@ const { Content } = await render(assessment);
       </Callout>
     )
   }
-  <p><strong>Due:</strong> {formatCourseDate(assessment.data.due)} · <strong>Weight:</strong> {assessment.data.weight}%</p>
+  <div class="brief-head">
+    <p class="brief-meta">
+      <span class="slop-label slop-label--mono">Due {formatCourseDate(assessment.data.due)}</span>
+      <span class="slop-label slop-label--mono">{assessment.data.weight}% of the course mark</span>
+    </p>
+    <p class="brief-note">
+      Marked on the argument, not the outcome. A defended decision that lost the
+      game is not penalised for losing.
+    </p>
+  </div>
   <Content />
   <SpecList spec={assessment.data.spec}>
     The brief poses the problem and leaves room for a response. The spec is the
@@ -45,3 +54,24 @@ const { Content } = await render(assessment);
   {assessment.data.marking && <MarkingModel marking={assessment.data.marking} />}
   <RelatedContent entry={assessment} collections={graphCollections} />
 </ContentLayout>
+
+<style>
+  .brief-head {
+    margin-block-end: 2.5rem;
+    padding-block-end: 1.25rem;
+    border-block-end: var(--slop-rule);
+  }
+
+  .brief-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
+    margin-block: 0;
+  }
+
+  .brief-note {
+    margin-block: 0.75rem 0;
+    color: var(--at-text-secondary);
+    font-size: 0.95rem;
+  }
+</style>

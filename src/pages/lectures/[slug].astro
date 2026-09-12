@@ -3,9 +3,8 @@ import { render } from "astro:content";
 import { getPublishedCollection } from "astro-course-university/content";
 import RelatedContent from "astro-course-university/components/RelatedContent.astro";
 import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
-import { withBase } from "astro-theme-university/url";
 import TeachingTeam from "../../components/TeachingTeam.astro";
-import { formatCourseDate } from "../../lib/dates";
+import WeekHead from "../../components/WeekHead.astro";
 import { graphCollections, siteConfig } from "../../site-config";
 
 export async function getStaticPaths() {
@@ -16,11 +15,22 @@ export async function getStaticPaths() {
 const { lecture } = Astro.props;
 const { Content } = await render(lecture);
 const title = `Week ${lecture.data.week}: ${lecture.data.title}`;
+
+// `claim` and `constraints` arrive through the collection's `.loose()` tail,
+// so they come in untyped; `spec/` is what guarantees every week has both.
+const data = lecture.data as Record<string, unknown>;
+const claim = typeof data.claim === "string" ? data.claim : undefined;
+const constraints = Array.isArray(data.constraints) ? data.constraints.map(String) : [];
 ---
 
 <ContentLayout title={title} description={lecture.data.description} {...siteConfig}>
-  <p><strong>{formatCourseDate(lecture.data.date)}</strong></p>
-  {lecture.data.slides && <p><a href={withBase(lecture.data.slides)}>Open the slides</a></p>}
+  <WeekHead
+    week={lecture.data.week}
+    date={lecture.data.date}
+    claim={claim}
+    constraints={constraints}
+    slides={lecture.data.slides}
+  />
   <Content />
   <TeachingTeam teachers={lecture.data.teachers} />
   <RelatedContent entry={lecture} collections={graphCollections} />

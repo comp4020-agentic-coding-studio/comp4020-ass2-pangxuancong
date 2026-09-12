@@ -1,7 +1,7 @@
 ---
 title: "Final: One Game, Twelve Decisions"
 description:
-  One game from champion roll to nexus, stopped twelve times --- decide at each
+  One game from champion roll to nexus, stopped twelve times — decide at each
   stop, then write the post-game analysis
 week: 12
 due: 2026-11-13T17:00:00+10:00

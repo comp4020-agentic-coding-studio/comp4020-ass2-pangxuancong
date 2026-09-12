@@ -1,7 +1,7 @@
 ---
 title: "Assignment 2: Read the Game"
 description:
-  Both team compositions and one frozen mid-game state --- name the win
+  Both team compositions and one frozen mid-game state — name the win
   condition, the threat, and what you would change about how you are playing
 week: 10
 due: 2026-10-09T17:00:00+10:00

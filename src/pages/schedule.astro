@@ -103,7 +103,7 @@ const lastLecture = lectures.at(-1)!.data.date;
             ) : row.kind === "assessment" ? (
               <tr class="row-assessment">
                 <th scope="row">
-                  <span class="week-label">Due</span>
+                  <span class="slop-label slop-label--mono">Due</span>
                 </th>
                 <td>{formatCourseDate(row.entry.data.due)}</td>
                 <td>
@@ -115,13 +115,13 @@ const lastLecture = lectures.at(-1)!.data.date;
                   </p>
                 </td>
                 <td>
-                  <span class="weight">{row.entry.data.weight}%</span>
+                  <span class="slop-figure">{row.entry.data.weight}%</span>
                 </td>
               </tr>
             ) : (
               <tr>
                 <th scope="row">
-                  <span class="week-label">{row.entry.data.week}</span>
+                  <span class="slop-label slop-label--mono">{row.entry.data.week}</span>
                 </th>
                 <td>{formatCourseDate(row.entry.data.date)}</td>
                 <td>
@@ -131,7 +131,7 @@ const lastLecture = lectures.at(-1)!.data.date;
                   {claimOf(row.entry.data) && <p class="claim">{claimOf(row.entry.data)}</p>}
                 </td>
                 <td>
-                  <ul class="constraints">
+                  <ul class="slop-chips">
                     {constraintsOf(row.entry.data).map((slug) => (
                       <li>{CONSTRAINT_LABELS[slug] ?? slug}</li>
                     ))}
@@ -165,13 +165,12 @@ const lastLecture = lectures.at(-1)!.data.date;
 
 <style>
   .schedule-scroll {
-    overflow-x: auto;
+    max-width: 100%;
     margin-block: 1.5rem 2.5rem;
   }
 
   .schedule {
     width: 100%;
-    min-width: 40rem;
     border-collapse: collapse;
     text-align: left;
   }
@@ -179,20 +178,15 @@ const lastLecture = lectures.at(-1)!.data.date;
   .schedule th,
   .schedule td {
     padding: 0.85rem 0.9rem;
-    border-bottom: 1px solid var(--at-border, currentColor);
+    border-bottom: var(--slop-rule);
     vertical-align: baseline;
   }
 
   .schedule thead th {
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
+    font-size: var(--slop-label-size);
+    letter-spacing: var(--slop-label-tracking);
     text-transform: uppercase;
-    color: var(--at-text-secondary);
-  }
-
-  .week-label {
-    font-variant-numeric: tabular-nums;
-    font-weight: 700;
+    color: var(--at-text-muted);
   }
 
   .schedule tbody td:nth-child(2) {
@@ -207,35 +201,12 @@ const lastLecture = lectures.at(-1)!.data.date;
     font-size: 0.92rem;
   }
 
-  .constraints {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .constraints li {
-    padding: 0.15rem 0.5rem;
-    border: 1px solid var(--at-border, currentColor);
-    border-radius: 2px;
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
   .row-assessment {
     font-weight: 600;
   }
 
   .row-assessment .claim {
     font-weight: 400;
-  }
-
-  .weight {
-    font-variant-numeric: tabular-nums;
   }
 
   .row-break td {
@@ -253,15 +224,60 @@ const lastLecture = lectures.at(-1)!.data.date;
   }
 
   .constraint-key dt {
-    font-size: 0.78rem;
-    letter-spacing: 0.06em;
+    color: var(--at-primary);
+    font-size: var(--slop-label-size);
+    letter-spacing: var(--slop-label-tracking);
     text-transform: uppercase;
+    font-weight: 700;
     white-space: nowrap;
   }
 
   .constraint-key dd {
     margin: 0;
     color: var(--at-text-secondary);
+  }
+
+  /* Below the point where four columns stop fitting, each row becomes a
+     block: week and date on one line, then the week itself, then what it is
+     about. A horizontally scrolling table would hide the constraints column
+     off-screen with nothing to say it was there. */
+  @media (max-width: 48rem) {
+    .schedule thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    .schedule tbody tr {
+      display: block;
+      padding-block: 1rem;
+      border-block-end: var(--slop-rule);
+    }
+
+    .schedule th,
+    .schedule td {
+      display: block;
+      padding: 0;
+      border: 0;
+    }
+
+    .schedule tbody th {
+      margin-block-end: 0.15rem;
+    }
+
+    .schedule tbody td:nth-child(2) {
+      margin-block-end: 0.5rem;
+    }
+
+    .schedule tbody td:nth-child(4) {
+      margin-block-start: 0.6rem;
+    }
+
+    .row-break td {
+      margin: 0;
+    }
   }
 
   @media (max-width: 32rem) {
@@ -273,14 +289,5 @@ const lastLecture = lectures.at(-1)!.data.date;
     .constraint-key dd {
       margin-block-end: 0.6rem;
     }
-  }
-
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
   }
 </style>
