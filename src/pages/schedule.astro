@@ -1,0 +1,286 @@
+---
+import { getPublishedCollection } from "astro-course-university/content";
+import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
+import { withBase } from "astro-theme-university/url";
+import { formatCourseDate } from "../lib/dates";
+import { courseMeta } from "../course-config";
+import { siteConfig } from "../site-config";
+
+// One table for the whole semester, because the argument of the curriculum is
+// its order: the weeks follow the sequence of decisions the game forces, and
+// each assessment falls after the last week it rests on. Both facts are
+// visible here and nowhere else on the site.
+
+const CONSTRAINT_LABELS: Record<string, string> = {
+  "no-pick": "no pick",
+  "no-recall": "no recall",
+  "one-lane": "one lane",
+  "forced-contact": "forced contact",
+};
+
+// `constraints` and `claim` come in through the collection's `.loose()` tail,
+// so they arrive untyped. `spec/course-promises.test.ts` is what actually
+// guarantees the shape; these readers just narrow it for the template.
+const constraintsOf = (data: Record<string, unknown>): string[] =>
+  Array.isArray(data.constraints) ? data.constraints.map(String) : [];
+const claimOf = (data: Record<string, unknown>): string =>
+  typeof data.claim === "string" ? data.claim : "";
+
+const lectures = (await getPublishedCollection("lectures")).sort(
+  (a, b) => a.data.date.getTime() - b.data.date.getTime(),
+);
+const assessments = (await getPublishedCollection("assessments")).sort(
+  (a, b) => a.data.due.getTime() - b.data.due.getTime(),
+);
+
+type Row =
+  | { kind: "lecture"; date: Date; entry: (typeof lectures)[number] }
+  | { kind: "assessment"; date: Date; entry: (typeof assessments)[number] }
+  | { kind: "break"; date: Date; weeks: number };
+
+const rows: Row[] = [
+  ...lectures.map((entry) => ({ kind: "lecture" as const, date: entry.data.date, entry })),
+  ...assessments.map((entry) => ({ kind: "assessment" as const, date: entry.data.due, entry })),
+].sort((a, b) => a.date.getTime() - b.date.getTime());
+
+// The two-week teaching break sits wherever the gap between consecutive
+// lectures exceeds a fortnight, so it moves if the calendar does.
+const breakAfter = lectures.findIndex((lecture, i) => {
+  const next = lectures[i + 1];
+  if (!next) return false;
+  const days = (next.data.date.getTime() - lecture.data.date.getTime()) / 86_400_000;
+  return days > 7;
+});
+if (breakAfter >= 0) {
+  const resumes = lectures[breakAfter + 1].data.date;
+  const weeks = Math.round(
+    (resumes.getTime() - lectures[breakAfter].data.date.getTime()) / 86_400_000 / 7 - 1,
+  );
+  const at = rows.findIndex((row) => row.date.getTime() >= resumes.getTime());
+  rows.splice(at, 0, { kind: "break", date: resumes, weeks });
+}
+
+const lastLecture = lectures.at(-1)!.data.date;
+---
+
+<ContentLayout
+  title="Schedule"
+  description={`Every teaching week and every due date in ${courseMeta.code}, in the order they happen.`}
+  {...siteConfig}
+>
+  <p>
+    Twelve Tuesday lectures from {formatCourseDate(lectures[0].data.date)} to{" "}
+    {formatCourseDate(lastLecture)}, with a two-week break after week 6. The
+    order is the argument: the weeks follow the sequence of decisions the game
+    forces on a player, from the roll you are handed to the design of the mode
+    that handed it to you. Nothing here is optional and nothing is assessed
+    that is not taught before it is due.
+  </p>
+
+  <div class="schedule-scroll">
+    <table class="schedule">
+      <caption class="visually-hidden">
+        Teaching weeks and assessment due dates for {courseMeta.code}
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Week</th>
+          <th scope="col">Date</th>
+          <th scope="col">Teaching</th>
+          <th scope="col">Constraints</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((row) =>
+            row.kind === "break" ? (
+              <tr class="row-break">
+                <td colspan="4">
+                  Teaching break — {row.weeks} weeks. Lectures resume{" "}
+                  {formatCourseDate(row.date)}.
+                </td>
+              </tr>
+            ) : row.kind === "assessment" ? (
+              <tr class="row-assessment">
+                <th scope="row">
+                  <span class="week-label">Due</span>
+                </th>
+                <td>{formatCourseDate(row.entry.data.due)}</td>
+                <td>
+                  <a href={withBase(`/assessments/${row.entry.id}/`)}>
+                    {row.entry.data.title}
+                  </a>
+                  <p class="claim">
+                    Worth {row.entry.data.weight}% of the course mark.
+                  </p>
+                </td>
+                <td>
+                  <span class="weight">{row.entry.data.weight}%</span>
+                </td>
+              </tr>
+            ) : (
+              <tr>
+                <th scope="row">
+                  <span class="week-label">{row.entry.data.week}</span>
+                </th>
+                <td>{formatCourseDate(row.entry.data.date)}</td>
+                <td>
+                  <a href={withBase(`/lectures/${row.entry.id}/`)}>
+                    {row.entry.data.title}
+                  </a>
+                  {claimOf(row.entry.data) && <p class="claim">{claimOf(row.entry.data)}</p>}
+                </td>
+                <td>
+                  <ul class="constraints">
+                    {constraintsOf(row.entry.data).map((slug) => (
+                      <li>{CONSTRAINT_LABELS[slug] ?? slug}</li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            ),
+          )
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h2>The four constraints</h2>
+  <p>
+    The last column names which of the mode's four removals the week is about.
+    They are the course's whole vocabulary, and a week that names none of them
+    would have drifted off the subject.
+  </p>
+  <dl class="constraint-key">
+    <dt>no pick</dt>
+    <dd>You do not choose your champion.</dd>
+    <dt>no recall</dt>
+    <dd>You cannot retreat and reset at will.</dd>
+    <dt>one lane</dt>
+    <dd>There is no map to rotate around.</dd>
+    <dt>forced contact</dt>
+    <dd>You cannot decline the fight.</dd>
+  </dl>
+</ContentLayout>
+
+<style>
+  .schedule-scroll {
+    overflow-x: auto;
+    margin-block: 1.5rem 2.5rem;
+  }
+
+  .schedule {
+    width: 100%;
+    min-width: 40rem;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .schedule th,
+  .schedule td {
+    padding: 0.85rem 0.9rem;
+    border-bottom: 1px solid var(--at-border, currentColor);
+    vertical-align: baseline;
+  }
+
+  .schedule thead th {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--at-text-secondary);
+  }
+
+  .week-label {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+  }
+
+  .schedule tbody td:nth-child(2) {
+    white-space: nowrap;
+    color: var(--at-text-secondary);
+    font-size: 0.92rem;
+  }
+
+  .claim {
+    margin-block: 0.35rem 0;
+    color: var(--at-text-secondary);
+    font-size: 0.92rem;
+  }
+
+  .constraints {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .constraints li {
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--at-border, currentColor);
+    border-radius: 2px;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .row-assessment {
+    font-weight: 600;
+  }
+
+  .row-assessment .claim {
+    font-weight: 400;
+  }
+
+  .weight {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .row-break td {
+    padding-block: 0.6rem;
+    color: var(--at-text-secondary);
+    font-size: 0.88rem;
+    font-style: italic;
+  }
+
+  .constraint-key {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.4rem 1.25rem;
+    margin-block: 1rem 0;
+  }
+
+  .constraint-key dt {
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .constraint-key dd {
+    margin: 0;
+    color: var(--at-text-secondary);
+  }
+
+  @media (max-width: 32rem) {
+    .constraint-key {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+    }
+
+    .constraint-key dd {
+      margin-block-end: 0.6rem;
+    }
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>

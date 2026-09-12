@@ -2,14 +2,11 @@ import { defineSiteConfig } from "astro-theme-university/types";
 import { slopBranding } from "astro-theme-slop";
 import { courseMeta } from "./course-config";
 
-// The underlying collection and URL remain `sessions`; these labels are the
-// language students see. Change them to Studios, Tutorials, Expeditions, etc.
-export const sessionLabels = {
-  singular: "Session",
-  plural: "Sessions",
-} as const;
-
-export const graphCollections = ["sessions", "assessments", "lectures", "people"];
+// The course teaches through lectures and marks three pieces of work. There
+// is no tutorial, studio or lab stream, so the starter's `sessions` collection
+// was removed rather than filled with a second kind of page saying the same
+// things as the lecture it sits beside.
+export const graphCollections = ["assessments", "lectures", "people"];
 
 export const courseApiCollections = [
   ...graphCollections.map((key) => ({ key })),
@@ -22,6 +19,7 @@ export const siteConfig = defineSiteConfig({
 
   links: [
     { text: "Lectures", href: "/lectures/" },
+    { text: "Schedule", href: "/schedule/" },
     { text: "Assessment", href: "/assessments/" },
     { text: "People", href: "/people/" },
     { text: "Policies", href: "/policies/" },

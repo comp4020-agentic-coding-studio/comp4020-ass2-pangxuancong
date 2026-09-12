@@ -2,12 +2,10 @@
 import Card from "astro-theme-university/components/Card.astro";
 import CardGrid from "astro-theme-university/components/CardGrid.astro";
 import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
+import { withBase } from "astro-theme-university/url";
 import heroImage from "../assets/images/hero-home.avif";
-import { courseMeta } from "../course-config";
+import { courseMeta, coursePrerequisite } from "../course-config";
 import { siteConfig } from "../site-config";
-
-// STARTER_CONTENT: replace the hero artwork and its alt text below, then
-// remove this comment.
 ---
 
 <ContentLayout
@@ -21,31 +19,107 @@ import { siteConfig } from "../site-config";
     {courseMeta.tags.map((tag) => <li>{tag}</li>)}
   </ul>
 
-  <!-- STARTER_CONTENT: replace the authored page below, then remove this comment. -->
-  <h2>What you will do</h2>
+  <p class="lede">
+    Removing choice does not remove strategy. It relocates it.
+  </p>
+
   <p>
-    Say what a student spends their time on — the making, reading, arguing or
-    measuring that fills the weeks. Name the artefact they walk out with.
+    HEX ARAM takes away four things at once: you do not choose your champion,
+    you cannot retreat and reset at will, there is no map to rotate around, and
+    you cannot decline the fight. The usual conclusion is that what remains is
+    execution — that the mode is the Rift with the interesting parts removed.
+    That conclusion is a category error, and correcting it takes twelve weeks.
+  </p>
+
+  <p>
+    Every decision the mode removes at the point of <em>selection</em> reappears,
+    harder, at the point of <em>interpretation</em>. You are handed a champion
+    and must work out what it can be made to do for this team, against this
+    enemy, with the augments you happen to be offered. That is not less
+    strategic than drafting. It is strategy without the comfort of having
+    chosen the problem.
+  </p>
+
+  <h2>What you will do</h2>
+
+  <p>
+    You will spend the semester arguing about single games. Each week takes one
+    decision the mode forces — the roll, the reroll, an augment tier, a first
+    purchase, a fight nobody could avoid, a death that was worth taking — and
+    asks under what conditions the usual answer stops being right.
+  </p>
+
+  <p>
+    The reading is a mix of first-party Riot material on how the mode is
+    configured and observational data on what players actually do with it. You
+    will be expected to tell those two things apart, and to say which one a
+    claim of yours rests on. The three pieces of assessment are written
+    accounts of decisions: a single opening state, a game read at its turning
+    point, and a full match argued end to end.
+  </p>
+
+  <p>
+    What you leave with is a defensible method for deciding under constraint,
+    and the ability to say why a population-level statistic is or is not
+    evidence for the decision in front of you.
+  </p>
+
+  <h2>What is marked</h2>
+
+  <p>
+    All three pieces are marked on the same four criteria: <strong>quality of
+    reasoning under uncertainty</strong> (40), <strong>identification of the
+    real trade-off</strong> (30), <strong>use of evidence</strong> (20) and
+    <strong>clarity of the account</strong> (10). The course marks the argument
+    for a decision, never whether the decision won. A well-argued defence of a
+    choice that lost the game earns full marks.
   </p>
 
   <h2>Who it is for</h2>
+
   <p>
-    Say who this is aimed at and what they need to already know. Be specific
-    enough that someone can rule themselves in or out without emailing you.
+    Postgraduate students in games and interactive systems, offered as
+    <strong>SLOP8223</strong> and, at undergraduate level, as
+    <strong>SLOP4223</strong>. The prerequisite is {coursePrerequisite}: you are
+    assumed to already know how damage, itemisation, levelling and objectives
+    work, and the course does not re-teach them.
   </p>
+
+  <p>
+    It is not a course in improving your rank, and it will not tell you which
+    champion or augment to take. If what you want is the current strongest
+    option, that information is free, current and on Hexdata, and this course
+    will spend most of its time explaining why it is not the same thing as the
+    right decision.
+  </p>
+
+  <h2>What you will be able to do</h2>
+
+  <ul class="outcomes">
+    {courseMeta.learningOutcomes.map((outcome) => <li>{outcome}</li>)}
+  </ul>
 
   <h2>Where to go next</h2>
   <CardGrid columns={2}>
     <Card title="Lectures" href="/lectures/">
       <p>The twelve teaching weeks, in the order the game forces the decisions.</p>
     </Card>
-    <Card title="Assessment" href="/assessments/">
-      <p>What is marked, what it is worth, and when it is due.</p>
+    <Card title="Schedule" href="/schedule/">
+      <p>Every lecture and due date on one page, with the constraint each week is about.</p>
     </Card>
-    <Card title="People" href="/people/">
-      <p>Who teaches the course and how to reach them.</p>
+    <Card title="Assessment" href="/assessments/">
+      <p>Three pieces of written work at 25, 25 and 50, and the criteria all of them are marked on.</p>
+    </Card>
+    <Card title="Policies" href="/policies/">
+      <p>Late work, extensions, generative tools, and the rule about which patch you argue from.</p>
     </Card>
   </CardGrid>
+
+  <p class="riot-notice">
+    League of Legends is © Riot Games, Inc. This course is not endorsed by,
+    affiliated with, or produced by Riot Games. Convener:{" "}
+    <a href={withBase("/people/spike/")}>Spike</a>.
+  </p>
 </ContentLayout>
 
 <style>
@@ -64,5 +138,27 @@ import { siteConfig } from "../site-config";
     color: var(--at-text-secondary);
     background: var(--at-bg-alt);
     font-size: 0.9rem;
+  }
+
+  .lede {
+    margin-block: 0 1.5rem;
+    font-size: clamp(1.35rem, 1rem + 1.6vw, 2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  .outcomes {
+    padding-inline-start: 1.1rem;
+  }
+
+  .outcomes li {
+    margin-block: 0.4rem;
+  }
+
+  .riot-notice {
+    margin-block-start: 3rem;
+    color: var(--at-text-secondary);
+    font-size: 0.85rem;
   }
 </style>
