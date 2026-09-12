@@ -32,6 +32,21 @@ const holisticMarking = z.object({
 });
 
 export const collections = {
+  // The course runs no tutorial or lab stream, so this collection is empty and
+  // has no pages --- but it stays declared, because README.md's platform
+  // contract keeps these four collection keys for the programs-and-courses
+  // page that ingests the generated API.
+  sessions: defineCollection({
+    loader: courseNodeLoader("sessions"),
+    schema: courseNodeSchema
+      .extend({
+        week: weekSchema,
+        date: z.coerce.date(),
+        teachers: teacherRefs.optional(),
+      })
+      .loose(),
+  }),
+
   assessments: defineCollection({
     loader: courseNodeLoader("assessments"),
     schema: courseNodeSchema

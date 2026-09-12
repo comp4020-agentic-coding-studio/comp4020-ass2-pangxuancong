@@ -1,11 +1,13 @@
 import { defineSiteConfig } from "astro-theme-university/types";
 import { slopBranding } from "astro-theme-slop";
 
-// The course teaches through lectures and marks three pieces of work. There
-// is no tutorial, studio or lab stream, so the starter's `sessions` collection
-// was removed rather than filled with a second kind of page saying the same
-// things as the lecture it sits beside.
-export const graphCollections = ["assessments", "lectures", "people"];
+// The course teaches through lectures and marks three pieces of work: there is
+// no tutorial, studio or lab stream, so `sessions` carries no entries and the
+// site gives it no pages rather than filling it with a second page per week
+// restating the lecture beside it. The key stays in the list because the
+// platform contract in README.md keeps all four, and an empty collection costs
+// the generated API nothing.
+export const graphCollections = ["sessions", "assessments", "lectures", "people"];
 
 export const courseApiCollections = [
   ...graphCollections.map((key) => ({ key })),

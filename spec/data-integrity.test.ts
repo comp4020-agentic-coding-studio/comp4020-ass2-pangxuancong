@@ -23,7 +23,7 @@ const dateOnly = (value: unknown): string => String(value).slice(0, 10);
 describe("course data integrity", () => {
   it("keeps every scheduled date inside the teaching period", () => {
     const dated = api.nodes.filter((node) =>
-      ["lectures", "assessments"].includes(node.type),
+      ["sessions", "lectures", "assessments"].includes(node.type),
     );
     for (const node of dated) {
       const raw = node.type === "assessments" ? node.meta?.due : node.meta?.date;
