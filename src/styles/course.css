@@ -132,7 +132,7 @@
   --at-font-size-h1: var(--slop-display);
   --at-font-size-h2: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
   --at-font-size-h3: 1.3rem;
-  --at-content-width: 44rem;
+  --at-content-width: 48rem;
 }
 
 /* Typography ----------------------------------------------------------- */
@@ -318,6 +318,54 @@ main > :is(p, ul, ol, dl, blockquote) {
 .slop-prismatic:hover {
   transform: translateY(-2px);
   filter: saturate(1.15);
+}
+
+/* The theme draws a full-height amber rule down the content edge. It is a good
+   detail on a page of prose, where it marks the text column, and a distraction
+   on a page built from full-bleed scenes: it has no column to mark there, and
+   runs straight through the middle of every display-size statement. The
+   cinematic page drops it; every other page keeps it. */
+body:has(.hero-cinematic)::after {
+  display: none;
+}
+
+/* Navigation ------------------------------------------------------------- */
+
+/* Over the home page's hero the nav is transparent and the artwork runs to the
+   top of the viewport; everywhere else it keeps the theme's solid ground. The
+   `:has()` test means no page has to be told which it is. */
+body:has(.hero-cinematic) .at-nav {
+  background: transparent;
+  transition: background var(--motion-medium) var(--ease-standard);
+}
+
+body:has(.hero-cinematic) .at-nav.is-stuck {
+  background: rgb(9 9 9 / 92%);
+  backdrop-filter: blur(8px);
+  border-block-end: 1px solid var(--slop-line);
+}
+
+/* A horizontal amber bar that grows from the left, rather than a link that
+   changes colour and nothing else. */
+.at-nav a {
+  position: relative;
+}
+
+.at-nav a::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -0.35rem;
+  height: 2px;
+  background: var(--slop-amber);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+
+.at-nav a:hover::after,
+.at-nav a:focus-visible::after {
+  transform: scaleX(1);
 }
 
 /* Scenes ---------------------------------------------------------------- */

@@ -30,6 +30,10 @@ const { title, description, heroImage, heroImageAlt, ...rest } = (frontmatter ??
   direct) as Props & Record<string, unknown>;
 
 const hero = resolveHeroImage(heroImage);
+// A page that supplies its own full-bleed opening scene brings its own <h1>
+// and its own opening line with it, so the layout stands back: rendering the
+// title again would give the document two first-level headings.
+const hasOwnOpening = Astro.slots.has("hero");
 ---
 
 <BaseLayout
@@ -48,8 +52,8 @@ const hero = resolveHeroImage(heroImage);
   </script>
   <slot name="hero" slot="hero" />
   {hero && <Hero slot="hero" title={title ?? ""} image={hero} imageAlt={heroImageAlt ?? ""} />}
-  {!hero && <h1>{title}</h1>}
-  {description && <p class="lead">{description}</p>}
+  {!hero && !hasOwnOpening && <h1>{title}</h1>}
+  {description && !hasOwnOpening && <p class="lead">{description}</p>}
   <slot />
 </BaseLayout>
 
@@ -105,8 +109,29 @@ const hero = resolveHeroImage(heroImage);
     for (const el of elements) observer.observe(el);
   }
 
+  // The nav sits transparent over a cinematic hero and takes a ground once the
+  // page has scrolled past it. A sentinel plus one observer, rather than a
+  // scroll handler: no work happens between the two states.
+  function watchNav() {
+    const nav = document.querySelector(".at-nav");
+    const hero = document.querySelector(".hero-cinematic");
+    if (!nav || !hero) return;
+    const sentinel = document.createElement("div");
+    sentinel.setAttribute("aria-hidden", "true");
+    sentinel.style.cssText = "position:absolute;top:0;height:1px;width:1px;";
+    hero.prepend(sentinel);
+    new IntersectionObserver(
+      ([entry]) => nav.classList.toggle("is-stuck", !entry.isIntersecting),
+      { threshold: 0 },
+    ).observe(sentinel);
+  }
+
   setUp();
+  watchNav();
   // The theme ships view transitions, so a client-side navigation swaps the
   // document without reloading this module.
-  document.addEventListener("astro:page-load", setUp);
+  document.addEventListener("astro:page-load", () => {
+    setUp();
+    watchNav();
+  });
 </script>

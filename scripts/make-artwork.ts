@@ -40,21 +40,23 @@ function hazard(y: number, w: number, h: number): string {
 // takes a reduced cut of the drawing — the corridor alone, at full width and
 // heavier weight — and the social card, which is never overlaid, takes the
 // whole figure.
-function drawing(w: number, h: number, variant: "full" | "corridor"): string {
+function drawing(w: number, h: number, variant: "full" | "corridor" | "transmute"): string {
   const u = w / 24; // one grid unit; every measurement below is in units
   const mid = h / 2;
 
   // The hand: five cards, the third one dealt (filled) and the rest outlines.
-  const cardW = u * 1.25;
-  const cardH = u * 4;
+  const cardW = variant === "transmute" ? u * 1.5 : u * 1.25;
+  const cardH = variant === "transmute" ? u * 5 : u * 4;
+  const cardX0 = variant === "transmute" ? u * 12.4 : u * 1.3;
   const cards: string[] = [];
   for (let i = 0; i < 5; i += 1) {
-    const x = u * 1.3 + i * (cardW + u * 0.45);
+    const x = cardX0 + i * (cardW + u * 0.45);
     const dealt = i === 2;
+    const fill = dealt && variant === "transmute" ? 'url(#prismatic)' : AMBER;
     cards.push(
       `<rect x="${x}" y="${mid - cardH / 2}" width="${cardW}" height="${cardH}" ` +
         (dealt
-          ? `fill="${AMBER}"/>`
+          ? `fill="${fill}"/>`
           : `fill="none" stroke="${AMBER}" stroke-width="${u * 0.07}" opacity="0.45"/>`),
     );
   }
@@ -74,16 +76,13 @@ function drawing(w: number, h: number, variant: "full" | "corridor"): string {
     );
   }
 
-  return `
-    <defs>
-      <clipPath id="endwall">
-        <rect x="${lane.x1 - u * 2.5}" y="${mid - lane.half}" width="${u * 2.5}" height="${lane.half * 2}"/>
-      </clipPath>
-    </defs>
-    <rect width="${w}" height="${h}" fill="${GROUND}"/>
-    ${hazard(0, w, u * 0.5)}
-    ${hazard(h - u * 0.5, w, u * 0.5)}
-    ${variant === "full" ? cards.join("") : ""}
+  // The corridor: two heavy rules, closed at the far end, with no opening
+  // behind the marker. The augment cut leaves it out — that scene is about the
+  // rules changing, not about the route.
+  const corridor =
+    variant === "transmute"
+      ? ""
+      : `
     <line x1="${lane.x0}" y1="${mid - lane.half}" x2="${lane.x1}" y2="${mid - lane.half}" stroke="${AMBER}" stroke-width="${u * 0.14}"/>
     <line x1="${lane.x0}" y1="${mid + lane.half}" x2="${lane.x1}" y2="${mid + lane.half}" stroke="${AMBER}" stroke-width="${u * 0.14}"/>
     <line x1="${lane.x0}" y1="${mid - lane.half}" x2="${lane.x0}" y2="${mid + lane.half}" stroke="${AMBER}" stroke-width="${u * 0.14}"/>
@@ -91,13 +90,51 @@ function drawing(w: number, h: number, variant: "full" | "corridor"): string {
     <rect x="${marker - u * 0.5}" y="${mid - u * 0.5}" width="${u}" height="${u}" fill="${AMBER}"/>
     <polygon points="${marker + u * 1.5},${mid - u * 0.55} ${marker + u * 2.6},${mid} ${marker + u * 1.5},${mid + u * 0.55}" fill="${AMBER}"/>
     <g clip-path="url(#endwall)">
-      ${[0, 1, 2, 3, 4, 5, 6].map((i) => `<line x1="${lane.x1 - u * 2.5 - lane.half * 2 + i * u * 0.85}" y1="${mid + lane.half}" x2="${lane.x1 - u * 2.5 - lane.half * 2 + i * u * 0.85 + lane.half * 2}" y2="${mid - lane.half}" stroke="${AMBER}" stroke-width="${u * 0.22}" opacity="0.9"/>`).join("")}
+      ${[0, 1, 2, 3, 4, 5, 6]
+        .map(
+          (i) =>
+            `<line x1="${lane.x1 - u * 2.5 - lane.half * 2 + i * u * 0.85}" y1="${mid + lane.half}" x2="${lane.x1 - u * 2.5 - lane.half * 2 + i * u * 0.85 + lane.half * 2}" y2="${mid - lane.half}" stroke="${AMBER}" stroke-width="${u * 0.22}" opacity="0.9"/>`,
+        )
+        .join("")}
     </g>
-    <rect x="${lane.x1 - u * 0.55}" y="${mid - lane.half}" width="${u * 0.55}" height="${lane.half * 2}" fill="${AMBER}"/>
+    <rect x="${lane.x1 - u * 0.55}" y="${mid - lane.half}" width="${u * 0.55}" height="${lane.half * 2}" fill="${AMBER}"/>`;
+
+  // Prismatic fragments, thrown by the card that changed. Only the augment cut
+  // has them: prismatic marks variance, and nothing else on this drawing is.
+  const fragments =
+    variant === "transmute"
+      ? [0, 1, 2, 3, 4, 5]
+          .map((i) => {
+            const fx = cardX0 - u * 1.6 + i * u * 1.9;
+            const fy = mid + (i % 2 === 0 ? -1 : 1) * u * (3.1 + (i % 3) * 0.5);
+            const s = u * (0.18 + (i % 3) * 0.09);
+            return `<rect x="${fx}" y="${fy}" width="${s}" height="${s}" fill="url(#prismatic)" opacity="${0.8 - i * 0.08}" transform="rotate(45 ${fx + s / 2} ${fy + s / 2})"/>`;
+          })
+          .join("")
+      : "";
+
+  return `
+    <defs>
+      <clipPath id="endwall">
+        <rect x="${lane.x1 - u * 2.5}" y="${mid - lane.half}" width="${u * 2.5}" height="${lane.half * 2}"/>
+      </clipPath>
+      <linearGradient id="prismatic" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0" stop-color="#49d7ff"/>
+        <stop offset="0.38" stop-color="#9d5cff"/>
+        <stop offset="0.72" stop-color="#f45de4"/>
+        <stop offset="1" stop-color="#f8d76a"/>
+      </linearGradient>
+    </defs>
+    <rect width="${w}" height="${h}" fill="${GROUND}"/>
+    ${hazard(0, w, u * 0.5)}
+    ${hazard(h - u * 0.5, w, u * 0.5)}
+    ${variant === "corridor" ? "" : cards.join("")}
+    ${fragments}
+    ${corridor}
   `;
 }
 
-function svg(w: number, h: number, variant: "full" | "corridor"): Buffer {
+function svg(w: number, h: number, variant: "full" | "corridor" | "transmute"): Buffer {
   return Buffer.from(
     `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${drawing(w, h, variant)}</svg>`,
   );
@@ -106,6 +143,10 @@ function svg(w: number, h: number, variant: "full" | "corridor"): Buffer {
 const targets = [
   { file: "hero-home.png", width: 2400, height: 780, variant: "corridor" as const },
   { file: "card.png", width: 1200, height: 630, variant: "full" as const },
+  // The augment scene: the same hand, with the dealt card transmuted. Prismatic
+  // is the course's colour for variance, so it appears here and nowhere the
+  // subject is not variance.
+  { file: "transmute.png", width: 2000, height: 760, variant: "transmute" as const },
 ];
 
 for (const { file, width, height, variant } of targets) {

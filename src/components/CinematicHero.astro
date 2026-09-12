@@ -1,0 +1,220 @@
+---
+import { Image } from "astro:assets";
+import { withBase } from "astro-theme-university/url";
+import heroImage from "../assets/images/hero-home.png";
+
+// The home page's opening scene, and the only place on the site that spends
+// this much vertical space on one idea.
+//
+// It replaces the theme's Hero rather than restyling it: the theme's version
+// centres a title over a scrim, which is right for a photograph and wrong for
+// an argument. Here the identity sits left, the artwork runs full-bleed behind
+// it, and the gradient is directional so the text side stays dark enough to
+// read while the corridor and its barrier stay visible on the right.
+//
+// Motion: the background settles from a slight overscale on load, the text
+// arrives in reading order, and the artwork drifts a few pixels on scroll
+// where the browser supports scroll-driven animation. All of it is transform
+// and opacity, all of it stops under prefers-reduced-motion, and none of it
+// carries meaning that is lost when it does not run.
+
+interface Props {
+  code: string;
+  titleLines: [string, string];
+  thesis: string;
+  alt: string;
+}
+
+const { code, titleLines, thesis, alt } = Astro.props;
+---
+
+<section class="hero hero-cinematic" aria-labelledby="hero-title">
+  <div class="hero__media">
+    <Image
+      src={heroImage}
+      alt={alt}
+      widths={[768, 1536, 2400]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="hero__image"
+    />
+  </div>
+
+  <div class="hero__content">
+    <p class="slop-label slop-label--mono hero__code">{code}</p>
+    <h1 id="hero-title" class="hero__title">
+      <span>{titleLines[0]}</span>
+      <span>{titleLines[1]}</span>
+    </h1>
+    <p class="hero__thesis">{thesis}</p>
+    <p class="hero__actions">
+      <a class="slop-button" href={withBase("/lectures/")}>Enter the course</a>
+      <a class="slop-button slop-button--ghost" href={withBase("/schedule/")}>See the schedule</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    grid-column: full;
+    position: relative;
+    display: grid;
+    align-items: end;
+    min-height: min(90vh, 54rem);
+    /* Pulled up under the sticky nav, which goes transparent over this scene
+       (see course.css) so the artwork starts at the top of the viewport. */
+    margin-block-start: calc(-1 * var(--at-nav-height));
+    padding-block: calc(var(--at-nav-height) + 2rem) clamp(3rem, 8vh, 6rem);
+    overflow: hidden;
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero__media::after {
+    /* Directional, not a flat scrim: dark where the words are, clear where the
+       drawing says something. */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(100deg, var(--slop-bg) 18%, rgb(9 9 9 / 78%) 46%, rgb(9 9 9 / 25%) 100%),
+      linear-gradient(to top, var(--slop-bg) 2%, transparent 40%);
+  }
+
+  .hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 65% center;
+    animation: hero-settle var(--motion-cinematic) var(--ease-standard) both;
+  }
+
+  @keyframes hero-settle {
+    from {
+      transform: scale(1.04);
+      opacity: 0.9;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Parallax where the browser has scroll-driven animation, and nothing at all
+     where it does not. 14px of travel: enough to separate the artwork from the
+     text, not enough to notice as movement. */
+  @supports (animation-timeline: scroll()) {
+    .hero__media {
+      animation: hero-drift linear both;
+      animation-timeline: scroll();
+      animation-range: 0 100vh;
+    }
+
+    @keyframes hero-drift {
+      to {
+        transform: translateY(14px);
+      }
+    }
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    width: min(74rem, 100% - 3rem);
+    margin-inline: auto;
+    max-width: 100%;
+  }
+
+  .hero__code {
+    margin-block: 0;
+    animation: hero-enter var(--motion-slow) var(--ease-standard) both;
+  }
+
+  .hero__title {
+    margin-block: 0.75rem 1.25rem;
+    display: grid;
+    font-size: var(--slop-display);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    max-width: 14ch;
+  }
+
+  .hero__title span {
+    display: block;
+    animation: hero-enter var(--motion-slow) var(--ease-standard) both;
+  }
+
+  .hero__title span:nth-child(1) {
+    animation-delay: 90ms;
+  }
+
+  .hero__title span:nth-child(2) {
+    animation-delay: 180ms;
+  }
+
+  .hero__thesis {
+    max-width: 34ch;
+    margin-block: 0 2rem;
+    color: var(--slop-ink-2);
+    font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.35rem);
+    line-height: 1.35;
+    animation: hero-enter var(--motion-slow) var(--ease-standard) 270ms both;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0;
+    animation: hero-enter var(--motion-slow) var(--ease-standard) 360ms both;
+  }
+
+  @keyframes hero-enter {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .hero {
+      min-height: min(82vh, 38rem);
+    }
+
+    .hero__image {
+      object-position: 72% center;
+    }
+
+    .hero__media::after {
+      background:
+        linear-gradient(to top, var(--slop-bg) 26%, rgb(9 9 9 / 55%) 70%, rgb(9 9 9 / 30%) 100%);
+    }
+
+    .hero__title {
+      max-width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__image,
+    .hero__code,
+    .hero__title span,
+    .hero__thesis,
+    .hero__actions {
+      animation: none;
+    }
+
+    .hero__media {
+      animation: none;
+    }
+  }
+</style>
