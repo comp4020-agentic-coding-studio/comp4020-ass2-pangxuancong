@@ -1,8 +1,7 @@
 ---
-import MdxPageLayout from "astro-theme-university/layouts/MdxPageLayout.astro";
-import { siteConfig } from "../site-config";
+import CoursePage from "./CoursePage.astro";
 ---
 
-<MdxPageLayout siteConfig={siteConfig} {...Astro.props}>
+<CoursePage {...Astro.props}>
   <slot />
-</MdxPageLayout>
+</CoursePage>

@@ -1,8 +1,7 @@
 ---
 import { render } from "astro:content";
 import { getPublishedCollection } from "astro-course-university/content";
-import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
-import { siteConfig } from "../../site-config";
+import CoursePage from "../../layouts/CoursePage.astro";
 
 export async function getStaticPaths() {
   const people = await getPublishedCollection("people");
@@ -12,15 +11,10 @@ export async function getStaticPaths() {
 const { person } = Astro.props;
 const { Content } = await render(person);
 
-// Map the role enum (convenor|tutor|guest|other) to display labels rather than
-// rendering the raw lowercase value.
-const roleLabels: Record<string, string> = {
-  convenor: "Convenor",
-  tutor: "Tutor",
-  guest: "Guest lecturer",
-  other: "",
-};
-const roleLabel = person.data.role ? roleLabels[person.data.role] : undefined;
+// `role` is free text in this repo's schema (see src/content.config.ts), not
+// the starter's four-value enum, so it is printed as written rather than
+// looked up in a table that would silently drop anything unlisted.
+const roleLabel = person.data.role;
 // Astro's generated type does not retain the image/alt refinement relationship,
 // so narrow the alt at the rendering boundary as well.
 const rawPhotoAlt = (person.data as { photoAlt?: unknown }).photoAlt;
@@ -30,14 +24,13 @@ const photoAlt = typeof rawPhotoAlt === "string" ? rawPhotoAlt : "";
 const description = person.data.description;
 ---
 
-<ContentLayout
+<CoursePage
   title={person.data.title}
   description={description}
   heroImage={person.data.photo ?? undefined}
   heroImageAlt={photoAlt}
-  {...siteConfig}
 >
-  <dl>
+  <dl class="person-facts">
     {roleLabel && (
       <>
         <dt>Role</dt>
@@ -66,9 +59,50 @@ const description = person.data.description;
         </dd>
       </>
     )}
-    <dt>Contact</dt>
-    <dd>{person.data.contact}</dd>
+    {person.data.contact && (
+      <>
+        <dt>Contact</dt>
+        <dd>{person.data.contact}</dd>
+      </>
+    )}
   </dl>
 
   <Content />
-</ContentLayout>
+</CoursePage>
+
+<style>
+  /* The same label register the rest of the site uses for metadata: the key is
+     a tracked amber label, the value is the text. */
+  .person-facts {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.35rem 1.5rem;
+    margin-block: 1.5rem 2.5rem;
+    padding-block-end: 1.5rem;
+    border-block-end: var(--slop-rule);
+  }
+
+  .person-facts dt {
+    color: var(--at-primary);
+    font-size: var(--slop-label-size);
+    letter-spacing: var(--slop-label-tracking);
+    text-transform: uppercase;
+    font-weight: 700;
+    align-self: baseline;
+  }
+
+  .person-facts dd {
+    margin: 0;
+  }
+
+  @media (max-width: 32rem) {
+    .person-facts {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+
+    .person-facts dd {
+      margin-block-end: 0.75rem;
+    }
+  }
+</style>

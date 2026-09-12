@@ -16,6 +16,13 @@
  * is the other half of this decision. */
 
 :root {
+  /* Deck pages are rendered by astromotion, not by the theme's BaseLayout, so
+     they never receive the `data-theme="dark"` attribute that `colorScheme`
+     sets — and every token the theme derives with `light-dark()` would resolve
+     to its light branch there, on a dark surface. Declaring the scheme here,
+     in the one file both the site and the decks load, settles it for both. */
+  color-scheme: dark;
+
   /* The one saturated amber. Lighter and more saturated than the Slop lockup
      gold, because it has to carry metadata, labels and links on a near-black
      ground rather than sit on paper. Hazard-sign logic: the accent means
@@ -69,6 +76,13 @@
 
 /* Typography ---------------------------------------------------------- */
 
+/* The page title takes no anchor link: there is nowhere to deep-link to that
+   the page's own URL does not already reach, and the trailing # reads as part
+   of the title at display size. Section headings keep theirs. */
+h1 > .at-heading-anchor {
+  display: none;
+}
+
 h1 {
   letter-spacing: -0.025em;
   font-weight: 800;
@@ -81,8 +95,10 @@ h3 {
   font-weight: 700;
 }
 
-/* Section headings sit under a rule rather than inside decoration. */
-main h2 {
+/* Section headings sit under a rule rather than inside decoration. Direct
+   children only: a card's heading is also an h2, and a rule across the top of
+   every card turns a grid of links into a grid of receipts. */
+main > h2 {
   margin-block-start: 2.75rem;
   padding-block-start: 0.75rem;
   border-block-start: var(--slop-rule);
@@ -147,6 +163,20 @@ main h2 {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+/* Decks ---------------------------------------------------------------- */
+
+/* On an impact slide the theme fills the ground with the brand colour, inks
+   the body in `--at-on-primary` (near-black over this amber) and reserves
+   `--at-on-primary-alt` --- the opposite ink --- for emphasis and links. With
+   a mid-lightness amber that opposite ink is white, which lands near 2:1 on
+   the fill: fine as a hue pairing, unreadable as text. A dark ink a few steps
+   off the body colour keeps emphasis distinguishable and legible at once.
+   Scoped to `.reveal` because it is only wrong inside a deck; the site's own
+   brand fills pair the same two inks on smaller type and pass. */
+.reveal {
+  --at-on-primary-alt: #3d2c06;
 }
 
 /* Content affordances -------------------------------------------------- */

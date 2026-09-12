@@ -1,10 +1,9 @@
 ---
 import { getPublishedCollection } from "astro-course-university/content";
-import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
+import CoursePage from "../layouts/CoursePage.astro";
 import { withBase } from "astro-theme-university/url";
 import { formatCourseDate } from "../lib/dates";
 import { courseMeta } from "../course-config";
-import { siteConfig } from "../site-config";
 
 // One table for the whole semester, because the argument of the curriculum is
 // its order: the weeks follow the sequence of decisions the game forces, and
@@ -63,10 +62,9 @@ if (breakAfter >= 0) {
 const lastLecture = lectures.at(-1)!.data.date;
 ---
 
-<ContentLayout
+<CoursePage
   title="Schedule"
   description={`Every teaching week and every due date in ${courseMeta.code}, in the order they happen.`}
-  {...siteConfig}
 >
   <p>
     Twelve Tuesday lectures from {formatCourseDate(lectures[0].data.date)} to{" "}
@@ -161,7 +159,7 @@ const lastLecture = lectures.at(-1)!.data.date;
     <dt>forced contact</dt>
     <dd>You cannot decline the fight.</dd>
   </dl>
-</ContentLayout>
+</CoursePage>
 
 <style>
   .schedule-scroll {

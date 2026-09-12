@@ -1,0 +1,46 @@
+---
+import type { ImageMetadata } from "astro";
+import BaseLayout from "astro-theme-university/layouts/BaseLayout.astro";
+import Hero from "astro-theme-university/components/Hero.astro";
+import { resolveHeroImage } from "astro-theme-university/images";
+import type { RemoteImage } from "astro-theme-university/types";
+import { siteConfig } from "../site-config";
+
+// Every page on the site, MDX and .astro alike, goes through here.
+//
+// The theme ships two layouts and they disagree in two ways that show. Its
+// MDX layout renders the frontmatter description as a lead paragraph but no
+// <h1>, so a content page arrived with its lead floating above nothing; its
+// ContentLayout renders both in the right order but passes the page title
+// straight to <title>, so half the site's browser tabs carried the site name
+// and half did not. One layout, used everywhere, settles both: title, then
+// lead, then the page — and a tab that always says which site it is.
+
+interface Props {
+  title?: string;
+  description?: string | null;
+  heroImage?: string | ImageMetadata | RemoteImage;
+  heroImageAlt?: string;
+  /** Supplied automatically when the page is MDX. */
+  frontmatter?: Record<string, unknown>;
+}
+
+const { frontmatter, ...direct } = Astro.props;
+const { title, description, heroImage, heroImageAlt, ...rest } = (frontmatter ??
+  direct) as Props & Record<string, unknown>;
+
+const hero = resolveHeroImage(heroImage);
+---
+
+<BaseLayout
+  title={`${title} — ${siteConfig.name}`}
+  description={description ?? undefined}
+  {...siteConfig}
+  {...rest}
+>
+  <slot name="head" slot="head" />
+  {hero && <Hero slot="hero" title={title ?? ""} image={hero} imageAlt={heroImageAlt ?? ""} />}
+  {!hero && <h1>{title}</h1>}
+  {description && <p class="lead">{description}</p>}
+  <slot />
+</BaseLayout>

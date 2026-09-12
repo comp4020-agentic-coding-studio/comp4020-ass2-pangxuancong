@@ -2,10 +2,10 @@
 import { render } from "astro:content";
 import { getPublishedCollection } from "astro-course-university/content";
 import RelatedContent from "astro-course-university/components/RelatedContent.astro";
-import ContentLayout from "astro-theme-university/layouts/ContentLayout.astro";
+import CoursePage from "../../layouts/CoursePage.astro";
 import TeachingTeam from "../../components/TeachingTeam.astro";
 import WeekHead from "../../components/WeekHead.astro";
-import { graphCollections, siteConfig } from "../../site-config";
+import { graphCollections } from "../../site-config";
 
 export async function getStaticPaths() {
   const lectures = await getPublishedCollection("lectures");
@@ -23,7 +23,7 @@ const claim = typeof data.claim === "string" ? data.claim : undefined;
 const constraints = Array.isArray(data.constraints) ? data.constraints.map(String) : [];
 ---
 
-<ContentLayout title={title} description={lecture.data.description} {...siteConfig}>
+<CoursePage title={title} description={lecture.data.description}>
   <WeekHead
     week={lecture.data.week}
     date={lecture.data.date}
@@ -34,4 +34,4 @@ const constraints = Array.isArray(data.constraints) ? data.constraints.map(Strin
   <Content />
   <TeachingTeam teachers={lecture.data.teachers} />
   <RelatedContent entry={lecture} collections={graphCollections} />
-</ContentLayout>
+</CoursePage>

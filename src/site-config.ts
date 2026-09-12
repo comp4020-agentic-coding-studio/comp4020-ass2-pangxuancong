@@ -1,6 +1,5 @@
 import { defineSiteConfig } from "astro-theme-university/types";
 import { slopBranding } from "astro-theme-slop";
-import { courseMeta } from "./course-config";
 
 // The course teaches through lectures and marks three pieces of work. There
 // is no tutorial, studio or lab stream, so the starter's `sessions` collection
