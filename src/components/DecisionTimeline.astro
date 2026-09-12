@@ -1,0 +1,182 @@
+---
+// The timeline weeks 8 and 9 are built on. A death costs twelve seconds of
+// absence and buys a purchase that would otherwise have waited: that is an
+// argument about time, and a list of paragraphs is a poor way to make it.
+//
+// The line grows as the reader scrolls, where the browser supports scroll-driven
+// animation, and is simply drawn where it does not. Nothing in the argument is
+// carried by the motion — the steps, their clock times and their labels are all
+// in the markup.
+
+interface Step {
+  at: string;
+  label: string;
+  note?: string;
+  /** The step the week turns on. */
+  pivot?: boolean;
+}
+
+interface Props {
+  steps: Step[];
+  caption?: string;
+}
+
+const {
+  steps,
+  caption = "Hypothetical timing, constructed for this example — not a recorded game.",
+} = Astro.props;
+---
+
+<figure class="timeline">
+  <div class="timeline__track" aria-hidden="true"><span class="timeline__line"></span></div>
+  <ol class="timeline__steps" data-reveal-stagger>
+    {
+      steps.map((step) => (
+        <li class:list={["timeline__step", step.pivot && "is-pivot"]} data-reveal>
+          <span class="timeline__at slop-figure">{step.at}</span>
+          <span class="timeline__dot" aria-hidden="true" />
+          <span class="timeline__body">
+            <span class="timeline__label">{step.label}</span>
+            {step.note && <span class="timeline__note">{step.note}</span>}
+          </span>
+        </li>
+      ))
+    }
+  </ol>
+  <figcaption class="timeline__caption">{caption}</figcaption>
+</figure>
+
+<style>
+  .timeline {
+    position: relative;
+    margin-block: 2.5rem;
+    padding-inline-start: 0;
+  }
+
+  .timeline__track {
+    position: absolute;
+    inset-block: 0.6rem 2.5rem;
+    inset-inline-start: 5.4rem;
+    width: 2px;
+    background: var(--slop-line);
+  }
+
+  .timeline__line {
+    display: block;
+    height: 100%;
+    background: var(--slop-amber);
+    transform-origin: top;
+  }
+
+  /* Where the browser has scroll-driven animation the line fills as the figure
+     passes through the viewport; where it does not, it is simply drawn. */
+  @supports (animation-timeline: view()) {
+    .timeline__line {
+      transform: scaleY(0);
+      animation: timeline-grow linear both;
+      animation-timeline: view();
+      animation-range: cover 12% cover 68%;
+    }
+
+    @keyframes timeline-grow {
+      to {
+        transform: scaleY(1);
+      }
+    }
+  }
+
+  .timeline__steps {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .timeline__step {
+    display: grid;
+    grid-template-columns: 4.5rem 1.8rem minmax(0, 1fr);
+    align-items: baseline;
+    padding-block: 0.85rem;
+  }
+
+  .timeline__at {
+    color: var(--slop-ink-muted);
+    font-size: 0.85rem;
+  }
+
+  .timeline__dot {
+    position: relative;
+    inset-block-start: -0.15rem;
+    justify-self: center;
+    width: 0.65rem;
+    height: 0.65rem;
+    background: var(--slop-bg);
+    border: 2px solid var(--slop-line-strong);
+  }
+
+  .timeline__body {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .timeline__label {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+  }
+
+  .timeline__note {
+    color: var(--slop-ink-2);
+    font-size: 0.92rem;
+    max-width: 52ch;
+  }
+
+  .is-pivot .timeline__dot {
+    background: var(--slop-amber);
+    border-color: var(--slop-amber);
+  }
+
+  .is-pivot .timeline__at,
+  .is-pivot .timeline__label {
+    color: var(--slop-amber);
+  }
+
+  .timeline__caption {
+    margin-block-start: 1rem;
+    padding-inline-start: 6.3rem;
+    color: var(--slop-ink-muted);
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 34rem) {
+    .timeline__track {
+      inset-inline-start: 0.3rem;
+    }
+
+    .timeline__step {
+      grid-template-columns: 1.6rem minmax(0, 1fr);
+      gap: 0 0.75rem;
+    }
+
+    .timeline__at {
+      grid-column: 2;
+      grid-row: 1;
+      font-size: 0.78rem;
+    }
+
+    .timeline__dot {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .timeline__body {
+      grid-column: 2;
+    }
+
+    .timeline__caption {
+      padding-inline-start: 2.35rem;
+    }
+  }
+</style>

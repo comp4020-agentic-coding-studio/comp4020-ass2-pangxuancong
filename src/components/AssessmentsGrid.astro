@@ -1,26 +1,125 @@
 ---
 import { getPublishedCollection } from "astro-course-university/content";
-import Card from "astro-theme-university/components/Card.astro";
-import CardGrid from "astro-theme-university/components/CardGrid.astro";
+import { withBase } from "astro-theme-university/url";
 import { formatCourseDate } from "../lib/dates";
 
-const assessments = await getPublishedCollection("assessments");
-const visible = assessments.sort((a, b) => a.data.week - b.data.week);
+// Three pieces, and the weight is the first thing you see. Deliberately closer
+// to a table than to a set of cards: this page is read to find a date and a
+// requirement, not to browse.
+
+const assessments = (await getPublishedCollection("assessments")).sort(
+  (a, b) => a.data.due.getTime() - b.data.due.getTime(),
+);
+// Narrowed here rather than at the call site: a type assertion inside a
+// template expression reads as a JSX tag to the .astro parser.
+const restsOn = (data: unknown): number => {
+  const related = (data as { related?: unknown })?.related;
+  return Array.isArray(related)
+    ? related.filter((r) => String(r).startsWith("lectures/")).length
+    : 0;
+};
 ---
 
-<CardGrid columns={2}>
+<ol class="briefs" data-reveal-stagger>
   {
-    visible.map((assessment) => (
-      <Card headingLevel="h2" title={assessment.data.title} href={`/assessments/${assessment.id}/`}>
-        {assessment.data.description && <p>{assessment.data.description}</p>}
-        {assessment.data.weight != null && (
-          <p>
-            <small>
-              Due {formatCourseDate(assessment.data.due)} · Weight: {assessment.data.weight}%{assessment.data.draft && " · Draft"}
-            </small>
-          </p>
-        )}
-      </Card>
-    ))
+    assessments.map((assessment) => {
+      const weeks = restsOn(assessment.data);
+      return (
+        <li class="brief" data-reveal>
+          <a href={withBase(`/assessments/${assessment.id}/`)}>
+            <span class="brief__weight slop-figure">{assessment.data.weight}%</span>
+            <div class="brief__body">
+              <h2 class="brief__title">{assessment.data.title}</h2>
+              {assessment.data.description && <p class="brief__desc">{assessment.data.description}</p>}
+              <p class="brief__meta">
+                <span class="slop-label slop-label--mono slop-label--quiet">
+                  Due {formatCourseDate(assessment.data.due)}
+                </span>
+                {weeks > 0 && (
+                  <span class="slop-label slop-label--mono slop-label--quiet">
+                    Rests on {weeks} {weeks === 1 ? "week" : "weeks"}
+                  </span>
+                )}
+                {assessment.data.draft && <span class="slop-label">Draft</span>}
+              </p>
+            </div>
+          </a>
+        </li>
+      );
+    })
   }
-</CardGrid>
+</ol>
+
+<style>
+  .briefs {
+    display: grid;
+    gap: 0;
+    margin-block: 2rem 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: var(--slop-rule);
+  }
+
+  .brief a {
+    display: grid;
+    grid-template-columns: minmax(7rem, max-content) minmax(0, 1fr);
+    gap: 0.5rem 1.5rem;
+    align-items: start;
+    padding-block: 1.75rem;
+    border-block-end: var(--slop-rule);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      background var(--motion-fast) var(--ease-standard),
+      transform var(--motion-medium) var(--ease-standard);
+  }
+
+  .brief a:hover,
+  .brief a:focus-visible {
+    background: rgb(243 183 0 / 7%);
+    transform: translateY(-2px);
+  }
+
+  .brief__weight {
+    white-space: nowrap;
+    color: var(--slop-amber);
+    font-size: var(--slop-figure-size);
+    font-weight: 700;
+    line-height: 0.95;
+  }
+
+  .brief__title {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: clamp(1.15rem, 1rem + 0.8vw, 1.5rem);
+    text-transform: uppercase;
+    letter-spacing: -0.015em;
+  }
+
+  .brief__desc {
+    margin-block: 0.4rem 0;
+    max-width: 62ch;
+    color: var(--slop-ink-2);
+  }
+
+  .brief__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
+    margin-block: 0.75rem 0;
+  }
+
+  @media (max-width: 34rem) {
+    .brief a {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brief a:hover,
+    .brief a:focus-visible {
+      transform: none;
+    }
+  }
+</style>

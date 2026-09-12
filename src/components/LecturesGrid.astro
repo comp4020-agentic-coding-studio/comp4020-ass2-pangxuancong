@@ -1,20 +1,139 @@
 ---
 import { getPublishedCollection } from "astro-course-university/content";
-import Card from "astro-theme-university/components/Card.astro";
-import CardGrid from "astro-theme-university/components/CardGrid.astro";
+import { withBase } from "astro-theme-university/url";
+import { decisionFor, decisionNumber } from "../lib/decisions";
 import { formatCourseDate } from "../lib/dates";
 
-const lectures = await getPublishedCollection("lectures");
-const visible = lectures.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+// The twelve weeks as editorial cards rather than a card grid: the decision
+// number is the dominant element, the verb names what is decided, and the claim
+// is the thing a reader is actually choosing between. A reader scanning this
+// page should be picking an argument, not a date.
+
+const lectures = (await getPublishedCollection("lectures")).sort(
+  (a, b) => a.data.week - b.data.week,
+);
+// `claim` arrives through the collection's `.loose()` tail, so it is untyped.
+// The narrowing happens here rather than at the call site: a type assertion
+// inside a template expression starts what the .astro parser reads as a JSX
+// tag, and `astro check` rejects the file.
+const claimOf = (data: unknown): string => {
+  const claim = (data as { claim?: unknown })?.claim;
+  return typeof claim === "string" ? claim : "";
+};
 ---
 
-<CardGrid columns={2}>
+<ol class="weeks" data-reveal-stagger>
   {
-    visible.map((lecture) => (
-      <Card headingLevel="h2" title={lecture.data.title} href={`/lectures/${lecture.id}/`}>
-        {lecture.data.description && <p>{lecture.data.description}</p>}
-        <p><small>Week {lecture.data.week} · {formatCourseDate(lecture.data.date)}</small></p>
-      </Card>
-    ))
+    lectures.map((lecture) => {
+      const week = lecture.data.week;
+      const decision = decisionFor(week);
+      return (
+        <li class="week" data-reveal>
+          <a href={withBase(`/lectures/${lecture.id}/`)}>
+            <span class="week__num slop-figure">{decisionNumber(week)}</span>
+            <span class="week__verb slop-label">{decision?.verb}</span>
+            <h2 class="week__title">{lecture.data.title}</h2>
+            <p class="week__claim">{claimOf(lecture.data)}</p>
+            <span class="week__date slop-label slop-label--mono slop-label--quiet">
+              Week {week} · {formatCourseDate(lecture.data.date)}
+            </span>
+          </a>
+        </li>
+      );
+    })
   }
-</CardGrid>
+</ol>
+
+<style>
+  .weeks {
+    display: grid;
+    gap: 0;
+    margin-block: 2rem 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: var(--slop-rule);
+  }
+
+  .week a {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    grid-template-areas:
+      "num verb"
+      "num title"
+      "num claim"
+      "num date";
+    gap: 0.2rem 1.5rem;
+    padding-block: 1.75rem;
+    border-block-end: var(--slop-rule);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      background var(--motion-fast) var(--ease-standard),
+      transform var(--motion-medium) var(--ease-standard);
+  }
+
+  .week a:hover,
+  .week a:focus-visible {
+    background: rgb(243 183 0 / 7%);
+    transform: translateY(-2px);
+  }
+
+  .week__num {
+    grid-area: num;
+    align-self: start;
+    color: var(--slop-amber);
+    font-size: clamp(2rem, 1.4rem + 2vw, 3.25rem);
+    font-weight: 700;
+    line-height: 0.9;
+  }
+
+  .week__verb {
+    grid-area: verb;
+  }
+
+  .week__title {
+    grid-area: title;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: clamp(1.2rem, 1rem + 1vw, 1.7rem);
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+  }
+
+  .week__claim {
+    grid-area: claim;
+    margin-block: 0.35rem 0;
+    max-width: 62ch;
+    color: var(--slop-ink-2);
+  }
+
+  .week__date {
+    grid-area: date;
+    margin-block-start: 0.5rem;
+  }
+
+  @media (max-width: 34rem) {
+    .week a {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "num"
+        "verb"
+        "title"
+        "claim"
+        "date";
+      gap: 0.15rem;
+    }
+
+    .week__num {
+      font-size: 2rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .week a:hover,
+    .week a:focus-visible {
+      transform: none;
+    }
+  }
+</style>

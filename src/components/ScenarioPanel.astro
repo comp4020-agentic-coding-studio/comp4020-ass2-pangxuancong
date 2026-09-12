@@ -1,0 +1,88 @@
+---
+// A game state, presented the way an analyst would write one down: the few
+// quantities the decision actually turns on, labelled, with nothing else.
+//
+// It is not a rebuild of the client interface and it is not a stat display for
+// its own sake. Every panel on this site exists because a week asks the reader
+// to decide something inside it, and it carries a provenance line saying where
+// its numbers come from — which for a teaching example is "constructed", said
+// in those words. A constructed state is a fine way to teach a decision; a
+// constructed state dressed as a measurement is not.
+
+interface Item {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  title?: string;
+  items: Item[];
+  /** Where the state comes from. Teaching examples say so. */
+  provenance?: string;
+}
+
+const {
+  title = "The state",
+  items,
+  provenance = "Hypothetical state, constructed for this example — not a recorded game.",
+} = Astro.props;
+---
+
+<figure class="scenario" data-reveal>
+  <figcaption class="scenario__head">
+    <span class="slop-label">{title}</span>
+  </figcaption>
+  <dl class="scenario__grid">
+    {
+      items.map((item) => (
+        <div class="scenario__cell">
+          <dt class="slop-label slop-label--quiet">{item.label}</dt>
+          <dd class="scenario__value slop-figure">{item.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+  <p class="scenario__provenance">{provenance}</p>
+</figure>
+
+<style>
+  .scenario {
+    margin-block: 2rem;
+    padding: 1.25rem 1.5rem 1rem;
+    border: var(--slop-rule);
+    background: var(--slop-bg-2);
+  }
+
+  .scenario__head {
+    padding-block-end: 0.75rem;
+    border-block-end: var(--slop-rule);
+  }
+
+  .scenario__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr));
+    gap: 1.25rem 2rem;
+    margin-block: 1.25rem;
+  }
+
+  .scenario__cell {
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .scenario__value {
+    margin: 0;
+    font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--slop-ink);
+  }
+
+  .scenario__provenance {
+    margin: 0;
+    padding-block-start: 0.75rem;
+    border-block-start: var(--slop-rule);
+    color: var(--slop-ink-muted);
+    font-size: 0.78rem;
+  }
+</style>

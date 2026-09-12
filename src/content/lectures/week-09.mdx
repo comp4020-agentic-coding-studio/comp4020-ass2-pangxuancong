@@ -10,6 +10,9 @@ constraints:
   - no-recall
 ---
 
+import DecisionTimeline from "../../components/DecisionTimeline.astro";
+import ScenarioPanel from "../../components/ScenarioPanel.astro";
+
 This is the week most likely to be misread, so the boundary is drawn early:
 nothing here is an argument for throwing. It is an argument that the cost of
 dying is not fixed, and that a player who treats it as fixed will make a
@@ -38,6 +41,17 @@ for a component that would meaningfully change what they can do in the next
 fight. They cannot buy it. There is no route back to the shop that does not go
 through the respawn timer.
 
+<ScenarioPanel
+  title="The state the decision is made in"
+  items={[
+    { label: "Stored gold", value: "3,200" },
+    { label: "Health", value: "18%" },
+    { label: "Route to shop", value: "None" },
+    { label: "Next fight in", value: "25s" },
+  ]}
+  provenance="Hypothetical state, constructed to make the decision concrete — not a recorded game, and not a measurement."
+/>
+
 Their inventory is now worth less than their bank. The team is fighting with a
 member operating below the strength their gold has already paid for.
 
@@ -59,6 +73,27 @@ at once:
 Miss any one and the calculation collapses. A death with an empty bank is a
 death. A death thirty seconds before a fight the team then loses four-on-five
 is a death. The window is real and it is narrow.
+
+Set out against the clock, the argument is easier to see than to state: the
+player is absent for twelve seconds and returns holding something they could
+not otherwise have held until the fight was over.
+
+<DecisionTimeline
+  steps={[
+    { at: "00:00", label: "Current state", note: "Alive, low, holding gold that cannot be spent." },
+    { at: "00:06", label: "Safe exit window", note: "The last moment a disengage is still free." },
+    { at: "00:12", label: "Death", pivot: true, note: "The cost: twelve seconds of absence, and the gold handed over." },
+    { at: "00:25", label: "Respawn" },
+    { at: "00:31", label: "Purchase complete", note: "Stored purchasing power becomes an item." },
+    { at: "00:37", label: "Next fight", note: "Arrives having spent, with the team, at full health." },
+  ]}
+  caption="Hypothetical timing, constructed for this example. Death timers, respawn and fight cadence all vary by patch and by game time; the argument is the shape of the window, not these numbers."
+/>
+
+Read the other way, the same clock is the argument against: move any of those
+times and the decision inverts. A respawn at forty seconds rather than
+twenty-five, or a fight at twenty rather than thirty-seven, and the player has
+simply died.
 
 ## The outcome: synchronised or staggered
 
