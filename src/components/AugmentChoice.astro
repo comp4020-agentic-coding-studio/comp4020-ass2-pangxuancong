@@ -1,0 +1,160 @@
+---
+// A set of augments as they are offered: three options, at once, with no way to
+// see the fourth. This is the only component on the site allowed the prismatic
+// border, and it is allowed it because prismatic means something here — the
+// selection screen is where the mode hands you a choice built out of
+// randomness, and that is the one moment the second colour system describes.
+//
+// The options are kinds, not names. Week 4's argument is that a ranking scores
+// an augment against a population and the reader is choosing against one game;
+// inventing an augment name and a strength figure would be exactly the coarse
+// object the week is arguing against, dressed as evidence.
+
+interface Option {
+  /** The kind of augment, as the week names it: "A sustain augment". */
+  kind: string;
+  /** What the population says about it, in words, never a figure. */
+  prior: string;
+  /** What it adds to this game, which is the question actually being asked. */
+  marginal: string;
+  /** Marks the option the case argues for. */
+  chosen?: boolean;
+}
+
+interface Props {
+  label?: string;
+  options: Option[];
+  /** The game the options are being read against. */
+  context?: string;
+  provenance?: string;
+}
+
+const {
+  label = "The offer",
+  options,
+  context,
+  provenance = "Constructed offer. The options are kinds rather than named augments, and carry no strength figures: the week's claim is about what a ranking cannot see, which a schematic set states and an invented one would contradict.",
+} = Astro.props;
+---
+
+<figure class="offer" data-reveal>
+  <figcaption class="offer__head">
+    <span class="slop-label">{label}</span>
+    {context && <p class="offer__context">{context}</p>}
+  </figcaption>
+  <ol class="offer__set">
+    {
+      options.map((option, index) => (
+        <li class:list={["offer__card", "slop-prismatic", option.chosen && "is-chosen"]}>
+          <span class="offer__index slop-label slop-label--mono slop-label--quiet">
+            Option {index + 1}
+          </span>
+          <h3 class="offer__kind">{option.kind}</h3>
+          <dl class="offer__reads">
+            <div>
+              <dt class="slop-label slop-label--quiet">The ranking</dt>
+              <dd>{option.prior}</dd>
+            </div>
+            <div>
+              <dt class="slop-label slop-label--quiet">What it adds here</dt>
+              <dd>{option.marginal}</dd>
+            </div>
+          </dl>
+          {option.chosen && <span class="offer__verdict">Adds the most</span>}
+        </li>
+      ))
+    }
+  </ol>
+  <p class="offer__provenance">{provenance}</p>
+</figure>
+
+<style>
+  .offer {
+    margin-block: 2.5rem;
+  }
+
+  .offer__head {
+    padding-block-end: 1rem;
+  }
+
+  .offer__context {
+    margin-block: 0.5rem 0;
+    max-width: 62ch;
+    color: var(--slop-ink-2);
+  }
+
+  .offer__set {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .offer__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.1rem 1.15rem 1.25rem;
+  }
+
+  /* The chosen option is marked in the site's own amber, not by making its
+     prismatic edge louder. The prismatic border says "this came out of the
+     randomness"; amber says "this is the one the argument lands on". Two
+     different claims, and they should not be made in the same colour. */
+  .offer__card.is-chosen {
+    box-shadow: inset 3px 0 0 var(--slop-amber);
+  }
+
+  .offer__kind {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+  }
+
+  .offer__reads {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0.35rem 0 0;
+  }
+
+  .offer__reads dd {
+    margin: 0.2rem 0 0;
+    color: var(--slop-ink-2);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .offer__verdict {
+    margin-block-start: auto;
+    padding-block-start: 0.75rem;
+    color: var(--slop-amber);
+    font-family: var(--at-font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .offer__provenance {
+    margin-block: 1rem 0;
+    padding-block-start: 0.75rem;
+    border-block-start: var(--slop-rule);
+    color: var(--slop-ink-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 46rem) {
+    .offer__set {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .offer__card.is-chosen {
+      box-shadow: inset 0 3px 0 var(--slop-amber);
+    }
+  }
+</style>

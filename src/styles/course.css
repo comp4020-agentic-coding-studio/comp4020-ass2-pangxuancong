@@ -320,6 +320,15 @@ main > .page-eyebrow + h1 {
 
 /* Prismatic marks what the course calls variance. It is a border and a hover,
    not a fill: the text inside stays on the dark ground where it is readable. */
+/* The browser's own figure margin is 40px on each side, and the theme's reset
+   never clears it. Every figure on this site is an editorial block that argues
+   alongside the prose --- a scenario panel, a modifier table, a set of offered
+   augments --- so it should start on the same line the paragraphs start on,
+   not float inset from them. */
+figure {
+  margin-inline: 0;
+}
+
 .slop-prismatic {
   border: 1px solid transparent;
   background:

@@ -10,6 +10,8 @@ constraints:
   - no-pick
 ---
 
+import AugmentChoice from "../../components/AugmentChoice.astro";
+
 Augment rankings exist, they are easy to find, and they are largely correct
 about the thing they measure. This week is about the gap between the thing they
 measure and the decision in front of you.
@@ -85,6 +87,29 @@ Both are properties of the game you are in when you are offered it.
 You are **Vladimir**, on a team that groups well, against a composition with
 no obvious way to burst you down. You are offered a strong damage augment, a
 sustain augment, and a high-variance one.
+
+<AugmentChoice
+  label="The offer"
+  context="Grouping team, no reliable way for the enemy to burst you down, and the fights are being survived rather than won."
+  options={[
+    {
+      kind: "A damage augment",
+      prior: "Strong, and rated below the sustain option across the population.",
+      marginal: "Solves the problem this game actually has: nothing converts a won fight into dead enemies.",
+      chosen: true,
+    },
+    {
+      kind: "A sustain augment",
+      prior: "Rated first, and deserves it against most compositions.",
+      marginal: "Adds to a quantity already sufficient. The fights are not being lost on survival.",
+    },
+    {
+      kind: "A high-variance augment",
+      prior: "Rated lower, on an average taken over games that were already winnable.",
+      marginal: "Widens a distribution that does not need widening while the position is winning.",
+    },
+  ]}
+/>
 
 The ranking may well put the sustain augment first, and against most
 compositions it would deserve that. Against this one you are already surviving
