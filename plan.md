@@ -26,9 +26,11 @@ Content first, non-linearly, because the marker reads non-adjacent weeks.
 4. **Weeks 2, 4, 7, 8, 11** — the remainder.
 5. **Assessment briefs** — three bodies against frontmatter already in place.
 6. **Week 1 deck** — a real argument, not the week 1 page as slides.
-7. **Policies, convener, home page, course overview, schedule.**
-8. **Remaining spec checks** — naked statistics, weak week titles, required
-   metadata, assessment count.
+7. **Policies, convener, home page, course overview, schedule** — done. The
+   starter's empty `sessions` collection was deleted rather than filled; a
+   `/schedule/` page carries the twelve weeks and three due dates instead.
+8. **Remaining spec checks** — done, in `spec/evidence-discipline.test.ts`.
+   Naked statistics, weak week titles, required metadata, assessment shape.
 9. **Visual system** — tokens, typography, editorial patterns. Only now.
 10. **QA** — marker simulation, responsive, contrast, consistency audit.
 11. **Ship** — public, Pages, verify the deployed URL.
@@ -49,19 +51,20 @@ clones:
 
 ## Still to build
 
-**Content** — twelve week bodies; three assessment briefs; the week 1 deck;
-policies (including the bespoke patch policy: students use the patch or dataset
-an assessment names rather than silently substituting live data); Spike's
-entry; home page; course overview; schedule page.
+**Content** — written. Twelve week bodies, three assessment briefs, the week 1
+deck, policies (with the bespoke patch rule), Spike's entry, home page and
+schedule are all in place.
 
-**Checks** — naked statistics (every number carries source and patch); weak
-week titles (`101`, `Introduction to`, `Advanced`, `Basics of`, `Review`);
-required metadata present; exactly two assignments and one final.
+**Checks** — written. `pnpm check` is green; `pnpm check:evidence` still fails
+on `PROCESS.md`, which is written last and by design.
 
-**Data** — a committed snapshot under `data/`, recording `source`, `patch` and
-`retrieved`. Only data actually retrieved goes in it. **The patch number in
-`CLAUDE.md` §5 is unverified and must be confirmed against Hexdata before any
-figure is published**, because the harness forbids fabricated patch numbers.
+**Data** — not built, deliberately. No figure was ever retrieved from Hexdata,
+so under the harness's own rule no figure may be published, and a `data/`
+snapshot with nothing in it would be theatre. The twelve weeks argue about what
+statistics can and cannot license instead of quoting any, which is the honest
+version of the same lesson. `spec/evidence-discipline.test.ts` now enforces the
+condition under which that could change: any statistic added later must carry a
+source and a patch, or say it is hypothetical.
 
 **Artwork** — the four constraints as an icon set, reused on every week page so
 one visual decision pays out twelve times. Hero and card are in place.
