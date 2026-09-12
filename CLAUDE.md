@@ -212,43 +212,85 @@ claim of its own, no reading leaned on more than three times — and, still to
 come, no naked statistic without source and patch, and no week titled with
 `101`, `Introduction to`, `Advanced`, `Basics of` or `Review`.
 
-## 9. Restraint
+## 9. Restraint, and what it does not cover
 
 The sophistication of this project comes from course design and argument, not
 feature count. Do not build a combat simulator, a playable match, a build
 calculator, a recommendation engine, drag-and-drop composition tools, accounts,
-persistence, a forum, progression, or quizzes on every page. Reading,
-navigating, comparing and following sources is the whole interaction budget;
-small affordances like tabs or filters are fine when they genuinely clarify.
+persistence, a forum, unlockable progression, or quizzes on every page. Those
+are still out: each one asks the reader to operate the site instead of reading
+it, and none of them makes an argument.
+
+**Presentation is not a feature.** Motion, scene pacing, ambient atmosphere and
+analytical game-state panels are presentation, and this section does not
+forbid them. A scroll-revealed timeline that shows a death costing twelve
+seconds is doing the week's teaching, not decorating it; a parallax hero, a
+staggered entrance, a drifting particle layer and a progression rail across the
+twelve weeks are all allowed. The test is the motto the visual system is built
+on: **make the argument feel visible.** An effect that carries constraint,
+choice, risk, adaptation or system change earns its place.
+An effect that is only motion does not — that is still decoration, and
+decoration is still cut.
+
+Anything animated obeys `prefers-reduced-motion`, never loops in a way that
+competes with reading, and leaves the page fully usable when it does not run.
 
 Riot assets may appear where they aid comprehension — a champion, item or
-augment icon in a case study. The site must never look like an official Riot
-page, must not reproduce the client interface, and must carry a short notice
-that League of Legends is Riot's. SLOP8223 and Slop University stay the primary
-identity.
+augment icon in a case study. A scenario panel may present a game state the way
+an analyst would (champion, health, gold, items, augments, team state) because
+that is the object of study. It must not be a rebuild of the client interface,
+and the site must never look like an official Riot page or borrow Riot's
+identity as its own; it carries a short notice that League of Legends is
+Riot's. SLOP8223 and Slop University stay the primary identity.
 
 ## 10. Visual direction
 
-High-contrast black and amber editorial. The lineage to draw on is **industrial
-hazard signage** for the colour logic, **Swiss editorial poster typography**
-for the scale jumps and grid, and **brutalist web** for flat blocking and the
-absence of decoration. Roughly seven parts university course to three parts
-game subject; never the reverse.
+**Cinematic editorial.** The site should read as a serious game-systems course
+published with the visual confidence of a studio, and never as either a
+university template wearing League's colours or a fan site wearing university
+labels. The mix to hold is roughly **70 parts academic editorial structure, 20
+parts game-system visual language, 10 parts cinematic motion** — and it is the
+first number that must stay largest. If a marker reading the site could stop
+being sure this is a university course, it has gone too far.
+
+The lineage to draw on is **industrial hazard signage** for the colour logic,
+**Swiss editorial poster typography** for the scale jumps and grid, and
+**cinematic campaign pages** for pacing, cropping and full-bleed composition.
 
 Near-black grounds, warm off-white body text, restrained grey secondary text,
-one saturated amber accent used for metadata, labels, emphasis, callouts,
-links and rules — not poured over every component. Heavy display sans for
-claims and week numbers, a neutral readable sans for prose, optional
-monospace for patch labels and statistics. Claims behave like editorial
-headlines: `DEATH CAN BE THE CORRECT PLAY.`
+and one saturated amber carrying course structure: metadata, labels, week
+numbering, emphasis, callouts, links, rules and calls to action. Heavy display
+sans for claims and week numbers, a neutral readable sans for prose, monospace
+for patch labels and statistics. Claims behave like editorial headlines:
+`DEATH CAN BE THE CORRECT PLAY.`
 
-Avoid the default gaming look: cyberpunk purple, RGB gradients, glowing
-borders, particles behind text, glassmorphism, esports tournament styling,
-Discord-grey dark UI, fantasy display faces in body copy.
+**The prismatic accents are a second colour system with a meaning, not a
+palette expansion.** Violet, cyan, magenta and their neighbours are reserved
+for what the course treats as variance: augments, randomness, transmutation,
+mode-specific mechanics, the moment a normally correct decision stops being
+correct. Where a chromatic border, a shimmer or a richer hover state marks one
+of those, it is doing semantic work and is allowed. Poured over ordinary
+navigation, cards or headings it is noise, and then black-and-amber wins.
+Red stays rare: failure, danger, a negative example.
 
-Amber on white is unreadable; the palette is dark-ground only. Contrast,
-focus states, heading order and alt text still get checked by hand even though
-axe runs in the build.
+Every section should have a visual reason to exist. Prefer scene changes,
+scale shifts, asymmetric splits, full-bleed media, deliberate crops, varied
+section heights and real negative space over repeating one card grid down the
+page. Ambient layers — drifting particles, faint lane geometry, an oversized
+faded number — belong in cinematic sections, not behind body copy and not on
+every page.
+
+What still reads as the default gaming look, and is still avoided: glow on
+every component, RGB cycling, HUD chrome everywhere, esports scoreboard
+styling, glassmorphism, fake stat meters used as decoration, fantasy display
+faces in body copy, and animated backgrounds running in every section at once.
+The rule is concentration: a strong effect in one place is cinematic, the same
+effect everywhere is wallpaper.
+
+Amber on white is unreadable; the palette is dark-ground only. Contrast, focus
+states, heading order, alt text and keyboard navigation still get checked by
+hand even though axe runs in the build — a cinematic page that fails any of
+them is a defect, not a trade-off.
 
 ## 11. Process evidence
 
