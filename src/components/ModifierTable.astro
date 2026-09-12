@@ -1,0 +1,177 @@
+---
+// The mode's per-champion modifier list, drawn the way a patch note draws it.
+//
+// Week 12 argues about the shape of that list rather than its contents, so the
+// rows here are schematic: Champion A, Champion B, a case rather than a name.
+// That is deliberate and not a shortcut. Naming a real champion and quoting a
+// real modifier would put an unsourced number on the page, and the argument
+// does not need one — it turns on the fact that corrections exist and differ in
+// size, which a schematic table states more honestly than an invented one.
+
+interface Row {
+  /** The case, not a real champion: "Champion A", "A displaced assassin". */
+  subject: string;
+  /** Modifier columns, in the order given by `columns`. */
+  values: string[];
+  /** One line on what this case is an example of. */
+  note?: string;
+}
+
+interface Props {
+  label?: string;
+  columns: string[];
+  rows: Row[];
+  provenance?: string;
+}
+
+const {
+  label = "Modifier list — schematic",
+  columns,
+  rows,
+  provenance = "Schematic. The cases are constructed to show the shape of the list, not its contents: no champion is named and no modifier is quoted, because the argument is about the existence and spread of corrections, not their values.",
+} = Astro.props;
+
+// A cell reads as a correction's direction so the eye can find the outliers
+// without the table shouting. Nothing here implies a measurement.
+const toneOf = (value: string): string => {
+  if (value.startsWith("+")) return "up";
+  if (value.startsWith("−") || value.startsWith("-")) return "down";
+  return "flat";
+};
+---
+
+<figure class="mods" data-reveal>
+  <figcaption class="mods__head">
+    <span class="slop-patch">{label}</span>
+  </figcaption>
+  <div class="mods__scroll">
+    <table class="mods__table">
+      <thead>
+        <tr>
+          <th scope="col">Case</th>
+          {columns.map((column) => <th scope="col" class="mods__num-head">{column}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((row) => (
+            <tr>
+              <th scope="row">
+                <span class="mods__subject">{row.subject}</span>
+                {row.note && <span class="mods__note">{row.note}</span>}
+              </th>
+              {row.values.map((value) => (
+                <td class:list={["mods__num", `is-${toneOf(value)}`]}>{value}</td>
+              ))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  <p class="mods__provenance">{provenance}</p>
+</figure>
+
+<style>
+  .mods {
+    margin-block: 2.5rem;
+    padding: 1.25rem 1.5rem 1rem;
+    border: var(--slop-rule);
+    background: var(--slop-bg-2);
+  }
+
+  .mods__head {
+    padding-block-end: 1rem;
+  }
+
+  .mods__scroll {
+    overflow-x: auto;
+  }
+
+  .mods__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  .mods__table th,
+  .mods__table td {
+    padding: 0.7rem 0.5rem;
+    text-align: start;
+    vertical-align: baseline;
+    border-block-end: var(--slop-rule);
+  }
+
+  .mods__table thead th {
+    border-block-end: var(--slop-rule-amber);
+    color: var(--slop-ink-muted);
+    font-family: var(--at-font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .mods__table tbody tr:last-child th,
+  .mods__table tbody tr:last-child td {
+    border-block-end: 0;
+  }
+
+  .mods__num-head,
+  .mods__num {
+    text-align: end;
+    font-family: var(--at-font-mono);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .mods__num {
+    font-size: 1.05rem;
+  }
+
+  .mods__num.is-up {
+    color: var(--slop-amber);
+  }
+
+  .mods__num.is-down {
+    color: var(--prismatic-cyan);
+  }
+
+  .mods__num.is-flat {
+    color: var(--slop-ink-muted);
+  }
+
+  .mods__subject {
+    display: block;
+    font-weight: 600;
+  }
+
+  .mods__note {
+    display: block;
+    margin-block-start: 0.2rem;
+    max-width: 34ch;
+    color: var(--slop-ink-muted);
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+
+  .mods__provenance {
+    margin-block: 1rem 0;
+    padding-block-start: 0.75rem;
+    border-block-start: var(--slop-rule);
+    color: var(--slop-ink-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 34rem) {
+    .mods {
+      padding-inline: 1rem;
+    }
+
+    .mods__note {
+      display: none;
+    }
+  }
+</style>

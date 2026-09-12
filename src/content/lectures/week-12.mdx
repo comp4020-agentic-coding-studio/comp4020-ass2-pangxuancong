@@ -13,6 +13,9 @@ constraints:
   - forced-contact
 ---
 
+import ModifierTable from "../../components/ModifierTable.astro";
+import ComparisonSplit from "../../components/ComparisonSplit.astro";
+
 For eleven weeks this course has taught adaptation to a system. This week the
 system is the object of study rather than the environment.
 
@@ -23,6 +26,33 @@ those champions with per-champion adjustments applied on top: modifiers to
 damage dealt and damage taken, to healing and shielding, sometimes to ability
 haste. The list is maintained patch by patch. Champions enter it, leave it, and
 have their numbers moved.
+
+<ModifierTable
+  label="Modifier list — schematic"
+  columns={["Damage dealt", "Damage taken", "Healing"]}
+  rows={[
+    {
+      subject: "Champion A",
+      values: ["−", "−", "—"],
+      note: "A small correction. Arrived close to the intended outcome and was nudged.",
+    },
+    {
+      subject: "Champion B",
+      values: ["− −", "+ +", "− −"],
+      note: "A large correction in three directions at once. The interaction, not the number, is what needed repair.",
+    },
+    {
+      subject: "Champion C",
+      values: ["+", "—", "+"],
+      note: "Corrected upward. Designed around a resource this mode removes.",
+    },
+    {
+      subject: "Champion D",
+      values: ["—", "—", "—"],
+      note: "Not on the list. Transplanted unaltered and produced an acceptable outcome.",
+    },
+  ]}
+/>
 
 This is not a criticism. It is a description, and it is the most interesting
 design fact about the mode, because of what it concedes.
@@ -49,6 +79,29 @@ win rate is a champion whose fundamental interaction with the environment is
 wrong. The correction hides the outcome; it does not repair the interaction.
 The player on the receiving end does not experience a corrected win rate. They
 experience the interaction.
+
+<ComparisonSplit
+  shared="One roster, one modifier list, and a win-rate distribution clustered near even."
+  left={{
+    label: "Reading one",
+    heading: "The mode is balanced",
+    points: [
+      "Win rates are near even across the roster, which is the standard the word normally means.",
+      "Drift is detected and corrected within a patch cycle, so the distribution stays flat.",
+      "By this standard a longer modifier list is evidence of better balance, not worse.",
+    ],
+  }}
+  right={{
+    label: "Reading two",
+    heading: "The mode is corrected",
+    points: [
+      "The size of a correction measures how wrong the underlying interaction was.",
+      "A flattened win rate hides that interaction from the table but not from the player in it.",
+      "By this standard a longer modifier list is a longer record of displacement.",
+    ],
+    emphasis: true,
+  }}
+/>
 
 Hence the distinction the week turns on:
 

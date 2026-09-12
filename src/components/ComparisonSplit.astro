@@ -1,0 +1,129 @@
+---
+// Two readings of the same evidence, set side by side so the disagreement is
+// structural rather than buried in paragraphs.
+//
+// Week 12 needs this because its whole argument is that one table supports two
+// incompatible conclusions depending on what "balanced" is taken to mean. Prose
+// can say that. A split says it in the layout, and the reader can see the two
+// columns are the same height and the same evidence before reading a word.
+
+interface Side {
+  label: string;
+  heading: string;
+  points: string[];
+  /** Marks the side the week argues for. Neither side is marked by default. */
+  emphasis?: boolean;
+}
+
+interface Props {
+  left: Side;
+  right: Side;
+  /** What both sides are reading. Stated once, above the split. */
+  shared?: string;
+}
+
+const { left, right, shared } = Astro.props;
+const sides = [left, right];
+---
+
+<div class="split" data-reveal>
+  {
+    shared && (
+      <p class="split__shared">
+        <span class="slop-label slop-label--quiet">Same evidence</span>
+        <span class="split__shared-text">{shared}</span>
+      </p>
+    )
+  }
+  <div class="split__columns">
+    {
+      sides.map((side) => (
+        <section class:list={["split__side", side.emphasis && "is-emphasis"]}>
+          <span class="slop-label">{side.label}</span>
+          <h3 class="split__heading">{side.heading}</h3>
+          <ul class="split__points">
+            {side.points.map((point) => (
+              <li>{point}</li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .split {
+    margin-block: 2.5rem;
+  }
+
+  .split__shared {
+    display: grid;
+    gap: 0.4rem;
+    margin-block: 0 1.5rem;
+    padding-block-end: 1.25rem;
+    border-block-end: var(--slop-rule);
+  }
+
+  .split__shared-text {
+    max-width: 62ch;
+    color: var(--slop-ink-2);
+  }
+
+  .split__columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .split__side {
+    padding: 1.25rem 1.5rem 1.5rem;
+    /* Both sides carry a 3px opening rule so the two columns start on the same
+       baseline; only its colour marks the side the week argues for. A thinner
+       rule on one side would misalign the headings by the difference. */
+    border-block-start: 3px solid var(--slop-line);
+    background: var(--slop-bg-2);
+  }
+
+  .split__side + .split__side {
+    border-inline-start: var(--slop-rule);
+  }
+
+  .split__side.is-emphasis {
+    border-block-start-color: var(--slop-amber);
+  }
+
+  .split__heading {
+    margin-block: 0.5rem 0.75rem;
+    padding: 0;
+    border: 0;
+    font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.3rem);
+    letter-spacing: -0.01em;
+  }
+
+  .split__points {
+    margin: 0;
+    padding-inline-start: 1.1rem;
+    color: var(--slop-ink-2);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .split__points li + li {
+    margin-block-start: 0.5rem;
+  }
+
+  .split__points ::marker {
+    color: var(--slop-amber);
+  }
+
+  @media (max-width: 40rem) {
+    .split__columns {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .split__side + .split__side {
+      border-inline-start: 0;
+    }
+  }
+</style>
