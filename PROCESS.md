@@ -68,6 +68,25 @@ On the deck, emphasis took the theme's opposite ink — white on amber, roughly
 
 ![Before and after, rebuilt from the same two commits: the title slide's SLOP8223 in white on amber, above the same slide with it in a dark ink](docs/deck-ink-before-after.png)
 
+**Then the verification itself turned out to be wrong.** Checking the site at
+phone width with `chrome --headless --window-size=390,844 --screenshot`
+produced six pages that all looked broken in the same way — headings clipped at
+the left, text running off the right. They were not. Chrome enforces a minimum
+window width on Linux, lays the page out at that width, and writes a 390-wide
+image out of it. Measuring the same pages over the DevTools protocol showed the
+layout correct to the pixel, and `scripts/screenshot.mjs`
+([`ebdfb90`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-pangxuancong/commit/ebdfb90)) now sets the viewport the page actually sees.
+
+Asking the page for its own measurements then found a defect no screenshot
+could: the home page was 18px wider than the viewport at 1920, because the
+full-bleed scenes assumed a content column centred in the window and this
+theme's is not ([`322dbf4`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-pangxuancong/commit/322dbf4)). A full-page capture is as wide as the
+document, so an overflowing page just produces a wider image that looks
+correct. Eleven pages at two viewports now report no element outside the
+viewport, and the same approach confirmed that a build with its reveal script
+deliberately replaced by a throw still renders every element visible
+([`ed8a38b`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-pangxuancong/commit/ed8a38b)) rather than as a blank page with a working nav.
+
 Both, plus an inconsistent `<title>` and a role dropped through a starter enum
 this repo had replaced, were fixed in [`4b26626`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass2-pangxuancong/commit/4b26626). Every
 check was green throughout.
