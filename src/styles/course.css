@@ -397,10 +397,19 @@ body:has(.hero-cinematic) .at-nav.is-stuck {
 /* `.at-main` spans inset-start/content-end of the page grid, so a section
    inside it cannot reach the viewport edge by grid alone. This is the standard
    escape, and it is confined to elements that opt in. */
+/* Full-bleed from inside .at-main, which is harder than the usual one-liner.
+   The theme's body grid is not symmetric about the viewport: .at-main spans
+   inset-start/content-end, so the content column sits half an --at-content-inset
+   to the right of centre. `margin-inline: calc(50% - 50vw)` assumes it is
+   centred, and the whole page ended up 18px wider than the viewport at 1920 ---
+   a horizontal scrollbar on the home page, invisible in a screenshot because
+   the capture is as wide as the document. The inset term corrects the offset,
+   and goes to zero on the narrow screens where the theme collapses the track. */
 .scene-bleed {
   width: 100vw;
   max-width: none;
-  margin-inline: calc(50% - 50vw);
+  margin-inline-start: calc(50% - 50vw - var(--at-content-inset, 0px) / 2);
+  margin-inline-end: calc(50% - 50vw + var(--at-content-inset, 0px) / 2);
 }
 
 .scene {
