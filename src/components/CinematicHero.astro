@@ -190,13 +190,27 @@ const { code, titleLines, thesis, alt } = Astro.props;
       min-height: min(82vh, 38rem);
     }
 
+    /* A phone sees roughly a fifth of the drawing's width, so the framing has
+       to be chosen rather than inherited. At 72% the window landed on empty
+       corridor floor and the hero read as a black rectangle; 96% puts the
+       barrier at the far end in frame, which is the one motif that still says
+       what the artwork says when everything around it is cropped away. */
     .hero__image {
-      object-position: 72% center;
+      object-position: 96% center;
+    }
+
+    /* §74: no parallax on a phone. The travel is 14px, the screen is small
+       enough that it reads as the background slipping rather than depth, and
+       scroll-driven animation on a touch device is the wrong place to spend
+       the frame budget. */
+    .hero__media {
+      animation-timeline: none;
+      animation: none;
     }
 
     .hero__media::after {
       background:
-        linear-gradient(to top, var(--slop-bg) 26%, rgb(9 9 9 / 55%) 70%, rgb(9 9 9 / 30%) 100%);
+        linear-gradient(to top, var(--slop-bg) 24%, rgb(9 9 9 / 72%) 62%, rgb(9 9 9 / 35%) 100%);
     }
 
     .hero__title {
