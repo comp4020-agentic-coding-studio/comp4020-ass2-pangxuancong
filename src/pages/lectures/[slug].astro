@@ -3,35 +3,59 @@ import { render } from "astro:content";
 import { getPublishedCollection } from "astro-course-university/content";
 import RelatedContent from "astro-course-university/components/RelatedContent.astro";
 import CoursePage from "../../layouts/CoursePage.astro";
+import DecisionRail from "../../components/DecisionRail.astro";
 import TeachingTeam from "../../components/TeachingTeam.astro";
+import WeekFooter from "../../components/WeekFooter.astro";
 import WeekHead from "../../components/WeekHead.astro";
+import { decisionNumber } from "../../lib/decisions";
+import { formatCourseDate } from "../../lib/dates";
 import { graphCollections } from "../../site-config";
 
 export async function getStaticPaths() {
-  const lectures = await getPublishedCollection("lectures");
-  return lectures.map((lecture) => ({ params: { slug: lecture.id }, props: { lecture } }));
+  const lectures = (await getPublishedCollection("lectures")).sort(
+    (a, b) => a.data.week - b.data.week,
+  );
+  return lectures.map((lecture, i) => ({
+    params: { slug: lecture.id },
+    props: {
+      lecture,
+      previous: lectures[i - 1],
+      next: lectures[i + 1],
+      weeks: lectures.map((l) => ({ week: l.data.week, id: l.id })),
+    },
+  }));
 }
 
-const { lecture } = Astro.props;
+const { lecture, previous, next, weeks } = Astro.props;
 const { Content } = await render(lecture);
-const title = `Week ${lecture.data.week}: ${lecture.data.title}`;
 
 // `claim` and `constraints` arrive through the collection's `.loose()` tail,
 // so they come in untyped; `spec/` is what guarantees every week has both.
 const data = lecture.data as Record<string, unknown>;
 const claim = typeof data.claim === "string" ? data.claim : undefined;
 const constraints = Array.isArray(data.constraints) ? data.constraints.map(String) : [];
+
+const week = lecture.data.week;
+// The tab still says which week this is; the heading is the claim the week
+// makes, because a heading that reads "Week 9" names a slot in a calendar
+// rather than an argument.
+const title = `Week ${week}: ${lecture.data.title}`;
+const eyebrow = `Decision ${decisionNumber(week)} · Week ${week} · ${formatCourseDate(lecture.data.date)}`;
+const weekIds = new Map(weeks.map((w) => [w.week, w.id]));
+const asNeighbour = (entry: typeof previous) =>
+  entry ? { id: entry.id, week: entry.data.week, title: entry.data.title } : undefined;
 ---
 
-<CoursePage title={title} description={lecture.data.description}>
-  <WeekHead
-    week={lecture.data.week}
-    date={lecture.data.date}
-    claim={claim}
-    constraints={constraints}
-    slides={lecture.data.slides}
-  />
+<CoursePage
+  title={title}
+  heading={lecture.data.title}
+  eyebrow={eyebrow}
+  description={lecture.data.description}
+>
+  <WeekHead week={week} claim={claim} constraints={constraints} slides={lecture.data.slides} />
   <Content />
   <TeachingTeam teachers={lecture.data.teachers} />
   <RelatedContent entry={lecture} collections={graphCollections} />
+  <WeekFooter previous={asNeighbour(previous)} next={asNeighbour(next)} />
+  <DecisionRail current={week} weekIds={weekIds} />
 </CoursePage>

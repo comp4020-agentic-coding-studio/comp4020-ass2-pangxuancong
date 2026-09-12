@@ -1,0 +1,127 @@
+---
+import { withBase } from "astro-theme-university/url";
+import { DECISIONS, decisionNumber } from "../lib/decisions";
+
+// The twelve decisions, as a rail on every week page.
+//
+// It is navigation, and it is also the curriculum's argument: the course is
+// ordered by the sequence of decisions the game forces, so a reader who lands
+// on week 9 from a search result can see what came before it and what it leads
+// to without opening anything. Horizontal where there is room, vertical where
+// there is not.
+
+interface Props {
+  current: number;
+  weekIds: Map<number, string>;
+}
+
+const { current, weekIds } = Astro.props;
+---
+
+<nav class="rail" aria-label="Course progression">
+  <p class="rail__caption slop-label slop-label--quiet">Twelve decisions</p>
+  <ol class="rail__list">
+    {
+      DECISIONS.map((decision) => {
+        const id = weekIds.get(decision.week);
+        const state =
+          decision.week === current ? "current" : decision.week < current ? "past" : "ahead";
+        return (
+          <li class:list={["rail__item", `is-${state}`]}>
+            <a
+              href={id ? withBase(`/lectures/${id}/`) : withBase("/lectures/")}
+              aria-current={state === "current" ? "page" : undefined}
+              title={`Decision ${decisionNumber(decision.week)} — ${decision.gloss}`}
+            >
+              <span class="rail__num slop-figure">{decisionNumber(decision.week)}</span>
+              <span class="rail__verb">{decision.verb}</span>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>
+
+<style>
+  .rail {
+    margin-block: 2.5rem 0;
+    padding-block-start: 1rem;
+    border-block-start: var(--slop-rule);
+  }
+
+  .rail__caption {
+    margin-block: 0 0.75rem;
+  }
+
+  .rail__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .rail__item a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid transparent;
+    color: var(--slop-ink-muted);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition:
+      color var(--motion-fast) var(--ease-standard),
+      border-color var(--motion-fast) var(--ease-standard);
+  }
+
+  .rail__num {
+    font-size: 0.68rem;
+    opacity: 0.7;
+  }
+
+  .rail__item.is-past a {
+    color: var(--slop-ink-2);
+  }
+
+  .rail__item.is-current a {
+    border-color: var(--slop-amber);
+    color: var(--slop-amber);
+    font-weight: 700;
+  }
+
+  .rail__item a:hover,
+  .rail__item a:focus-visible {
+    color: var(--slop-ink);
+    border-color: var(--slop-line-strong);
+  }
+
+  .rail__item.is-current a:hover {
+    border-color: var(--slop-amber);
+    color: var(--slop-amber-bright);
+  }
+
+  /* Narrow: a vertical rail, one decision per row, so the verbs stay readable
+     rather than shrinking to fit twelve across. */
+  @media (max-width: 40rem) {
+    .rail__list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+    }
+
+    .rail__item a {
+      border: 0;
+      border-block-end: var(--slop-rule);
+      padding-block: 0.5rem;
+    }
+
+    .rail__item.is-current a {
+      border-block-end-color: var(--slop-amber);
+    }
+  }
+</style>

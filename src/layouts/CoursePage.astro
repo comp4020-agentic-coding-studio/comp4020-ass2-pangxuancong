@@ -18,6 +18,11 @@ import { siteConfig } from "../site-config";
 
 interface Props {
   title?: string;
+  /** Heading text, when the page's <title> and its <h1> should differ — a week
+   *  page's tab says "Week 9: …" while its heading is the claim alone. */
+  heading?: string;
+  /** A small label above the heading: the decision number, the week, the date. */
+  eyebrow?: string;
   description?: string | null;
   heroImage?: string | ImageMetadata | RemoteImage;
   heroImageAlt?: string;
@@ -26,8 +31,8 @@ interface Props {
 }
 
 const { frontmatter, ...direct } = Astro.props;
-const { title, description, heroImage, heroImageAlt, ...rest } = (frontmatter ??
-  direct) as Props & Record<string, unknown>;
+const { title, heading, eyebrow, description, heroImage, heroImageAlt, ...rest } =
+  (frontmatter ?? direct) as Props & Record<string, unknown>;
 
 const hero = resolveHeroImage(heroImage);
 // A page that supplies its own full-bleed opening scene brings its own <h1>
@@ -52,7 +57,8 @@ const hasOwnOpening = Astro.slots.has("hero");
   </script>
   <slot name="hero" slot="hero" />
   {hero && <Hero slot="hero" title={title ?? ""} image={hero} imageAlt={heroImageAlt ?? ""} />}
-  {!hero && !hasOwnOpening && <h1>{title}</h1>}
+  {!hero && !hasOwnOpening && eyebrow && <p class="page-eyebrow slop-label slop-label--mono">{eyebrow}</p>}
+  {!hero && !hasOwnOpening && <h1>{heading ?? title}</h1>}
   {description && !hasOwnOpening && <p class="lead">{description}</p>}
   <slot />
 </BaseLayout>
