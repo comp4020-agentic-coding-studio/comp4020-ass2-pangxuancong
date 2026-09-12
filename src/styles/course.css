@@ -1,19 +1,25 @@
-/* SLOP8223's visual system, layered over the Slop brand palette.
+/* SLOP8223's visual system.
  *
- * The theme's tokens are declared inside `@layer at.tokens`, so these
- * unlayered declarations win regardless of load order. Everything here is a
- * token override or an editorial pattern used across the site; nothing here
- * is page-specific styling, which stays in the page that needs it.
+ * Two layers live here. The first is the token layer: the site's own names
+ * (--slop-*) are the source, and the theme's names (--at-*) are mapped onto
+ * them so every component the theme ships follows without being restyled one
+ * by one. The second is the pattern layer: the small set of editorial shapes
+ * the pages compose from — label, claim, statement, chip, figure, scene.
  *
- * The register: industrial hazard signage for the colour logic, Swiss
- * editorial poster typography for the scale jumps, brutalist web for flat
- * blocking and the absence of decoration. Seven parts university course to
- * three parts game subject.
+ * The register is cinematic editorial, held at roughly 70 parts academic
+ * structure to 20 parts game-system visual language to 10 parts motion. The
+ * first number is the one that has to stay largest: if a reader could stop
+ * being sure this is a university course, it has gone too far.
+ *
+ * Everything here answers to one test — make the argument feel visible. An
+ * effect that carries constraint, choice, risk, adaptation or system change
+ * earns its place; an effect that is only motion is decoration, and decoration
+ * is still cut.
  *
  * Dark ground only, and not as a preference: the accent is amber, amber on
- * white fails contrast at every usable weight, and a palette that inverts
- * would have to give up the accent. `colorScheme: "dark"` in site-config.ts
- * is the other half of this decision. */
+ * white fails contrast at every usable weight, and a palette that inverted
+ * would have to give the accent up. `colorScheme: "dark"` in site-config.ts is
+ * the other half of that decision. */
 
 :root {
   /* Deck pages are rendered by astromotion, not by the theme's BaseLayout, so
@@ -23,58 +29,127 @@
      in the one file both the site and the decks load, settles it for both. */
   color-scheme: dark;
 
-  /* The one saturated amber. Lighter and more saturated than the Slop lockup
-     gold, because it has to carry metadata, labels and links on a near-black
-     ground rather than sit on paper. Hazard-sign logic: the accent means
-     "read this", so it is spent on rules, labels and links and nothing else. */
-  --at-primary: #f0a417;
-  --at-secondary: #c07c10;
-  --at-tertiary: #b5aca0;
+  /* Ground ----------------------------------------------------------- */
 
-  /* Near-black, warmed a few degrees toward the amber so the two inks read as
-     one system rather than as amber dropped onto neutral grey. */
-  --at-bg: #0c0b09;
-  --at-bg-alt: #141210;
-  --at-bg-elevated: #191614;
+  --slop-bg: #090909;
+  --slop-bg-2: #111;
+  --slop-bg-3: #191919;
+  --slop-bg-4: #222;
 
-  --at-text: #f4efe6;
-  --at-text-secondary: #bdb4a7;
-  --at-text-muted: #978d80;
+  /* Ink. `--slop-ink-muted` is lifted off the brief's #74746f, which lands at
+     3.9:1 on the ground and fails AA for body text; this clears 4.5:1. The
+     brief allows exactly this adjustment. */
+  --slop-ink: #f4f1e8;
+  --slop-ink-2: #a8a8a0;
+  --slop-ink-muted: #8c8c85;
 
-  /* Headings are warm off-white, not amber. A page where every heading is the
-     accent has no accent left for the things that matter: the week's claim,
-     its constraints, a patch label, a link. */
-  --at-heading: var(--at-text);
+  /* The one structural accent: course structure, navigation, metadata, week
+     numbering, emphasis, links, rules, calls to action. */
+  --slop-amber: #f3b700;
+  --slop-amber-bright: #ffc928;
+  --slop-amber-soft: #d89f00;
 
-  --at-border: rgb(240 164 23 / 32%);
-  --at-divider: rgb(244 239 230 / 14%);
-  --at-accent-soft: rgb(240 164 23 / 12%);
-  --at-code-bg: rgb(244 239 230 / 8%);
+  --slop-line: #2b2b2b;
+  --slop-line-strong: #464646;
 
-  /* Flat blocking: no rounded corners anywhere, including components the
-     theme rounds on its own. */
+  /* The second colour system, and it has a meaning rather than a mood: what
+     the course treats as variance — augments, randomness, transmutation, the
+     moment a normally correct decision stops being correct. Anywhere else it
+     is noise, and black-and-amber wins. */
+  --prismatic-violet: #9d5cff;
+  --prismatic-cyan: #49d7ff;
+  --prismatic-magenta: #f45de4;
+  --prismatic-blue: #4f7dff;
+  --prismatic-gold: #f8d76a;
+  --prismatic-sweep: linear-gradient(
+    120deg,
+    var(--prismatic-cyan),
+    var(--prismatic-violet),
+    var(--prismatic-magenta),
+    var(--prismatic-gold)
+  );
+
+  --slop-red: #ff5c4d;
+
+  /* Motion ----------------------------------------------------------- */
+
+  --motion-fast: 160ms;
+  --motion-medium: 320ms;
+  --motion-slow: 700ms;
+  --motion-cinematic: 1100ms;
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Type ------------------------------------------------------------- */
+
+  /* Display sizes are genuinely display and the middle of the ramp is
+     deliberately empty: a Swiss scale jump, not a smooth progression. */
+  --slop-display: clamp(2.6rem, 1.2rem + 6vw, 6rem);
+  --slop-statement: clamp(2rem, 1rem + 5vw, 4.75rem);
+  --slop-claim: clamp(1.5rem, 1rem + 2.4vw, 2.6rem);
+  --slop-figure-size: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
+
+  --slop-label-size: 0.72rem;
+  --slop-label-tracking: 0.14em;
+
+  --slop-rule: 1px solid var(--slop-line);
+  --slop-rule-amber: 1px solid rgb(243 183 0 / 45%);
+  --slop-rule-heavy: 3px solid var(--slop-amber);
+
+  /* Theme mapping ---------------------------------------------------- */
+
+  --at-primary: var(--slop-amber);
+  --at-primary-hover: var(--slop-amber-bright);
+  --at-primary-active: var(--slop-amber-soft);
+  --at-secondary: var(--slop-amber-soft);
+  --at-tertiary: var(--slop-ink-2);
+
+  --at-bg: var(--slop-bg);
+  --at-bg-alt: var(--slop-bg-2);
+  --at-bg-elevated: var(--slop-bg-3);
+
+  --at-text: var(--slop-ink);
+  --at-text-secondary: var(--slop-ink-2);
+  --at-text-muted: var(--slop-ink-muted);
+
+  /* Headings stay warm off-white. A page where every heading is the accent has
+     no accent left for the things that carry meaning. */
+  --at-heading: var(--slop-ink);
+
+  --at-border: var(--slop-line);
+  --at-divider: var(--slop-line);
+  --at-accent-soft: rgb(243 183 0 / 12%);
+  --at-code-bg: rgb(244 241 232 / 8%);
+
+  /* Flat blocking: nothing on this site is rounded. */
   --at-border-radius: 0;
 
-  /* A header row poured with amber turns every table into a warning label.
-     The rule under it does the same work for a tenth of the ink. */
+  /* A header row poured with amber turns every table into a warning label. The
+     rule under it does the same work for a tenth of the ink. */
   --at-table-header-bg: transparent;
-  --at-table-header-text: var(--at-primary);
-  --at-table-stripe: rgb(244 239 230 / 4%);
+  --at-table-header-text: var(--slop-amber);
+  --at-table-stripe: rgb(244 241 232 / 4%);
 
-  /* Swiss scale jumps: a display size that is genuinely display, then a steep
-     drop to reading sizes. The middle of the ramp is deliberately empty. */
-  --at-font-size-h1: clamp(2.4rem, 1.5rem + 4vw, 4rem);
-  --at-font-size-h2: clamp(1.6rem, 1.3rem + 1.2vw, 2.1rem);
+  --at-font-size-h1: var(--slop-display);
+  --at-font-size-h2: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
   --at-font-size-h3: 1.3rem;
-
-  /* Course-local tokens, used by the patterns below and by page styles. */
-  --slop-label-size: 0.72rem;
-  --slop-label-tracking: 0.12em;
-  --slop-rule: 1px solid var(--at-border);
-  --slop-rule-heavy: 3px solid var(--at-primary);
+  --at-content-width: 44rem;
 }
 
-/* Typography ---------------------------------------------------------- */
+/* Typography ----------------------------------------------------------- */
+
+h1 {
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  line-height: 1.02;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+h2,
+h3 {
+  letter-spacing: -0.015em;
+  font-weight: 700;
+}
 
 /* The page title takes no anchor link: there is nowhere to deep-link to that
    the page's own URL does not already reach, and the trailing # reads as part
@@ -83,35 +158,27 @@ h1 > .at-heading-anchor {
   display: none;
 }
 
-h1 {
-  letter-spacing: -0.025em;
-  font-weight: 800;
-  text-wrap: balance;
-}
-
-h2,
-h3 {
-  letter-spacing: -0.01em;
-  font-weight: 700;
-}
-
 /* Section headings sit under a rule rather than inside decoration. Direct
    children only: a card's heading is also an h2, and a rule across the top of
    every card turns a grid of links into a grid of receipts. */
 main > h2 {
-  margin-block-start: 2.75rem;
-  padding-block-start: 0.75rem;
+  margin-block-start: 3rem;
+  padding-block-start: 0.85rem;
   border-block-start: var(--slop-rule);
 }
 
-/* Editorial patterns --------------------------------------------------- */
+main > :is(p, ul, ol, dl, blockquote) {
+  max-width: 68ch;
+}
+
+/* Editorial patterns ---------------------------------------------------- */
 
 /* The label: uppercase, tracked, amber, monospace where it carries a number.
-   Metadata is labelled this way everywhere on the site — a week number, a
-   patch, a weight, a constraint. */
+   Metadata is labelled this way everywhere — a decision number, a patch, a
+   weight, a constraint, a source. */
 .slop-label {
   display: inline-block;
-  color: var(--at-primary);
+  color: var(--slop-amber);
   font-size: var(--slop-label-size);
   letter-spacing: var(--slop-label-tracking);
   text-transform: uppercase;
@@ -120,21 +187,43 @@ main > h2 {
 
 .slop-label--mono {
   font-family: var(--at-font-mono);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 
-/* The claim: the one sentence a week is prepared to be argued with about,
-   set like an editorial headline. Capitalised in CSS rather than in the
-   content, so the frontmatter stays a readable sentence and screen readers
-   are not handed twelve lines of shouting. */
+.slop-label--quiet {
+  color: var(--slop-ink-muted);
+}
+
+/* The claim: the one sentence a week is prepared to be argued with about, set
+   like an editorial headline. Capitalised in CSS rather than in the content, so
+   the frontmatter stays a readable sentence and a screen reader is not handed
+   twelve lines of shouting. */
 .slop-claim {
-  margin-block: 0.5rem 2rem;
-  font-size: clamp(1.4rem, 1.05rem + 1.6vw, 2.15rem);
+  margin-block: 0.75rem 0;
+  font-size: var(--slop-claim);
   font-weight: 800;
-  line-height: 1.12;
+  line-height: 1.1;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   text-wrap: balance;
+  max-width: 22ch;
+}
+
+/* The statement: a scene anchor on the home page, one sentence at poster
+   scale, alone on its ground. */
+.slop-statement {
+  margin: 0;
+  font-size: var(--slop-statement);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.slop-statement em {
+  font-style: normal;
+  color: var(--slop-amber);
 }
 
 /* Patch labels and statistics are monospace, so a number always looks like a
@@ -158,37 +247,179 @@ main > h2 {
 .slop-chips li {
   padding: 0.2rem 0.55rem;
   border: var(--slop-rule);
-  color: var(--at-text-secondary);
+  color: var(--slop-ink-2);
   font-size: var(--slop-label-size);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-/* Decks ---------------------------------------------------------------- */
-
-/* On an impact slide the theme fills the ground with the brand colour, inks
-   the body in `--at-on-primary` (near-black over this amber) and reserves
-   `--at-on-primary-alt` --- the opposite ink --- for emphasis and links. With
-   a mid-lightness amber that opposite ink is white, which lands near 2:1 on
-   the fill: fine as a hue pairing, unreadable as text. A dark ink a few steps
-   off the body colour keeps emphasis distinguishable and legible at once.
-   Scoped to `.reveal` because it is only wrong inside a deck; the site's own
-   brand fills pair the same two inks on smaller type and pass. */
-.reveal {
-  --at-on-primary-alt: #3d2c06;
+/* The patch tag: small, mono, amber-bordered. Every statistic on this site has
+   to carry one, so it is a component rather than a one-off. */
+.slop-patch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.15rem 0.5rem;
+  border: var(--slop-rule-amber);
+  background: var(--slop-bg);
+  color: var(--slop-amber);
+  font-family: var(--at-font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-/* Content affordances -------------------------------------------------- */
+/* Buttons: rectangular, high contrast, no pill and no gloss. */
+.slop-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--slop-amber);
+  background: var(--slop-amber);
+  color: #000;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background var(--motion-fast) var(--ease-standard);
+}
+
+.slop-button:hover {
+  background: var(--slop-amber-bright);
+  border-color: var(--slop-amber-bright);
+  color: #000;
+}
+
+.slop-button--ghost {
+  background: transparent;
+  color: var(--slop-amber);
+}
+
+.slop-button--ghost:hover {
+  background: rgb(243 183 0 / 14%);
+  color: var(--slop-amber-bright);
+}
+
+/* Variance --------------------------------------------------------------- */
+
+/* Prismatic marks what the course calls variance. It is a border and a hover,
+   not a fill: the text inside stays on the dark ground where it is readable. */
+.slop-prismatic {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--slop-bg-2), var(--slop-bg-2)) padding-box,
+    var(--prismatic-sweep) border-box;
+  transition:
+    transform var(--motion-medium) var(--ease-standard),
+    filter var(--motion-medium) var(--ease-standard);
+}
+
+.slop-prismatic:hover {
+  transform: translateY(-2px);
+  filter: saturate(1.15);
+}
+
+/* Scenes ---------------------------------------------------------------- */
+
+/* `.at-main` spans inset-start/content-end of the page grid, so a section
+   inside it cannot reach the viewport edge by grid alone. This is the standard
+   escape, and it is confined to elements that opt in. */
+.scene-bleed {
+  width: 100vw;
+  max-width: none;
+  margin-inline: calc(50% - 50vw);
+}
+
+.scene {
+  padding-block: clamp(4rem, 10vh, 8rem);
+}
+
+.scene--tight {
+  padding-block: clamp(2rem, 5vh, 3.5rem);
+}
+
+.scene--alt {
+  background: var(--slop-bg-2);
+}
+
+.scene__inner {
+  width: min(var(--at-content-width), 100% - 3rem);
+  margin-inline: auto;
+}
+
+.scene__inner--wide {
+  width: min(74rem, 100% - 3rem);
+}
+
+/* Motion ---------------------------------------------------------------- */
+
+/* Scroll reveal. The initial state is only applied once the observer script
+   has run, so a page with JavaScript disabled — or one whose script fails —
+   renders fully visible rather than blank. */
+[data-reveal] {
+  opacity: 1;
+}
+
+html.slop-js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--motion-slow) var(--ease-standard),
+    transform var(--motion-slow) var(--ease-standard);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+html.slop-js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Nothing here is load-bearing: every animation is transform and opacity, and
+   the page is complete without any of it. */
+@media (prefers-reduced-motion: reduce) {
+  html.slop-js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .slop-prismatic:hover {
+    transform: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Content affordances ---------------------------------------------------- */
 
 blockquote {
   border-inline-start: var(--slop-rule-heavy);
 }
 
-/* Links are amber and underlined. Underlines stay: the accent alone is not
-   an affordance for anyone who cannot see it. */
-main a:not(.at-card):not(.at-button) {
+/* Links are amber and underlined. Underlines stay: the accent alone is not an
+   affordance for anyone who cannot see it. */
+main a:not(.at-card):not(.at-button):not(.slop-button) {
   text-underline-offset: 0.18em;
+}
+
+/* Decks ------------------------------------------------------------------ */
+
+/* On an impact slide the theme fills the ground with the brand colour, inks
+   the body in `--at-on-primary` (near-black over this amber) and reserves
+   `--at-on-primary-alt` — the opposite ink — for emphasis and links. With a
+   mid-lightness amber that opposite ink is white, which lands near 2:1 on the
+   fill: fine as a hue pairing, unreadable as text. A dark ink a few steps off
+   the body colour keeps emphasis distinguishable and legible at once. */
+.reveal {
+  --at-on-primary-alt: #3d2c06;
 }
 
 .visually-hidden {

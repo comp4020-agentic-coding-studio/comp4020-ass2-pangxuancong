@@ -39,8 +39,74 @@ const hero = resolveHeroImage(heroImage);
   {...rest}
 >
   <slot name="head" slot="head" />
+  {/* Marks the document as scripted before first paint, so the reveal styles
+      only ever apply where something is going to reveal them again. A page
+      whose JavaScript fails, or is turned off, renders fully visible rather
+      than blank. */}
+  <script is:inline slot="head">
+    document.documentElement.classList.add("slop-js");
+  </script>
+  <slot name="hero" slot="hero" />
   {hero && <Hero slot="hero" title={title ?? ""} image={hero} imageAlt={heroImageAlt ?? ""} />}
   {!hero && <h1>{title}</h1>}
   {description && <p class="lead">{description}</p>}
   <slot />
 </BaseLayout>
+
+<script>
+  // Scroll reveal, and nothing else. Elements opt in with `data-reveal`; a
+  // parent marked `data-reveal-stagger` hands its revealing children an
+  // increasing delay so a row of constraints arrives in reading order rather
+  // than all at once.
+  //
+  // One observer for the page, disconnecting each element as it fires: this
+  // animates arrival, not scroll position, so nothing re-runs on the way back
+  // up and nothing stays subscribed after it has been seen.
+  const STAGGER_MS = 90;
+  const MAX_STAGGER_STEPS = 6;
+
+  function revealAll(elements: Element[]) {
+    for (const el of elements) el.classList.add("is-revealed");
+  }
+
+  function setUp() {
+    const elements = [...document.querySelectorAll<HTMLElement>("[data-reveal]")];
+    if (elements.length === 0) return;
+
+    // Honour the OS setting here as well as in CSS: without this the observer
+    // still runs, and an element scrolled past before it fires would sit at
+    // the initial opacity until it does.
+    const stillMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (stillMotion.matches || !("IntersectionObserver" in window)) {
+      revealAll(elements);
+      return;
+    }
+
+    for (const group of document.querySelectorAll<HTMLElement>("[data-reveal-stagger]")) {
+      const children = [...group.querySelectorAll<HTMLElement>("[data-reveal]")];
+      children.forEach((child, i) => {
+        child.style.setProperty("--reveal-delay", `${Math.min(i, MAX_STAGGER_STEPS) * STAGGER_MS}ms`);
+      });
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add("is-revealed");
+          observer.unobserve(entry.target);
+        }
+      },
+      // A little way into the viewport, so an element finishes arriving around
+      // the time it is actually being read.
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.05 },
+    );
+
+    for (const el of elements) observer.observe(el);
+  }
+
+  setUp();
+  // The theme ships view transitions, so a client-side navigation swaps the
+  // document without reloading this module.
+  document.addEventListener("astro:page-load", setUp);
+</script>
