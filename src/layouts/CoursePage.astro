@@ -49,11 +49,22 @@ const hasOwnOpening = Astro.slots.has("hero");
 >
   <slot name="head" slot="head" />
   {/* Marks the document as scripted before first paint, so the reveal styles
-      only ever apply where something is going to reveal them again. A page
-      whose JavaScript fails, or is turned off, renders fully visible rather
-      than blank. */}
+      only ever apply where something is going to reveal them again. With
+      JavaScript off the class is never added and the page renders fully
+      visible.
+
+      The timer covers the case the class alone does not: scripting on, but the
+      module below never runs --- a chunk that fails to load, a syntax error
+      from a bad build, an extension that blocks it. The reveal styles would
+      then hold every element at opacity 0 and the site would be a blank page
+      with a working nav. Two seconds is far past the point the module should
+      have claimed the flag, and the module cancels the timer when it does, so
+      a page that is working keeps its reveal for as long as it is scrolled. */}
   <script is:inline slot="head">
     document.documentElement.classList.add("slop-js");
+    window.__slopFailsafe = setTimeout(function () {
+      document.documentElement.classList.remove("slop-js");
+    }, 2000);
   </script>
   <slot name="hero" slot="hero" />
   {hero && <Hero slot="hero" title={title ?? ""} image={hero} imageAlt={heroImageAlt ?? ""} />}
@@ -80,6 +91,14 @@ const hasOwnOpening = Astro.slots.has("hero");
   }
 
   function setUp() {
+    // The inline head script above arms a timer that strips `slop-js` if this
+    // module never arrives. It has arrived, so disarm it.
+    const failsafe = (window as unknown as { __slopFailsafe?: number }).__slopFailsafe;
+    if (failsafe !== undefined) {
+      clearTimeout(failsafe);
+      document.documentElement.classList.add("slop-js");
+    }
+
     const elements = [...document.querySelectorAll<HTMLElement>("[data-reveal]")];
     if (elements.length === 0) return;
 
