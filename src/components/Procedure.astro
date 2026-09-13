@@ -1,0 +1,146 @@
+---
+// A procedure, or a list of things that invalidate one.
+//
+// Weeks 5 and 10 are a pair: week 5 gives the four questions to run before the
+// first purchase, week 10 gives the events that mean running them again. They
+// are the same figure from two directions, so they use the same component --- an
+// ordered one for the procedure, an unordered one for the triggers, because a
+// procedure has an order and a trigger list does not, and numbering a set of
+// events that can happen in any sequence would claim otherwise.
+//
+// Nothing here prescribes a purchase. Both weeks are explicit that the output
+// is a re-read rather than an item, and a component that ended in a
+// recommendation would be the build calculator §9 rules out.
+
+interface Step {
+  /** The question, or the event. */
+  prompt: string;
+  /** What it settles, or what it invalidates. */
+  settles: string;
+  /** The one the week turns on. */
+  emphasis?: boolean;
+}
+
+interface Props {
+  label: string;
+  /** The column heading for the right-hand side: "What it settles". */
+  settlesLabel: string;
+  /** Numbered where the order is part of the instruction. */
+  ordered?: boolean;
+  steps: Step[];
+  note?: string;
+}
+
+const { label, settlesLabel, ordered = false, steps, note } = Astro.props;
+const Tag = ordered ? "ol" : "ul";
+---
+
+<figure class="proc" data-reveal>
+  <figcaption class="proc__head">
+    <span class="slop-label">{label}</span>
+    <span class="proc__col slop-label slop-label--quiet">{settlesLabel}</span>
+  </figcaption>
+  <Tag class:list={["proc__list", ordered && "is-ordered"]}>
+    {
+      steps.map((step, index) => (
+        <li class:list={["proc__step", step.emphasis && "is-emphasis"]}>
+          {ordered && (
+            <span class="proc__index slop-figure" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+          )}
+          <span class="proc__prompt">{step.prompt}</span>
+          <span class="proc__settles">{step.settles}</span>
+        </li>
+      ))
+    }
+  </Tag>
+  {note && <p class="proc__note">{note}</p>}
+</figure>
+
+<style>
+  .proc {
+    margin-block: 2.5rem;
+  }
+
+  .proc__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-block-end: 0.75rem;
+    border-block-end: var(--slop-rule-amber);
+  }
+
+  .proc__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .proc__step {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.3rem 2rem;
+    align-items: baseline;
+    padding-block: 0.9rem;
+    border-block-end: var(--slop-rule);
+  }
+
+  .proc__list.is-ordered .proc__step {
+    grid-template-columns: 3.5rem minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  /* The emphasised row is the week's point --- for week 5, the question the
+     recommendation cannot answer. It changes ground rather than colour, so the
+     amber stays on structure and does not start meaning "important". */
+  .proc__step.is-emphasis {
+    background: rgb(243 183 0 / 6%);
+    box-shadow: inset 3px 0 0 var(--slop-amber);
+    /* The tint bleeds outward rather than pushing the row's columns inward:
+       padding alone shifted the emphasised row out of line with the ones above
+       it, which made the highlight read as a layout mistake. */
+    margin-inline: -0.9rem;
+    padding-inline: 0.9rem;
+  }
+
+  .proc__index {
+    color: var(--slop-amber);
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .proc__prompt {
+    font-weight: 600;
+  }
+
+  .proc__settles {
+    color: var(--slop-ink-2);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .proc__note {
+    margin-block: 1.25rem 0;
+    max-width: 62ch;
+    color: var(--slop-ink-2);
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 44rem) {
+    .proc__col {
+      display: none;
+    }
+
+    .proc__step,
+    .proc__list.is-ordered .proc__step {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.25rem;
+    }
+
+    .proc__index {
+      font-size: 1.1rem;
+    }
+  }
+</style>

@@ -10,6 +10,9 @@ constraints:
   - no-recall
 ---
 
+import Procedure from "../../components/Procedure.astro";
+
+
 Week 5 was about choosing with almost no information. This week is about what
 happens when the information arrives.
 
@@ -44,14 +47,38 @@ are symptoms.
 The practical content of the week is a short list of observable events, each
 of which should cause a re-read rather than a specific purchase.
 
-| trigger | what it invalidates |
-| --- | --- |
-| an enemy buys a resistance item | that your damage still scales the way you assumed |
-| an enemy buys anti-heal | your team's sustain plan, immediately |
-| a threat emerges from a champion you had discounted | your priority target, and where you stand |
-| an enemy augment or item changes their range or mobility | whether you are actually safe where you are |
-| your team's frontline is dying first, repeatedly | who the fight is actually being fought around |
-| you stopped being able to kill somebody you used to kill | the whole build, usually |
+<Procedure
+  label="Events that should cause a re-read"
+  settlesLabel="What it invalidates"
+  steps={[
+    {
+      prompt: "An enemy buys a resistance item",
+      settles: "That your damage still scales the way you assumed.",
+    },
+    {
+      prompt: "An enemy buys anti-heal",
+      settles: "Your team's sustain plan, immediately.",
+    },
+    {
+      prompt: "A threat emerges from a champion you had discounted",
+      settles: "Your priority target, and where you stand.",
+    },
+    {
+      prompt: "An enemy augment or item changes their range or mobility",
+      settles: "Whether you are actually safe where you are.",
+    },
+    {
+      prompt: "Your team's frontline is dying first, repeatedly",
+      settles: "Who the fight is actually being fought around.",
+    },
+    {
+      prompt: "You stopped being able to kill somebody you used to kill",
+      settles: "The whole build, usually.",
+      emphasis: true,
+    },
+  ]}
+  note="Unnumbered on purpose: these do not arrive in an order, and numbering them would claim a sequence the game does not follow."
+/>
 
 None of these prescribes an item. Each says *the model you have been operating
 is now known to be wrong in a specific way*. What to do about it is week 5's

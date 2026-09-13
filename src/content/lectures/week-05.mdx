@@ -10,6 +10,9 @@ constraints:
   - no-recall
 ---
 
+import Procedure from "../../components/Procedure.astro";
+
+
 The first purchase is made with less information than any other decision in
 the game and it is harder to undo than any other. That combination is the whole
 of this week.
@@ -71,17 +74,31 @@ The tab is not malfunctioning. It was asked the wrong question.
 
 Before the first purchase, in this order:
 
-1. **What kills me?** Damage type, and whether it arrives as burst or over
-   time. This sets resistances and whether they are needed now or later.
-2. **What do I need to reach?** If nothing, mobility and durability are
-   worth less than they look.
-3. **What does my team already have?** Duplicated utility is wasted gold;
-   nobody needs the third source of the same effect.
-4. **What survives being wrong?** Of the candidates, which is still doing
-   something for me if my read of the game turns out to be mistaken?
-
-The fourth is the one the recommendation cannot answer, and under the
-no-recall constraint it is the one that matters most.
+<Procedure
+  label="Before the first purchase, in this order"
+  settlesLabel="What it settles"
+  ordered
+  steps={[
+    {
+      prompt: "What kills me?",
+      settles: "Damage type, and whether it arrives as burst or over time — which sets resistances, and whether they are needed now or later.",
+    },
+    {
+      prompt: "What do I need to reach?",
+      settles: "If nothing, mobility and durability are worth less than they look.",
+    },
+    {
+      prompt: "What does my team already have?",
+      settles: "Duplicated utility is wasted gold. Nobody needs the third source of the same effect.",
+    },
+    {
+      prompt: "What survives being wrong?",
+      settles: "Of the candidates, which is still doing something for me if my read of the game turns out to be mistaken?",
+      emphasis: true,
+    },
+  ]}
+  note="The fourth is the one the recommendation cannot answer, and under the no-recall constraint it is the one that matters most."
+/>
 
 ## The counterargument
 
