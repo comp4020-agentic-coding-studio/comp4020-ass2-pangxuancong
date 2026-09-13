@@ -10,7 +10,7 @@ constraints:
   - no-pick
 ---
 
-import AugmentChoice from "../../components/AugmentChoice.astro";
+import OptionSet from "../../components/OptionSet.astro";
 
 Augment rankings exist, they are easy to find, and they are largely correct
 about the thing they measure. This week is about the gap between the thing they
@@ -88,25 +88,34 @@ You are **Vladimir**, on a team that groups well, against a composition with
 no obvious way to burst you down. You are offered a strong damage augment, a
 sustain augment, and a high-variance one.
 
-<AugmentChoice
+<OptionSet
   label="The offer"
   context="Grouping team, no reliable way for the enemy to burst you down, and the fights are being survived rather than won."
+  prismatic
+  verdict="Adds the most"
+  provenance="Constructed offer. The options are kinds rather than named augments, and carry no strength figures: the week's claim is about what a ranking cannot see, which a schematic set states and an invented one would contradict."
   options={[
     {
-      kind: "A damage augment",
-      prior: "Strong, and rated below the sustain option across the population.",
-      marginal: "Solves the problem this game actually has: nothing converts a won fight into dead enemies.",
+      title: "A damage augment",
       chosen: true,
+      reads: [
+        { label: "The ranking", text: "Strong, and rated below the sustain option across the population." },
+        { label: "What it adds here", text: "Solves the problem this game actually has: nothing converts a won fight into dead enemies." },
+      ],
     },
     {
-      kind: "A sustain augment",
-      prior: "Rated first, and deserves it against most compositions.",
-      marginal: "Adds to a quantity already sufficient. The fights are not being lost on survival.",
+      title: "A sustain augment",
+      reads: [
+        { label: "The ranking", text: "Rated first, and deserves it against most compositions." },
+        { label: "What it adds here", text: "Adds to a quantity already sufficient. The fights are not being lost on survival." },
+      ],
     },
     {
-      kind: "A high-variance augment",
-      prior: "Rated lower, on an average taken over games that were already winnable.",
-      marginal: "Widens a distribution that does not need widening while the position is winning.",
+      title: "A high-variance augment",
+      reads: [
+        { label: "The ranking", text: "Rated lower, on an average taken over games that were already winnable." },
+        { label: "What it adds here", text: "Widens a distribution that does not need widening while the position is winning." },
+      ],
     },
   ]}
 />

@@ -10,6 +10,9 @@ constraints:
   - no-pick
 ---
 
+import OptionSet from "../../components/OptionSet.astro";
+
+
 The reroll is the only choice the mode hands back before the game starts, and
 it is the one most often spent badly. Not because players reroll champions they
 should keep — sometimes they should reroll — but because the button is pressed
@@ -38,11 +41,34 @@ the reroll is evaluated as a personal decision and is not one.
 A worked case. You are given **Azir**. Your team is filling in around you:
 Azir, Maokai, Ashe, Seraphine, Renekton.
 
-| option | what you get | what you pay |
-| --- | --- | --- |
-| keep Azir | a champion with a very high ceiling and a very high floor-to-ceiling gap | whatever the gap is, in your hands |
-| reroll | a draw from the roster | the currency, the known quantity, and Azir's role in the composition |
-| trade | a teammate's champion, if one is offered | nothing, except that you now owe the read |
+<OptionSet
+  label="The choice, priced"
+  context="Azir, Maokai, Ashe, Seraphine, Renekton — and one reroll, spendable once."
+  provenance="A constructed case. Every entry is a price in kind rather than a figure: the variable that settles it is not on the table, and putting numbers on the ones that are would suggest it could be settled without that variable."
+  options={[
+    {
+      title: "Keep Azir",
+      reads: [
+        { label: "What you get", text: "A champion with a very high ceiling and a very high floor-to-ceiling gap." },
+        { label: "What you pay", text: "Whatever that gap is, in your hands, for the length of the game." },
+      ],
+    },
+    {
+      title: "Reroll",
+      reads: [
+        { label: "What you get", text: "A draw from the roster, unconditioned on anything about this game." },
+        { label: "What you pay", text: "The currency, the known quantity, and Azir's role in the composition." },
+      ],
+    },
+    {
+      title: "Trade",
+      reads: [
+        { label: "What you get", text: "A teammate's champion, if one is offered." },
+        { label: "What you pay", text: "Nothing — except that you now owe the read on what you took." },
+      ],
+    },
+  ]}
+/>
 
 The interesting variable is not on this table, and it is the one that decides
 the answer: **how well do you play Azir?**
