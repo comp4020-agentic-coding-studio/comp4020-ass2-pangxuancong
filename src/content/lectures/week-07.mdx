@@ -10,6 +10,8 @@ constraints:
   - one-lane
 ---
 
+import LaneOrder from "../../components/LaneOrder.astro";
+
 On Summoner's Rift, position is a point on a plane. There are three lanes, a
 jungle, and a river, and the question *where should I be* has a large answer
 space and a slow clock.
@@ -83,6 +85,32 @@ Nobody decides to move forward. Each individual takes a small step to get in
 range of something, and the aggregate is a team that is now ten metres closer
 than it agreed to be and standing in the enemy's engage distance with the
 frontline somewhere behind. There is no moment at which the mistake was made.
+
+<LaneOrder
+  sequences={[
+    {
+      label: "As agreed",
+      marks: [
+        { name: "Ranged carry", role: "At the back, using the range they were picked for." },
+        { name: "Mage", role: "Behind the line, within casting distance." },
+        { name: "Support", role: "Close enough to peel, far enough to survive." },
+        { name: "Skirmisher", role: "Second, ready to answer an engage." },
+        { name: "Frontline", role: "In front, occupying the space they must come through." },
+      ],
+    },
+    {
+      label: "Four seconds later",
+      note: "Nobody moved. Each took one step to reach something, and every step on a bridge points the same way — so the order inverted at one end while the frontline, already at maximum range, had nowhere further to go.",
+      marks: [
+        { name: "Support", role: "Stepped up to land a heal." },
+        { name: "Frontline", role: "Unchanged. Already as far forward as the fight allows." },
+        { name: "Ranged carry", role: "Stepped up to reach a minion.", flagged: true },
+        { name: "Mage", role: "Stepped up to land a skillshot." },
+        { name: "Skirmisher", role: "Held, and is now the furthest back." },
+      ],
+    },
+  ]}
+/>
 
 This is a genuine property of one-dimensional space: every small correction
 points in the same direction. On a map, players drift apart in different

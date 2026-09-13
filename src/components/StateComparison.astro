@@ -1,0 +1,143 @@
+---
+// One action, read three times: ahead, even, behind.
+//
+// Week 11's claim is that the value of a play is not a property of the play.
+// A table says that; three columns headed by the state and sharing one action
+// line above them say it before the reader has read a cell, which is the
+// difference between being told the argument and seeing it.
+
+interface State {
+  /** AHEAD / EVEN / BEHIND. */
+  state: string;
+  /** What the action does from this state. */
+  effect: string;
+  /** The one-word judgement. */
+  value: string;
+  /** good | neutral | bad --- drives the colour, nothing else. */
+  tone: "good" | "neutral" | "bad";
+}
+
+interface Props {
+  /** The action being valued. Stated once, because it does not change. */
+  action: string;
+  /** What the action is, if the name needs one line of definition. */
+  definition?: string;
+  states: State[];
+}
+
+const { action, definition, states } = Astro.props;
+---
+
+<figure class="states" data-reveal>
+  <figcaption class="states__head">
+    <span class="slop-label">One action</span>
+    <p class="states__action">{action}</p>
+    {definition && <p class="states__definition">{definition}</p>}
+  </figcaption>
+  <ol class="states__row">
+    {
+      states.map((entry) => (
+        <li class:list={["states__cell", `is-${entry.tone}`]}>
+          <span class="states__state slop-label slop-label--mono">{entry.state}</span>
+          <p class="states__effect">{entry.effect}</p>
+          <p class="states__value">{entry.value}</p>
+        </li>
+      ))
+    }
+  </ol>
+</figure>
+
+<style>
+  .states {
+    margin-block: 2.5rem;
+  }
+
+  .states__head {
+    padding-block-end: 1.25rem;
+    border-block-end: var(--slop-rule);
+  }
+
+  .states__action {
+    margin-block: 0.5rem 0;
+    font-size: clamp(1.15rem, 1rem + 0.8vw, 1.6rem);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  .states__definition {
+    margin-block: 0.35rem 0;
+    max-width: 62ch;
+    color: var(--slop-ink-2);
+    font-size: 0.95rem;
+  }
+
+  .states__row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .states__cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.25rem 1.25rem 1.4rem;
+    background: var(--slop-bg-2);
+    /* The rule is the verdict. Three cells, three weights of the same line ---
+       a fourth colour would make this a status display rather than a reading. */
+    border-block-start: 3px solid var(--slop-line);
+  }
+
+  .states__cell + .states__cell {
+    border-inline-start: var(--slop-rule);
+  }
+
+  .states__cell.is-good {
+    border-block-start-color: var(--slop-amber);
+  }
+
+  .states__cell.is-bad {
+    border-block-start-color: var(--prismatic-magenta);
+  }
+
+  .states__effect {
+    margin: 0;
+    color: var(--slop-ink-2);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .states__value {
+    margin: auto 0 0;
+    padding-block-start: 0.6rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .states__cell.is-good .states__value {
+    color: var(--slop-amber);
+  }
+
+  .states__cell.is-bad .states__value {
+    color: var(--prismatic-magenta);
+  }
+
+  .states__cell.is-neutral .states__value {
+    color: var(--slop-ink-muted);
+  }
+
+  @media (max-width: 40rem) {
+    .states__row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .states__cell + .states__cell {
+      border-inline-start: 0;
+    }
+  }
+</style>

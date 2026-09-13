@@ -11,6 +11,8 @@ constraints:
   - one-lane
 ---
 
+import StateComparison from "../../components/StateComparison.astro";
+
 The standard advice for a losing game is to play safer. Farm, do not force,
 wait for a mistake. It is delivered with confidence and it is, in a mode where
 contact cannot be declined and there is nowhere else to farm, close to the
@@ -24,11 +26,30 @@ It depends on the state you are in when you take it.
 Consider one action: **trading evenly** — a fight in which both teams lose the
 same number of champions and spend the same resources.
 
-| state | what an even trade does | value |
-| --- | --- | --- |
-| ahead | preserves the gap, burns clock you want burned | good |
-| even | preserves symmetry | neutral |
-| behind | preserves a gap you need to close, burns clock you need | **losing** |
+<StateComparison
+  action="Trading evenly"
+  definition="A fight in which both teams lose the same number of champions and spend the same resources."
+  states={[
+    {
+      state: "Ahead",
+      effect: "Preserves the gap, and burns clock you want burned.",
+      value: "Good",
+      tone: "good",
+    },
+    {
+      state: "Even",
+      effect: "Preserves symmetry. Nothing about the game has moved.",
+      value: "Neutral",
+      tone: "neutral",
+    },
+    {
+      state: "Behind",
+      effect: "Preserves a gap you need to close, and burns clock you need.",
+      value: "Losing",
+      tone: "bad",
+    },
+  ]}
+/>
 
 Nothing about the action changed. The same play is correct, neutral and wrong
 depending only on where the game already is.

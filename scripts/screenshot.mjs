@@ -89,19 +89,35 @@ for (const path of paths) {
   // Scroll reveal is driven by an IntersectionObserver, so a full-page capture
   // of an unscrolled page would photograph everything below the fold in its
   // pre-reveal state. Walk the page first, then wait out the transition.
+  //
+  // The walk has to be unhurried. At 0.8 of a viewport every 120ms the observer
+  // misses elements --- a whole diagram came out as a black rectangle in an
+  // otherwise correct page, and the page was fine. Half a viewport every 250ms
+  // is reliable, and anything still unrevealed at the end is scrolled to
+  // directly rather than hoped over.
   await pause(1200);
   await send("Runtime.evaluate", {
     expression: `(async () => {
-      const step = innerHeight * 0.8;
+      const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+      const step = innerHeight * 0.5;
       for (let y = 0; y < document.body.scrollHeight; y += step) {
         scrollTo(0, y);
-        await new Promise((r) => setTimeout(r, 120));
+        await wait(250);
+      }
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        const left = [...document.querySelectorAll("[data-reveal]")]
+          .filter((el) => !el.classList.contains("is-revealed"));
+        if (left.length === 0) break;
+        for (const el of left) {
+          el.scrollIntoView({ block: "center" });
+          await wait(250);
+        }
       }
       scrollTo(0, 0);
     })()`,
     awaitPromise: true,
   }, session);
-  await pause(1200);
+  await pause(1400);
 
   const { result: shot } = await send("Page.captureScreenshot", {
     format: "png",

@@ -10,6 +10,8 @@ constraints:
   - no-pick
 ---
 
+import FunctionMap from "../../components/FunctionMap.astro";
+
 A drafted composition is an argument: five picks assembled by people who agreed
 on how they intended to win. A random five is not an argument. It is still a
 system, and systems have properties whether or not anyone intended them.
@@ -50,6 +52,21 @@ poke and burst, Graves provides sustained damage at a range that requires him
 to be closer than anyone would like. Nobody on the team wants to be hit.
 
 Theirs has three engage tools and a frontline that is happy to be hit.
+
+<FunctionMap
+  side="Yours: Graves, Lulu, Xerath, Brand, Sona"
+  functions={[
+    { name: "Frontline", cover: "absent", absence: "Fights start on your carries." },
+    { name: "Engage", cover: "absent", absence: "You fight only when they decide to." },
+    { name: "Disengage", cover: "thin", by: "Lulu, at the cost of her peel." },
+    { name: "Poke", cover: "held", by: "Xerath and Brand, from range." },
+    { name: "Sustained damage", cover: "thin", by: "Graves, closer than he wants to be." },
+    { name: "Burst", cover: "held", by: "Brand, on a target that stands still." },
+    { name: "Peel", cover: "held", by: "Lulu and Sona." },
+    { name: "Waveclear", cover: "held", by: "Xerath and Brand." },
+  ]}
+  note="Read against week 6's list of eight. The coverage is this page's own reading of the example above, not a rating: nobody has measured Lulu's disengage. The two tinted cells are the point of the diagram — the gap this team has to name before the enemy finds it — and the six that are merely held or thin are there so the gap has something to be missing from."
+/>
 
 Read functionally, the game is already described. Their win condition is any
 fight that starts on your terms being their terms — a Zac or Nautilus landing,

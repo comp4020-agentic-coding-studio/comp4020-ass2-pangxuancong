@@ -1,0 +1,176 @@
+---
+// The lane as an ordering, back to front.
+//
+// Week 7's reframe is that on a bridge your position is not where you are but
+// who is in front of you, so this diagram is ordinal and not metric on purpose:
+// no distances, no scale, no coordinates. A measured axis would draw exactly
+// the spatial model the week spends its first section arguing against.
+//
+// Two sequences can be shown. That is how the failure case reads --- the same
+// five champions in a different order four seconds later, with nobody having
+// decided to move.
+
+interface Mark {
+  /** Who is at this place in the queue. */
+  name: string;
+  /** What they are doing there, if it needs saying. */
+  role?: string;
+  /** Marks the one that is out of place. */
+  flagged?: boolean;
+}
+
+interface Sequence {
+  label: string;
+  note?: string;
+  marks: Mark[];
+}
+
+interface Props {
+  sequences: Sequence[];
+  /** What the far end of the queue is. */
+  frontLabel?: string;
+  backLabel?: string;
+  provenance?: string;
+}
+
+const {
+  sequences,
+  frontLabel = "Toward the enemy",
+  backLabel = "Own side",
+  provenance = "Constructed ordering. It has no scale and no distances, because week 7's claim is that position here is an order rather than a location — a measured axis would draw the model the week argues against.",
+} = Astro.props;
+---
+
+<figure class="lane" data-reveal>
+  <div class="lane__axis" aria-hidden="true">
+    <span class="slop-label slop-label--mono slop-label--quiet">{backLabel}</span>
+    <span class="lane__arrow"></span>
+    <span class="slop-label slop-label--mono slop-label--quiet">{frontLabel}</span>
+  </div>
+
+  {
+    sequences.map((sequence) => (
+      <section class="lane__seq">
+        <span class="slop-label">{sequence.label}</span>
+        <ol class="lane__queue">
+          {sequence.marks.map((mark) => (
+            <li class:list={["lane__mark", mark.flagged && "is-flagged"]}>
+              <span class="lane__name">{mark.name}</span>
+              {mark.role && <span class="lane__role">{mark.role}</span>}
+            </li>
+          ))}
+        </ol>
+        {sequence.note && <p class="lane__note">{sequence.note}</p>}
+      </section>
+    ))
+  }
+
+  <p class="lane__provenance">{provenance}</p>
+</figure>
+
+<style>
+  .lane {
+    margin-block: 2.5rem;
+    padding: 1.25rem 1.5rem 1rem;
+    border: var(--slop-rule);
+    background: var(--slop-bg-2);
+  }
+
+  .lane__axis {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-block-end: 1.25rem;
+  }
+
+  .lane__arrow {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--slop-line), var(--slop-amber));
+  }
+
+  .lane__seq + .lane__seq {
+    margin-block-start: 1.75rem;
+    padding-block-start: 1.5rem;
+    border-block-start: var(--slop-rule);
+  }
+
+  .lane__queue {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.5rem;
+    margin-block: 0.75rem 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lane__mark {
+    flex: 1 1 7rem;
+    display: grid;
+    gap: 0.2rem;
+    align-content: start;
+    padding: 0.7rem 0.75rem 0.8rem;
+    border: var(--slop-rule);
+    border-block-start: 3px solid var(--slop-line);
+  }
+
+  /* One cell is out of place and that is the whole diagram, so it is the only
+     one that changes. Colouring each position by role would turn an ordering
+     into a legend. */
+  .lane__mark.is-flagged {
+    border-block-start-color: var(--prismatic-magenta);
+    background: rgb(244 93 228 / 8%);
+  }
+
+  .lane__name {
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .lane__role {
+    color: var(--slop-ink-muted);
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  .lane__note {
+    margin-block: 0.9rem 0;
+    max-width: 62ch;
+    color: var(--slop-ink-2);
+    font-size: 0.9rem;
+  }
+
+  .lane__provenance {
+    margin-block: 1.25rem 0;
+    padding-block-start: 0.75rem;
+    border-block-start: var(--slop-rule);
+    color: var(--slop-ink-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  /* §75: a horizontal progression becomes a vertical rail on a phone. The
+     order is the content, so it has to survive the turn. */
+  @media (max-width: 40rem) {
+    .lane__queue {
+      flex-direction: column;
+      border-inline-start: var(--slop-rule);
+      padding-inline-start: 0.9rem;
+    }
+
+    .lane__mark {
+      flex: 1 1 auto;
+      border-block-start: var(--slop-rule);
+      border-inline-start: 3px solid var(--slop-line);
+    }
+
+    .lane__mark.is-flagged {
+      border-inline-start-color: var(--prismatic-magenta);
+    }
+
+    .lane__axis {
+      display: none;
+    }
+  }
+</style>

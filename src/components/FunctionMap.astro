@@ -1,0 +1,150 @@
+---
+// The eight team functions, and which of them a composition actually covers.
+//
+// Week 6 argues that a random five is still a system, and that reading it means
+// naming the gap before the enemy does. A table of eight rows states the
+// functions; it does not show a gap. A map does: eight fixed cells, always in
+// the same order, with the missing one visible as an absence rather than as a
+// word in a cell.
+//
+// The functions are the week's own list and the coverage is the week's own
+// reading of an example it already sets out in prose. Nothing here is measured.
+
+type Cover = "held" | "thin" | "absent";
+
+interface Fn {
+  /** The function, from week 6's list of eight. */
+  name: string;
+  /** What its absence looks like, which is how a reader recognises it. */
+  absence: string;
+  /** Who holds it, in the example being read. */
+  by?: string;
+  cover: Cover;
+}
+
+interface Props {
+  label?: string;
+  /** Whose composition this is. */
+  side: string;
+  functions: Fn[];
+  note?: string;
+}
+
+const { label = "Function coverage", side, functions, note } = Astro.props;
+
+const READS: Record<Cover, string> = {
+  held: "Held",
+  thin: "Thin",
+  absent: "Absent",
+};
+---
+
+<figure class="fnmap" data-reveal>
+  <figcaption class="fnmap__head">
+    <span class="slop-patch">{label}</span>
+    <p class="fnmap__side">{side}</p>
+  </figcaption>
+  <ul class="fnmap__grid">
+    {
+      functions.map((fn) => (
+        <li class:list={["fnmap__cell", `is-${fn.cover}`]}>
+          <span class="fnmap__name">{fn.name}</span>
+          <span class="fnmap__cover slop-label slop-label--mono">{READS[fn.cover]}</span>
+          <span class="fnmap__detail">{fn.by ?? fn.absence}</span>
+        </li>
+      ))
+    }
+  </ul>
+  {note && <p class="fnmap__note">{note}</p>}
+</figure>
+
+<style>
+  .fnmap {
+    margin-block: 2.5rem;
+  }
+
+  .fnmap__head {
+    padding-block-end: 1rem;
+  }
+
+  .fnmap__side {
+    margin-block: 0.6rem 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .fnmap__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--slop-line);
+    border: var(--slop-rule);
+  }
+
+  .fnmap__cell {
+    display: grid;
+    gap: 0.3rem;
+    align-content: start;
+    padding: 0.9rem 0.9rem 1rem;
+    background: var(--slop-bg-2);
+  }
+
+  /* An absent function is the point of the diagram, so it is the only cell
+     that changes ground. Held and thin differ by ink weight alone --- eight
+     cells in eight colours would be a legend, not a reading. */
+  .fnmap__cell.is-absent {
+    background: rgb(244 93 228 / 8%);
+  }
+
+  .fnmap__name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+
+  .fnmap__cell.is-thin .fnmap__name {
+    color: var(--slop-ink-2);
+  }
+
+  .fnmap__cover {
+    color: var(--slop-ink-muted);
+  }
+
+  .fnmap__cell.is-held .fnmap__cover {
+    color: var(--slop-amber);
+  }
+
+  .fnmap__cell.is-absent .fnmap__cover {
+    color: var(--prismatic-magenta);
+  }
+
+  .fnmap__detail {
+    color: var(--slop-ink-2);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .fnmap__note {
+    margin-block: 1rem 0;
+    max-width: 62ch;
+    color: var(--slop-ink-muted);
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 52rem) {
+    .fnmap__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .fnmap__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
