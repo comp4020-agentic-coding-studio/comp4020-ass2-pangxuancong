@@ -10,6 +10,9 @@ constraints:
   - forced-contact
 ---
 
+import DecisionTimeline from "../../components/DecisionTimeline.astro";
+
+
 You cannot decline the fight. Two teams occupy one bridge and disengaging buys
 seconds rather than minutes, so the question *should we fight* is not really
 available. Contact is coming.
@@ -66,6 +69,38 @@ Two teams read this window differently. One notices and does nothing, because
 the fight had not started and nobody thought to start one. The other treats the
 window as the only period in which contact is on favourable terms, and moves
 before it closes — accepting a fight it would refuse ten seconds later.
+
+<DecisionTimeline
+  steps={[
+    {
+      at: "Before",
+      label: "Both engage tools available",
+      note: "Contact on their terms is possible at any moment, so neither team can commit.",
+    },
+    {
+      at: "Trigger",
+      label: "Their engage ultimate is spent",
+      note: "It is visible when it goes, and both teams see the same thing.",
+    },
+    {
+      at: "Window",
+      label: "Their ability to open a fight is materially reduced",
+      note: "The only period in which contact is on favourable terms. Nothing about it is announced.",
+      pivot: true,
+    },
+    {
+      at: "Outcome",
+      label: "One team moves; the other waits for a fight to arrive",
+      note: "Neither played better. They fought in different states.",
+    },
+    {
+      at: "Reset",
+      label: "The cooldown returns and the window closes",
+      note: "Once it returns, the same fight is one the second team would now refuse.",
+    },
+  ]}
+  caption="Phases rather than a clock. This week's window is bounded by a cooldown, and no cooldown length is quoted here: the argument is that a window exists and is legible, which does not depend on how many seconds it lasts."
+/>
 
 Nothing in the second team's play was mechanically better. They fought in a
 different state.

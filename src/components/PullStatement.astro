@@ -1,0 +1,68 @@
+---
+// The Type A device: one sentence, set at display size, wider than the prose
+// around it.
+//
+// Weeks 1 and 12 are the two editorial weeks --- they argue rather than
+// analyse, and their pages have no state to draw and no clock to lay out. What
+// they have is a sentence the rest of the week is built to earn, and the layout
+// should let a reader find it while scrolling past.
+//
+// One per page. A second would mean neither is the one.
+
+interface Props {
+  /** What kind of sentence this is: "The distinction", "The claim". */
+  label?: string;
+  /** One line under the statement, where the sentence needs a qualifier. */
+  support?: string;
+}
+
+const { label, support } = Astro.props;
+---
+
+<aside class="pull" data-reveal>
+  {label && <span class="slop-label">{label}</span>}
+  <div class="pull__text"><slot /></div>
+  {support && <p class="pull__support">{support}</p>}
+</aside>
+
+<style>
+  .pull {
+    margin-block: 3rem;
+    padding-inline-start: 1.5rem;
+    border-inline-start: var(--slop-rule-heavy);
+  }
+
+  /* An earlier version hung the block into the right gutter to make it wider
+     than the measure. It overflowed the page at 1024, because the theme scales
+     its root font size and the breakpoint that was supposed to guarantee a
+     gutter did not line up with one. The type scale and the heavy rule already
+     say this is not body copy; a second signal was not worth a viewport where
+     the page scrolls sideways. */
+
+  /* The statement is written in MDX, so its text arrives already wrapped in a
+     paragraph of MDX's own making. Styling the wrapper is what a first attempt
+     does, and it renders at body size: a <p> inside a <p> is invalid, the
+     browser hoists the inner one out, and the class-bearing element is left
+     holding nothing. The slot is a div and the styles reach through it. */
+  .pull__text :global(p) {
+    margin-block: 0.6rem 0;
+    font-size: clamp(1.5rem, 1.1rem + 1.9vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  .pull__text :global(em) {
+    font-style: normal;
+    color: var(--slop-amber);
+  }
+
+  .pull__support {
+    margin-block: 1rem 0;
+    max-width: 58ch;
+    color: var(--slop-ink-2);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+</style>
