@@ -1,10 +1,15 @@
 ---
-// One action, read three times: ahead, even, behind.
+// One thing, read three times.
 //
-// Week 11's claim is that the value of a play is not a property of the play.
-// A table says that; three columns headed by the state and sharing one action
-// line above them say it before the reader has read a cell, which is the
-// difference between being told the argument and seeing it.
+// Week 11 sets one action against ahead, even and behind; week 2 sets one
+// champion against three teams. Both weeks make the same move --- the subject
+// did not change, the context did, and the correct answer changed anyway --- so
+// they share the figure. The subject is stated once above three columns, which
+// says that before the reader has read a cell.
+//
+// The columns are not always a verdict. Week 2's three readings are all
+// correct, and all three carry the neutral rule; the tone exists for week 11,
+// where two of the three are a judgement.
 
 interface State {
   /** AHEAD / EVEN / BEHIND. */
@@ -18,19 +23,21 @@ interface State {
 }
 
 interface Props {
-  /** The action being valued. Stated once, because it does not change. */
+  /** What kind of subject this is: "One action", "One champion". */
+  subjectLabel?: string;
+  /** The subject being read. Stated once, because it does not change. */
   action: string;
   /** What the action is, if the name needs one line of definition. */
   definition?: string;
   states: State[];
 }
 
-const { action, definition, states } = Astro.props;
+const { subjectLabel = "One action", action, definition, states } = Astro.props;
 ---
 
 <figure class="states" data-reveal>
   <figcaption class="states__head">
-    <span class="slop-label">One action</span>
+    <span class="slop-label">{subjectLabel}</span>
     <p class="states__action">{action}</p>
     {definition && <p class="states__definition">{definition}</p>}
   </figcaption>

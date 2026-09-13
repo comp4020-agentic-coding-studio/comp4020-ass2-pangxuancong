@@ -10,6 +10,9 @@ constraints:
   - no-pick
 ---
 
+import StateComparison from "../../components/StateComparison.astro";
+
+
 A champion arrives with a reputation. The reputation was earned somewhere
 else, in a mode where somebody chose it on purpose, for a job they had already
 decided needed doing. Here nobody chose it and no job has been decided. The
@@ -56,6 +59,32 @@ squishy rather than on whoever is nearest.
 damage on the other team is physical. Malphite's armour is no longer a
 personal statistic; it is a team-level asset, because he is the only member of
 the team who can stand in front of that composition and continue existing.
+
+<StateComparison
+  subjectLabel="One champion"
+  action="Malphite"
+  definition="Reputation fixed, function not. The seven properties are identical in all three games; only the team and the enemy differ."
+  states={[
+    {
+      state: "Game A",
+      effect: "Alongside Jayce, Corki, Zyra and Soraka. The only body on a team that wants to be far away.",
+      value: "Peel",
+      tone: "neutral",
+    },
+    {
+      state: "Game B",
+      effect: "Alongside Yorick, Trundle, Volibear and Rell. A fifth frontline on a team that already has more durability than it can use.",
+      value: "Burst",
+      tone: "neutral",
+    },
+    {
+      state: "Game C",
+      effect: "Against Talon, Zed, Quinn, Kled and Camille. Every point of damage on the other team is physical.",
+      value: "Team-level armour",
+      tone: "neutral",
+    },
+  ]}
+/>
 
 Three games, one champion, three different correct answers. The reputation was
 constant across all three and useful in none of them.
