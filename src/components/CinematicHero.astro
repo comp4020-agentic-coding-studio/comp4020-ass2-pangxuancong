@@ -21,11 +21,13 @@ import heroImage from "../assets/images/hero-home.png";
 interface Props {
   code: string;
   titleLines: [string, string];
+  /** What the course is about, in words that assume no knowledge of the game. */
+  subject: string;
   thesis: string;
   alt: string;
 }
 
-const { code, titleLines, thesis, alt } = Astro.props;
+const { code, titleLines, subject, thesis, alt } = Astro.props;
 ---
 
 <section class="hero hero-cinematic" aria-labelledby="hero-title">
@@ -44,9 +46,10 @@ const { code, titleLines, thesis, alt } = Astro.props;
   <div class="hero__content">
     <p class="slop-label slop-label--mono hero__code">{code}</p>
     <h1 id="hero-title" class="hero__title">
-      <span>{titleLines[0]}</span>
+      <span class="hero__title-mode">{titleLines[0]}</span>
       <span>{titleLines[1]}</span>
     </h1>
+    <p class="hero__subject">{subject}</p>
     <p class="hero__thesis">{thesis}</p>
     <p class="hero__actions">
       <a class="slop-button" href={withBase("/lectures/")}>Enter the course</a>
@@ -157,13 +160,31 @@ const { code, titleLines, thesis, alt } = Astro.props;
     animation-delay: 180ms;
   }
 
+  /* The mode's name is the smaller half of the title, which is what the colon
+     in "HEX ARAM: The Hand You're Dealt" is doing --- one names the subject,
+     the other is the argument about it. */
+  .hero__title-mode {
+    font-size: 0.52em;
+    letter-spacing: 0.02em;
+    color: var(--slop-amber);
+  }
+
+  .hero__subject {
+    max-width: 44ch;
+    margin-block: 0 0.9rem;
+    color: var(--slop-ink-2);
+    font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.1rem);
+    line-height: 1.5;
+    animation: hero-enter var(--motion-slow) var(--ease-standard) 240ms both;
+  }
+
   .hero__thesis {
     max-width: 34ch;
     margin-block: 0 2rem;
     color: var(--slop-ink-2);
     font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.35rem);
     line-height: 1.35;
-    animation: hero-enter var(--motion-slow) var(--ease-standard) 270ms both;
+    animation: hero-enter var(--motion-slow) var(--ease-standard) 300ms both;
   }
 
   .hero__actions {
@@ -171,7 +192,7 @@ const { code, titleLines, thesis, alt } = Astro.props;
     flex-wrap: wrap;
     gap: 0.75rem;
     margin: 0;
-    animation: hero-enter var(--motion-slow) var(--ease-standard) 360ms both;
+    animation: hero-enter var(--motion-slow) var(--ease-standard) 380ms both;
   }
 
   @keyframes hero-enter {
@@ -222,6 +243,7 @@ const { code, titleLines, thesis, alt } = Astro.props;
     .hero__image,
     .hero__code,
     .hero__title span,
+    .hero__subject,
     .hero__thesis,
     .hero__actions {
       animation: none;
